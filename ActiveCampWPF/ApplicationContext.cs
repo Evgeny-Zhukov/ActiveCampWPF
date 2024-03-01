@@ -4,12 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 public class ApplicationContext : DbContext
 {
-    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+    public ApplicationContext()
     {
         Database.EnsureCreated();
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=testDB;Trusted_Connection=True;");
+    }
 
-    public DbSet<User> Users { get; set; }
+    public DbSet<User> User { get; set; }
     /*public DbSet<Equipment> Equipments { get; set; }
     public DbSet<UserEquipment> UserEquipments { get; set; }
     public DbSet<DietaryPreference> DietaryPreferences { get; set; }

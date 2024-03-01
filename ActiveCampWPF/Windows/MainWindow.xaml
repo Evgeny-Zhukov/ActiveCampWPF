@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Добавить пользователя" Name="myButton" Click="addUser_Click" />
+        <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="65,8,0,0"/>
+
+        <Label Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="65,37,0,0"/>
+
+        <Label Content="Login:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0"/>
+        <TextBox x:Name="txtLogin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="65,67,0,0"/>
+
+        <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,90,0,0"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="65,94,0,0"/>
+
+        <Button Content="Add User" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="0,120,0,0" Click="AddUser_Click"/>
+        <Button Content="Change User Data" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="0,150,0,0" Click="ChangeUserData_Click"/>
+        <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="0,180,0,0" Click="Exit_Click"/>
     </Grid>
+
 </Window>
