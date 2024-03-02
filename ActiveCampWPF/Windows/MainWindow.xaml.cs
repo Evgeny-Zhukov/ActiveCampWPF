@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ActiveCamp;
+using Microsoft.EntityFrameworkCore;
 using System.Windows;
 
 
@@ -11,17 +12,26 @@ namespace ActiveCampWPF
             InitializeComponent();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void AddEquipment_Click(object sender, RoutedEventArgs e)
         {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                User user1 = new User { Username = "username1", Email = "test1@test.com", Password = "password1", Name = "name1" };
+            string equipmentName = txtEquipmentName.Text;
+            string equipmentWeight = txtEquipmentWeight.Text;
 
-                db.User.AddRange(user1);
-                db.SaveChanges();
-            }
-            MessageBox.Show("Пользователь добавлен");
+                
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    Equipment newEquipment = new Equipment
+                    {
+                        EquipmentName = equipmentName,
+                        EquipmentWeight = equipmentWeight
+                    };
+                    db.Equipment.Add(newEquipment);
+                    db.SaveChanges();
+                }
+
+                MessageBox.Show("Equipment added successfully!");   
         }
+
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
             string name = txtName.Text;
@@ -31,20 +41,20 @@ namespace ActiveCampWPF
 
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (db.User.Any(u => u.Username == login))
+                if (db.Users.Any(u => u.Username == login))
                 {
                     MessageBox.Show("Логин недоступен. Пожалуйста, выберите другой логин.");
                     return;
                 }
 
-                if (db.User.Any(u => u.Email == email))
+                if (db.Users.Any(u => u.Email == email))
                 {
                     MessageBox.Show("Данная почта уже зарегистрирована");
                     return;
                 }
             }
             
-            User newUser = new User
+            Users newUser = new Users
             {
                 Name = name,
                 Password = password,
@@ -53,7 +63,7 @@ namespace ActiveCampWPF
             };
             using (ApplicationContext db = new ApplicationContext())
             {
-                db.User.Add(newUser);
+                db.Users.Add(newUser);
                 db.SaveChanges();
             }
             
@@ -68,7 +78,7 @@ namespace ActiveCampWPF
 
             using (ApplicationContext db = new ApplicationContext())
             {
-                User selectedUser = db.User.FirstOrDefault(u => u.Username == login);
+                Users selectedUser = db.Users.FirstOrDefault(u => u.Username == login);
 
                 if (selectedUser != null)
                 {
