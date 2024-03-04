@@ -12,9 +12,9 @@ public class User
     public int? PreferencesID { get; set; }
     
     //связь с другими таблицами
-    /*public virtual ICollection<UserEquipment> UserEquipments { get; set; }
+    public virtual ICollection<UserEquipment> UserEquipments { get; set; }
     public virtual ICollection<UserDietaryPreferences> UserDietaryPreferences { get; set; }
     public virtual GroupMember GroupMember { get; set; }
     public virtual DietaryPreference DietaryPreference { get; set; }
-    public virtual Group Group { get; set; }*/
+    public virtual Group Group { get; set; }
 }

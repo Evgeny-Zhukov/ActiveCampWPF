@@ -4,8 +4,9 @@
     {
         public int EquipmentID { get; set; }
         public string EquipmentName { get; set; }
-        public string EquipmentWeight { get; set; }
+        public double EquipmentWeight { get; set; }
+        public User User { get; set; }
         //связь с другими таблицами
-        //public virtual UserEquipment UserEquipment { get; set; }
+        public virtual ICollection<UserEquipment> UserEquipment { get; set; }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Windows;
+using System.Windows.Forms;
 
 
 namespace ActiveCampWPF
@@ -9,18 +12,6 @@ namespace ActiveCampWPF
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                User user1 = new User { Username = "username1", Email = "test1@test.com", Password = "password1", Name = "name1" };
-
-                db.User.AddRange(user1);
-                db.SaveChanges();
-            }
-            MessageBox.Show("Пользователь добавлен");
         }
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
@@ -33,13 +24,13 @@ namespace ActiveCampWPF
             {
                 if (db.User.Any(u => u.Username == login))
                 {
-                    MessageBox.Show("Логин недоступен. Пожалуйста, выберите другой логин.");
+                    System.Windows.Forms.MessageBox.Show("Логин недоступен. Пожалуйста, выберите другой логин.");
                     return;
                 }
 
                 if (db.User.Any(u => u.Email == email))
                 {
-                    MessageBox.Show("Данная почта уже зарегистрирована");
+                    System.Windows.Forms.MessageBox.Show("Данная почта уже зарегистрирована");
                     return;
                 }
             }
@@ -56,8 +47,8 @@ namespace ActiveCampWPF
                 db.User.Add(newUser);
                 db.SaveChanges();
             }
-            
-            MessageBox.Show("Пользователь успешно добавлен!");
+
+            System.Windows.Forms.MessageBox.Show("Пользователь успешно добавлен!");
         }
         private void ChangeUserData_Click(object sender, RoutedEventArgs e)
         {
@@ -77,11 +68,11 @@ namespace ActiveCampWPF
                     selectedUser.Email = email;
                     db.SaveChanges();
 
-                    MessageBox.Show("Данные пользователя успешно изменены!");
+                    System.Windows.Forms.MessageBox.Show("Данные пользователя успешно изменены!");
                 }
                 else
                 {
-                    MessageBox.Show("Что-то пошло не так...");
+                    System.Windows.Forms.MessageBox.Show("Что-то пошло не так...");
                 }
             }
             
@@ -89,7 +80,7 @@ namespace ActiveCampWPF
 
         private void Exit_Click(Object sender, RoutedEventArgs e) 
         {
-            Application.Current.Shutdown();
-        }
+            System.Windows.Application.Current.Shutdown();
+        } 
     }
 }

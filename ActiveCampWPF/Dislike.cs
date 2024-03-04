@@ -5,6 +5,6 @@
         public int DislikeID { get; set; }
         public string Dislikes { get; set; }
         //связь с другими таблицами
-        //public virtual ICollection<UserDietaryPreferences> UserDietaryPreferences { get; set; }
+        public virtual ICollection<UserDietaryPreferences> UserDietaryPreferences { get; set; }
     }
 }

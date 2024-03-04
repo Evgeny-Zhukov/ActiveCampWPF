@@ -9,7 +9,7 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         //связь с другими таблицами
-        //public virtual GroupMember GroupMember { get; set; }
-        //public virtual ICollection<User> Users { get; set; }    
+        public virtual GroupMember GroupMember { get; set; }
+        public virtual ICollection<User> Users { get; set; }    
     }
 }
