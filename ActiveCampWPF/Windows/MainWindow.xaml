@@ -22,6 +22,7 @@
         <Button Content="Register" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="0,120,0,0" Click="AddUser_Click"/>
         <Button Content="Change User Data" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="0,150,0,0" Click="ChangeUserData_Click"/>
         <Button Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="0,180,0,0" Click="Exit_Click"/>
+
 		<StackPanel Orientation="Vertical" Margin="400 0 0 0">
             <TextBlock Text="Equipment Details" FontWeight="Bold" Margin="0,0,0,10"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
