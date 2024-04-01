@@ -42,26 +42,10 @@ namespace ActiveCamp.BL
         /// <exception cref="ArgumentNullException"></exception>
         public User(string username, string email, string password, string name)
         {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                throw new ArgumentNullException("Псевдоним пользователя не может быть пустым или null.", nameof(username));
-            }
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                throw new ArgumentNullException("Почта не может быть пустым или null.", nameof(email));
-            }
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentNullException("Пароль не может быть пустым или null.", nameof(password));
-            }
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
-            }
-            Username = username;
-            Email = email;
-            Password = password;
-            Name = name;
+            Username = username ?? throw new ArgumentNullException("Псевдоним пользователя не может быть пустым или null.", nameof(username));
+            Email = email ?? throw new ArgumentNullException("Почта не может быть пустым или null.", nameof(email));
+            Password = password ?? throw new ArgumentNullException("Password", nameof(password));
+            Name = name ?? throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
         }
         /// <summary>
         /// Создает пользователя.
@@ -74,11 +58,7 @@ namespace ActiveCamp.BL
         /// <exception cref="ArgumentNullException"></exception>
         public User(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
-            }
-            Name = name;
+            Name = name ?? throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
         }
         public override string ToString()
         {
