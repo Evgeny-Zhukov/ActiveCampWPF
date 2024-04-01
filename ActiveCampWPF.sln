@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveCampWPF", "ActiveCampWPF\ActiveCampWPF.csproj", "{EDBB9BC7-99A3-4BB9-886D-E3E233F34706}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActiveCampWPF", "ActiveCampWPF\ActiveCampWPF.csproj", "{EDBB9BC7-99A3-4BB9-886D-E3E233F34706}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4C50DF9B-8022-4D2B-A299-DC81049370F9} = {4C50DF9B-8022-4D2B-A299-DC81049370F9}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveCamp.BL", "ActiveCamp.BL\ActiveCamp.BL.csproj", "{4C50DF9B-8022-4D2B-A299-DC81049370F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{EDBB9BC7-99A3-4BB9-886D-E3E233F34706}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDBB9BC7-99A3-4BB9-886D-E3E233F34706}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDBB9BC7-99A3-4BB9-886D-E3E233F34706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C50DF9B-8022-4D2B-A299-DC81049370F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C50DF9B-8022-4D2B-A299-DC81049370F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C50DF9B-8022-4D2B-A299-DC81049370F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C50DF9B-8022-4D2B-A299-DC81049370F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

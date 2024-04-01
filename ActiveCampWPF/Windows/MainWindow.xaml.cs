@@ -39,6 +39,9 @@ namespace ActiveCampWPF
             string login = txtLogin.Text;
             string email = txtEmail.Text;
 
+
+
+
             using (ApplicationContext db = new ApplicationContext())
             {
                 if (db.Users.Any(u => u.Username == login))
