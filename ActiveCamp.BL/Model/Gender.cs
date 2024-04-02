@@ -20,15 +20,15 @@ namespace ActiveCamp.BL
         /// </summary>
         /// <param name="name"> Название пола</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Gender(string name) 
+        public Gender(string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("Имя пола не может быть пустым или null", nameof(name));
             }
             Name = name;
         }
-        public override string ToString() 
+        public override string ToString()
         {
             return Name;
         }

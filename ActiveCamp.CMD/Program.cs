@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActiveCamp.BL;
 
 namespace ActiveCamp.CMD
 {
@@ -10,6 +11,9 @@ namespace ActiveCamp.CMD
     {
         static void Main(string[] args)
         {
+            User user = new User("","","","");
+            Equipment equipment = new Equipment("",12);
+
         }
     }
 }

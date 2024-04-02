@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace ActiveCamp
 {
@@ -12,7 +11,7 @@ namespace ActiveCamp
         /// <summary>
         /// ИД снаряжения.
         /// </summary>
-        public int equipmentID { get;}
+        public int equipmentID { get; }
         /// <summary>
         /// Название снаряжения.
         /// </summary>
@@ -20,14 +19,35 @@ namespace ActiveCamp
         /// <summary>
         /// Вес снаряжения.
         /// </summary>
-        public string equipmentWeight { get; set; }
+        public double equipmentWeight { get; set; }
         #endregion
 
-        public Equipment(){}
-        public Equipment(string equipmentName, string equipmentWeight)
+        public Equipment() { }
+        /// <summary>
+        /// Создает снаряжение.
+        /// </summary>
+        /// <param name="equipmentName">Название снаряжения</param>
+        /// <param name="equipmentWeight">Вес снаряжения</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public Equipment(string equipmentName, double equipmentWeight)
         {
             this.equipmentName = equipmentName ?? throw new ArgumentNullException("Название снаряжение не может быть пустым или NULL", nameof(equipmentName));
-            this.equipmentWeight = equipmentWeight ?? throw new ArgumentNullException("Вес снаряжение не может быть пустым или NULL", nameof(equipmentWeight));
+
+            if(equipmentWeight <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Вес снаряжения должен быть положительным числом и не равен нулю.", nameof(equipmentWeight));
+            }
+            this.equipmentWeight = equipmentWeight;
+        }
+        /// <summary>
+        /// Создает снаряжение.
+        /// </summary>
+        /// <param name="equipmentName">Название снаряжения</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public Equipment(string equipmentName)
+        {
+            this.equipmentName = equipmentName ?? throw new ArgumentNullException("Название снаряжение не может быть пустым или NULL", nameof(equipmentName));
         }
 
         public override string ToString()

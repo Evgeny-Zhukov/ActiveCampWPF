@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveCamp.BL\ActiveCamp.BL.csproj">
+      <Project>{92355a46-eea5-432e-9bb6-5800865874eb}</Project>
+      <Name>ActiveCamp.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
