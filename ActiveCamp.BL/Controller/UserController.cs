@@ -7,9 +7,18 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Controller
 {
+    /// <summary>
+    /// Контроллер пользователя.
+    /// </summary>
     public class UserController
     {
+        /// <summary>
+        /// Пользователь приложения.
+        /// </summary>
         public User user { get; }
+        /// <summary>
+        /// Текущий пользователь.
+        /// </summary>
         public User CurentUser { get; }
         //TODO: Создать связь с БД
         public List<User> users { get; }

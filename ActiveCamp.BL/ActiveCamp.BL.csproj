@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EquipmentController.cs" />
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Model\ActiveCampDbContext.cs" />
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\User.cs" />
