@@ -24,7 +24,7 @@ namespace ActiveCamp.BL
         /// <summary>
         /// Пароль пользователя.
         /// </summary>
-        private string Password { get; set; }
+        internal string Password { get; set; }
         /// <summary>
         /// Имя пользователя.
         /// </summary>

@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\DBController.cs" />
+    <Compile Include="Controller\DishController.cs" />
     <Compile Include="Controller\EquipmentController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ActiveCampDbContext.cs" />
@@ -48,6 +51,7 @@
     <Compile Include="Model\Dish.cs" />
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\Group.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

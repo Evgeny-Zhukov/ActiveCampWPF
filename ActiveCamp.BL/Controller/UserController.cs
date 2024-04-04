@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,24 +13,51 @@ namespace ActiveCamp.BL.Controller
     /// </summary>
     public class UserController
     {
-        /// <summary>
-        /// Пользователь приложения.
-        /// </summary>
-        public User user { get; }
-        /// <summary>
-        /// Текущий пользователь.
-        /// </summary>
-        public User CurentUser { get; }
-        //TODO: Создать связь с БД
-        public List<User> users { get; }
+        private readonly string connectionString = "";
+
+        public User CurrentUser { get; private set; }
+
         public UserController(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
                 throw new ArgumentNullException(nameof(userName));
             }
-            CurentUser = users.SingleOrDefault(u => u.Username == userName);
 
+            // TODO: Получить пользователя из базы данных по имени пользователя
+            CurrentUser = GetUserByUsername(userName);
+        }
+
+        public void RegisterUser(User user)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Email, Password, Name) VALUES (@Username, @Email, @Password, @Name)", connection);
+                command.Parameters.AddWithValue("@Username", user.Username);
+                command.Parameters.AddWithValue("@Email", user.Email);
+                command.Parameters.AddWithValue("@Password", user.Password);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public bool Login(string username, string password)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password", connection);
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@Password", password);
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        private User GetUserByUsername(string username)
+        {
+            // TODO: Получить пользователя из базы данных по имени пользователя
+            throw new NotImplementedException();
         }
     }
 }
