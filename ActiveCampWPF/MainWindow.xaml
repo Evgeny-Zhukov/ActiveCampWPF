@@ -13,13 +13,14 @@
             <ColumnDefinition Width="340"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
 
         <!-- Window Background -->
         <Image x:Name="mainPicture" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="Resources/Images/reka_trava_derevia_153970_1920x1080.jpg">
-            <Image.BitmapEffect>
-                <BlurBitmapEffect Radius="20" KernelType="Gaussian" ></BlurBitmapEffect>
-            </Image.BitmapEffect>
+            <!--<Image.BitmapEffect>
+                <BlurBitmapEffect Radius="20" KernelType="Gaussian"></BlurBitmapEffect>
+            </Image.BitmapEffect>-->
         </Image>
 
         <!-- BackgroundButton -->
@@ -302,5 +303,85 @@
         </Grid>
         <!--#endregion-->
 
+        
+        <!--Registration plane. It`s exist on first Load-->
+        <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+              IsEnabled="True" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="500"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="300"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Rectangle Fill="Black" Opacity="0.99" RadiusX="20" RadiusY="20" 
+                       Visibility ="{Binding Visibility, ElementName=Person_Validate}"  IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
+                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
+                <Rectangle.Effect>
+                    <BlurEffect KernelType="Gaussian" Radius="30"></BlurEffect>
+                </Rectangle.Effect>
+            </Rectangle>
+
+            <Grid x:Name="RegistrGrid" Grid.Column="1" Grid.Row="1">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"></RowDefinition>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="0.25*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="Registration_window" Fill="DarkOrange" 
+                           Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
+                           RadiusX="25" RadiusY="25"
+                           Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="7"/>
+
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="15,5,15,5" Text="Введите логин" IsReadOnly="False" 
+                         FontFamily="TimesNewRoman" FontSize="12" FontStyle="Italic" FontWeight="Normal" Foreground="DarkGray" 
+                         CaretBrush="Black" Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10"
+                                    ForceCursor="True">
+                                <ScrollViewer Margin="3" x:Name="PART_ContentHost"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter Property="Foreground" Value="Black"></Setter>
+                                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+
+                <PasswordBox Grid.Column="1" Grid.Row="4" 
+                             Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
+                    <PasswordBox.Template>
+                        <ControlTemplate TargetType="{x:Type PasswordBox}">
+                            <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10" ForceCursor="True" Margin="15,5,15,5">
+                                
+                            </Border>
+                        </ControlTemplate>
+                    </PasswordBox.Template>
+                </PasswordBox>
+                
+            </Grid>
+        </Grid>
+            
     </Grid>
 </Window>
