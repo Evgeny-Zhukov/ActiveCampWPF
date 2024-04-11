@@ -91,5 +91,16 @@ namespace ActiveCampWPF
         {
 
         }
+
+        private void Login_textbox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            if (tb != null)
+            { 
+
+
+            }
+        }
     }
 }

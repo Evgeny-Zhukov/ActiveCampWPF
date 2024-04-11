@@ -336,11 +336,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.25*"></RowDefinition>
                     <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="10"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="0.25*"></RowDefinition>
+                    <RowDefinition Height="55"></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                    <RowDefinition Height="55"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Rectangle x:Name="Registration_window" Fill="DarkOrange" 
@@ -348,38 +348,85 @@
                            RadiusX="25" RadiusY="25"
                            Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="7"/>
 
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="15,5,15,5" Text="Введите логин" IsReadOnly="False" 
-                         FontFamily="TimesNewRoman" FontSize="12" FontStyle="Italic" FontWeight="Normal" Foreground="DarkGray" 
-                         CaretBrush="Black" Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
+                <Label Content="login:" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"
+                       FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
+
+                <TextBox x:Name="Login_textbox" Grid.Row="2" Grid.Column="1" Margin="15,20,15,0" IsReadOnly="False" 
+                         FontFamily="TimesNewRoman" FontSize="14" FontStyle="Italic" FontWeight="Bold" Foreground="Black" 
+                         CaretBrush="Black" Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
+                           MouseEnter="Login_textbox_MouseEnter">
                     <TextBox.Template>
                         <ControlTemplate TargetType="{x:Type TextBox}">
                             <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10"
-                                    ForceCursor="True">
+                                    ForceCursor="True" x:Name="Login_textbox_border">
                                 <ScrollViewer Margin="3" x:Name="PART_ContentHost"/>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Trigger.Setters>
-                                        <Setter Property="Foreground" Value="Black"></Setter>
-                                        <Setter Property="FontWeight" Value="Bold"></Setter>
-                                    </Trigger.Setters>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </TextBox.Template>
                 </TextBox>
 
-                <PasswordBox Grid.Column="1" Grid.Row="4" 
+                <Label Content="Password:" Grid.Row="4" Grid.Column="1" Margin="15,0,0,0"  
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"
+                       FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
+
+                <PasswordBox Grid.Column="1" Grid.Row="4" Margin="15,20,15,0" 
                              Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
                     <PasswordBox.Template>
                         <ControlTemplate TargetType="{x:Type PasswordBox}">
-                            <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10" ForceCursor="True" Margin="15,5,15,5">
-                                
+                            <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10" ForceCursor="True">
+                                <ScrollViewer Margin="5" x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
                     </PasswordBox.Template>
                 </PasswordBox>
-                
+
+                <Button x:Name="Log_In_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Left" Margin="5,0,0,0" 
+                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Log in">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Log_In_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}"></ContentPresenter>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="Log_In_buttonBorder" Property="Cursor" Value="Hand"/>
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="Log_In_buttonBorder" Property="Opacity" Value="0.75"></Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button x:Name="Sign_up_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Right" Margin="5,0,0,0" 
+                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Sign up">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Sign_up_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}"></ContentPresenter>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="Sign_up_buttonBorder" Property="Cursor" Value="Hand"/>
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="Sign_up_buttonBorder" Property="Opacity" Value="0.75"></Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
             </Grid>
         </Grid>
             
