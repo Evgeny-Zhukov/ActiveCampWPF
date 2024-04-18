@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000"
                             MinHeight="500" MinWidth="360">
-    <Grid x:Name="Back_of_window">
+    <Grid x:Name="Background_of_window">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="340"></ColumnDefinition>
@@ -18,9 +18,9 @@
         <!-- Window Background -->
         <Image x:Name="mainPicture" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="Resources/Images/reka_trava_derevia_153970_1920x1080.jpg">
-            <!--<Image.BitmapEffect>
-                <BlurBitmapEffect Radius="20" KernelType="Gaussian"></BlurBitmapEffect>
-            </Image.BitmapEffect>-->
+            <Image.BitmapEffect>
+                <BlurBitmapEffect Radius="0" KernelType="Gaussian"></BlurBitmapEffect>
+            </Image.BitmapEffect>
         </Image>
 
         <!-- BackgroundButton -->
@@ -236,7 +236,8 @@
                     </Image>
 
                     <!-- SelfPresenter Box -->
-                    <TextBox x:Name="FullNamePresentation" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3"
+                    <TextBox x:Name
+                             ="FullNamePresentation" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3"
                              Width="185" Height="80"
                              VerticalAlignment="Top" HorizontalAlignment="Left" Margin="120,15,0,0"
                              Background="{x:Null}" Foreground="#1b1a1c" 
@@ -285,6 +286,15 @@
             <!--#endregion-->
 
         </Grid>
+        
+        <!-- RichTextBox. thats box for news -->
+        <RichTextBox Grid.Column="1" Grid.Row="0" Margin="5">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
         <!--#region Settings Section -->
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
@@ -304,9 +314,9 @@
         <!--#endregion-->
 
         
-        <!--Registration plane. It`s exist on first Load-->
+        <!--#region Registration plane. It`s exist on first Load-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible">
+              IsEnabled="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>
@@ -327,7 +337,7 @@
             </Rectangle>
 
             <Grid x:Name="RegistrGrid" Grid.Column="1" Grid.Row="1">
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -429,6 +439,6 @@
 
             </Grid>
         </Grid>
-            
+        <!--#endregion-->
     </Grid>
 </Window>
