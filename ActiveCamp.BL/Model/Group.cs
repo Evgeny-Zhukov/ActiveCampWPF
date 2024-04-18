@@ -9,7 +9,8 @@ namespace ActiveCamp.BL.Model
     internal class Group
     {
         public int GroupId { get;}
-        public List<User> users { get;}
+        public int RouteId { get; set; }
+        public string InvitationLink { get; set; }
         public User GroupSupervisor { get;}
         // Добавить роли для участников
 

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Text;
+using ActiveCamp.BL;
+using ActiveCamp.BL.Controller;
+using ActiveCamp.BL.Model;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+
 
 namespace ActiveCampWPF
 {
@@ -18,9 +16,12 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UserController userController;
+        private User currentUser;   
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -102,5 +103,45 @@ namespace ActiveCampWPF
 
             }
         }
+
+        private void Login_textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Log_In_button_Click(object sender, RoutedEventArgs e)
+        {
+            string username = Login_textbox.Text;
+            string password = Person_Validate.ToString();
+            MessageBox.Show($"Error");
+            User user = new User(username, password);
+            if (userController.RegisterUser(user))
+            {
+                currentUser = new User { Username = username, Password = password };
+                MessageBox.Show($"{username}, {password}");
+            }
+            else
+            {
+                MessageBox.Show($"Error");
+            }
+        }
+
+        private void Sign_up_button_Click(object sender, RoutedEventArgs e, ActiveCampDbContext activeCampDbContext)
+        {
+            string username = Login_textbox.Text;
+            string password = Person_Validate.ToString();
+            User user = new User { Username = username, Password = password };
+
+            if (userController.RegisterUser(user))
+            {
+                currentUser = new User { Username = username, Password = password };
+                MessageBox.Show($"{username}, {password}");
+            }
+            else
+            {
+                MessageBox.Show($"Error");
+            }
+        }
+
     }
 }

@@ -355,7 +355,7 @@
                 <TextBox x:Name="Login_textbox" Grid.Row="2" Grid.Column="1" Margin="15,20,15,0" IsReadOnly="False" 
                          FontFamily="TimesNewRoman" FontSize="14" FontStyle="Italic" FontWeight="Bold" Foreground="Black" 
                          CaretBrush="Black" Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
-                           MouseEnter="Login_textbox_MouseEnter">
+                           MouseEnter="Login_textbox_MouseEnter" TextChanged="Login_textbox_TextChanged">
                     <TextBox.Template>
                         <ControlTemplate TargetType="{x:Type TextBox}">
                             <Border Background="{x:Null}" BorderBrush="Black" BorderThickness="1" CornerRadius="10"

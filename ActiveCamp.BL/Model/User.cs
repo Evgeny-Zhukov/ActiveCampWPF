@@ -16,7 +16,7 @@ namespace ActiveCamp.BL
         /// <summary>
         /// Псевдоним пользователя.
         /// </summary>
-        public string Username { get; }
+        public string Username { get; set; }
         /// <summary>
         /// Электронная почта пользователя.
         /// </summary>
@@ -24,7 +24,7 @@ namespace ActiveCamp.BL
         /// <summary>
         /// Пароль пользователя.
         /// </summary>
-        internal string Password { get; set; }
+        public string Password { get; set; }
         /// <summary>
         /// Имя пользователя.
         /// </summary>
@@ -36,16 +36,12 @@ namespace ActiveCamp.BL
         /// Создает пользователя.
         /// </summary>
         /// <param name="username"> Псевдоним</param>
-        /// <param name="email">Электронная почта</param>
         /// <param name="password">Пароль</param>
-        /// <param name="name">Имя</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public User(string username, string email, string password, string name)
+        public User(string username,string password)
         {
             Username = username ?? throw new ArgumentNullException("Псевдоним пользователя не может быть пустым или null.", nameof(username));
-            Email = email ?? throw new ArgumentNullException("Почта не может быть пустым или null.", nameof(email));
             Password = password ?? throw new ArgumentNullException("Password", nameof(password));
-            Name = name ?? throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
         }
         /// <summary>
         /// Создает пользователя.
@@ -62,7 +58,7 @@ namespace ActiveCamp.BL
         }
         public override string ToString()
         {
-            return Username + " " + Email + " " + Name;
+            return Username;
         }
     }
 }
