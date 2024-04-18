@@ -316,7 +316,7 @@
         
         <!--#region Registration plane. It`s exist on first Load-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="False" Visibility="Hidden">
+              IsEnabled="True" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>
@@ -328,11 +328,11 @@
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Rectangle Fill="Black" Opacity="0.99" RadiusX="20" RadiusY="20" 
+            <Rectangle Fill="Black" Opacity="0.99" RadiusX="10" RadiusY="10" 
                        Visibility ="{Binding Visibility, ElementName=Person_Validate}"  IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
                        Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
                 <Rectangle.Effect>
-                    <BlurEffect KernelType="Gaussian" Radius="30"></BlurEffect>
+                    <BlurEffect KernelType="Gaussian" Radius="20"></BlurEffect>
                 </Rectangle.Effect>
             </Rectangle>
 
@@ -380,7 +380,7 @@
                        HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"
                        FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
 
-                <PasswordBox Grid.Column="1" Grid.Row="4" Margin="15,20,15,0" 
+                <PasswordBox x:Name="PasswordBox_UserPassword" Grid.Column="1" Grid.Row="4" Margin="15,20,15,0" 
                              Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
                     <PasswordBox.Template>
                         <ControlTemplate TargetType="{x:Type PasswordBox}">
@@ -392,7 +392,7 @@
                 </PasswordBox>
 
                 <Button x:Name="Log_In_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Left" Margin="5,0,0,0" 
-                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Log in">
+                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Log in" Click="Log_In_button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Log_In_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
@@ -415,7 +415,7 @@
                 </Button>
 
                 <Button x:Name="Sign_up_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Right" Margin="5,0,0,0" 
-                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Sign up">
+                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Sign up" Click="Sign_up_button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Sign_up_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">

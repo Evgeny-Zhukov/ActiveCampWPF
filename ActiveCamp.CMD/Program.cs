@@ -11,7 +11,7 @@ namespace ActiveCamp.CMD
     {
         static void Main(string[] args)
         {
-            User user = new User("","","","");
+            User user = new User("","");
             Equipment equipment = new Equipment("",12);
 
         }

@@ -16,7 +16,7 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private UserController userController;
+  
         private User currentUser;   
         public MainWindow()
         {
@@ -88,11 +88,6 @@ namespace ActiveCampWPF
 
         }
 
-        private void NewsList_SelectionChanged()
-        {
-
-        }
-
         private void Login_textbox_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -112,9 +107,11 @@ namespace ActiveCampWPF
         private void Log_In_button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login_textbox.Text;
-            string password = Person_Validate.ToString();
+            string password = PasswordBox_UserPassword.Password;
             MessageBox.Show($"Error");
             User user = new User(username, password);
+            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController(connectionString);
             if (userController.RegisterUser(user))
             {
                 currentUser = new User { Username = username, Password = password };
@@ -126,11 +123,15 @@ namespace ActiveCampWPF
             }
         }
 
-        private void Sign_up_button_Click(object sender, RoutedEventArgs e, ActiveCampDbContext activeCampDbContext)
+        private void Sign_up_button_Click(object sender, RoutedEventArgs e)
         {
+            // ActiveCampDbContext activeCampDbContext;
+            
             string username = Login_textbox.Text;
-            string password = Person_Validate.ToString();
+            string password = PasswordBox_UserPassword.Password;
             User user = new User { Username = username, Password = password };
+            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController(connectionString);
 
             if (userController.RegisterUser(user))
             {
@@ -142,6 +143,5 @@ namespace ActiveCampWPF
                 MessageBox.Show($"Error");
             }
         }
-
     }
 }
