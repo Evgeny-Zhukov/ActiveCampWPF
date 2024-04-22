@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using ActiveCamp;
 
 
 
@@ -18,6 +19,7 @@ namespace ActiveCampWPF
     {
   
         private User currentUser;   
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -35,12 +37,14 @@ namespace ActiveCampWPF
 
         private void AccountButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderOfSection.Text = "Account";
             CloseMenu();
             //Treatment of account button.
         }
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderOfSection.Text = "News";
             CloseMenu();
             //Treatment of News button.
         }
@@ -51,12 +55,14 @@ namespace ActiveCampWPF
         }
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderOfSection.Text = "Equipment";
             CloseMenu();
             //Treatment of Equipment button.
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderOfSection.Text = "Setting";
             CloseMenu();
             //Treatment of Setting button.
         }
