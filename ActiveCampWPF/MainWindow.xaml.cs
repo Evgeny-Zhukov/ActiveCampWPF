@@ -149,5 +149,10 @@ namespace ActiveCampWPF
                 MessageBox.Show($"Error");
             }
         }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

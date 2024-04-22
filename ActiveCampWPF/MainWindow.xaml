@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ActiveCampWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000"
-                            MinHeight="500" MinWidth="360">
+                            MinHeight="500" MinWidth="360" Initialized="Window_Initialized">
     <Grid x:Name="Background_of_window">
 
         <Grid.ColumnDefinitions>
@@ -327,7 +327,7 @@
         <!--#endregion-->
 
         
-        <!--#region Registration plane. It`s exist on first Load-->
+        <!--#region Registration plane.-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
               IsEnabled="True" Visibility="Visible">
             <Grid.ColumnDefinitions>
