@@ -119,7 +119,7 @@
             </Button>
 
             <!-- Header Of Section -->
-            <TextBlock Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
+            <TextBlock x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
                        Text="News" FontWeight="Bold" FontSize="34" Foreground="AliceBlue" 
                        HorizontalAlignment="Center" VerticalAlignment="Center">
             </TextBlock>
@@ -127,7 +127,11 @@
             <!--#region News Section -->
             <ListBox x:Name="NewsList" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
                      Background="{x:Null}">
-
+                <ListBox.Template>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border Background="Pink"></Border>
+                    </ControlTemplate>
+                </ListBox.Template>
             </ListBox>
             <!--#endregion-->
 
@@ -289,6 +293,15 @@
         
         <!-- RichTextBox. thats box for news -->
         <RichTextBox Grid.Column="1" Grid.Row="0" Margin="5">
+            <RichTextBox.Template>
+                <ControlTemplate TargetType="{x:Type RichTextBox}">
+                    <Border Background="{x:Null}" BorderThickness="2" BorderBrush="Black" CornerRadius="20">
+                        <ContentPresenter  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </RichTextBox.Template>
             <FlowDocument>
                 <Paragraph>
                     <Run Text=""/>
@@ -316,7 +329,7 @@
         
         <!--#region Registration plane. It`s exist on first Load-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible">
+              IsEnabled="False" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>
