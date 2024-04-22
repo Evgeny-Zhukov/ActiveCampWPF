@@ -114,7 +114,7 @@ namespace ActiveCampWPF
             UserController userController = new UserController(connectionString);
             if (userController.RegisterUser(user))
             {
-                currentUser = new User { Username = username, Password = password };
+                //currentUser = new User { Username = username, Password = password };
                 MessageBox.Show($"{username}, {password}");
             }
             else
@@ -135,7 +135,7 @@ namespace ActiveCampWPF
 
             if (userController.RegisterUser(user))
             {
-                currentUser = new User { Username = username, Password = password };
+                //currentUser = new User { Username = username, Password = password };
                 MessageBox.Show($"{username}, {password}");
             }
             else
