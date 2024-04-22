@@ -14,7 +14,7 @@ namespace ActiveCamp.BL.Controller
     /// </summary>
     public class UserController
     {
-        private readonly string connectionString;
+        private readonly string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
         public UserController(string connectionString)
         {
