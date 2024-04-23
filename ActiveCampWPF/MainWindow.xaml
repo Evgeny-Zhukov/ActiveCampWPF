@@ -329,7 +329,7 @@
         
         <!--#region Registration plane. It`s exist on first Load-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="False" Visibility="Hidden">
+              IsEnabled="True" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>

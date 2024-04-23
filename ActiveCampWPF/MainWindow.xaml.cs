@@ -114,11 +114,9 @@ namespace ActiveCampWPF
         {
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
-            MessageBox.Show($"Error");
-            User user = new User(username, password);
-            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
             UserController userController = new UserController(connectionString);
-            if (userController.RegisterUser(user))
+            if (userController.ValidateCredentials(username, password))
             {
                 //currentUser = new User { Username = username, Password = password };
                 MessageBox.Show($"{username}, {password}");
@@ -136,7 +134,7 @@ namespace ActiveCampWPF
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
             User user = new User { Username = username, Password = password };
-            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
             UserController userController = new UserController(connectionString);
 
             if (userController.RegisterUser(user))
