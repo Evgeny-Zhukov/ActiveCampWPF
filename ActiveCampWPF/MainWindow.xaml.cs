@@ -101,7 +101,6 @@ namespace ActiveCampWPF
             if (tb != null)
             { 
 
-
             }
         }
 
@@ -114,12 +113,18 @@ namespace ActiveCampWPF
         {
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
-            string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
-            UserController userController = new UserController(connectionString);
-            if (userController.ValidateCredentials(username, password))
+            
+            User user = new User(username, password);
+            //string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController();
+            
+            if (userController.ValidateCredentials(user))
             {
                 //currentUser = new User { Username = username, Password = password };
-                MessageBox.Show($"{username}, {password}");
+                //MessageBox.Show($"{username}, {password}");
+                Background_of_window.IsEnabled = true;
+                Person_Validate.IsEnabled = false;
+                Person_Validate.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -134,18 +139,24 @@ namespace ActiveCampWPF
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
             User user = new User { Username = username, Password = password };
-            string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
+            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
             UserController userController = new UserController(connectionString);
 
-            if (userController.RegisterUser(user))
-            {
-                //currentUser = new User { Username = username, Password = password };
-                MessageBox.Show($"{username}, {password}");
-            }
-            else
-            {
-                MessageBox.Show($"Error");
-            }
+            //if (userController.RegisterUser(user))
+            //{
+            //    //currentUser = new User { Username = username, Password = password };
+            //    MessageBox.Show($"{username}, {password}");
+            //}
+            //else
+            //{
+            //    MessageBox.Show($"Error");
+            //}
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            Person_Validate.IsEnabled = true;
+            Person_Validate.Visibility = Visibility.Visible;
         }
     }
 }

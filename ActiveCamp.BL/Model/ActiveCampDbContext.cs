@@ -18,6 +18,7 @@ namespace ActiveCamp.BL.Model
         {
             this.connectionString = connectionString;
         }
+
         public static SqlConnection GetSqlConnection()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"].ConnectionString; // TODO: Сделать явное преобразование (string)

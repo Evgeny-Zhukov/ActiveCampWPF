@@ -14,14 +14,14 @@ namespace ActiveCamp.BL.Controller
     /// </summary>
     public class UserController
     {
-        private readonly string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        private static readonly string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
-        public UserController(string connectionString)
+        public UserController()
         {
-            this.connectionString = connectionString;
+            
         }
 
-        public bool ValidateCredentials(string username, string password)
+        public bool ValidateCredentials(User user)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -29,8 +29,8 @@ namespace ActiveCamp.BL.Controller
                 string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Password", password);
+                    command.Parameters.AddWithValue("@Username", user.Username);
+                    command.Parameters.AddWithValue("@Password", user.Password);
                     int count = (int)command.ExecuteScalar();
                     return count > 0;
                 }

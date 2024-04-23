@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ActiveCampWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000"
-                            MinHeight="500" MinWidth="360">
-    <Grid x:Name="Background_of_window">
+                            MinHeight="500" MinWidth="360" Initialized="Window_Initialized">
+    <Grid x:Name="Background_of_window" IsEnabled="False">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="340"></ColumnDefinition>
@@ -46,7 +46,8 @@
             </Grid.RowDefinitions>
 
             <!-- Menu Button -->
-            <Button Width="50" Height="50" x:Name="MenuButton" Click="MenuButton_Click">
+            <Button Width="50" Height="50" x:Name="MenuButton" Click="MenuButton_Click" 
+                    IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                 <Button.Template>
                     <ControlTemplate TargetType="{x:Type Button}" x:Name="MenuButtonTemplate">
                         <Border x:Name="MenuButtonBorder"
@@ -121,12 +122,13 @@
             <!-- Header Of Section -->
             <TextBlock x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
                        Text="News" FontWeight="Bold" FontSize="34" Foreground="AliceBlue" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center">
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
             </TextBlock>
 
             <!--#region News Section -->
             <ListBox x:Name="NewsList" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
-                     Background="{x:Null}">
+                     Background="{x:Null}" IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                 <ListBox.Template>
                     <ControlTemplate TargetType="{x:Type ListBox}">
                         <Border Background="Pink"></Border>
@@ -292,7 +294,7 @@
         </Grid>
         
         <!-- RichTextBox. thats box for news -->
-        <RichTextBox Grid.Column="1" Grid.Row="0" Margin="5">
+        <RichTextBox Grid.Column="1" Grid.Row="0" Margin="5" IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
             <RichTextBox.Template>
                 <ControlTemplate TargetType="{x:Type RichTextBox}">
                     <Border Background="{x:Null}" BorderThickness="2" BorderBrush="Black" CornerRadius="20">
@@ -327,7 +329,7 @@
         <!--#endregion-->
 
         
-        <!--#region Registration plane. It`s exist on first Load-->
+        <!--#region Registration plane.-->
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
               IsEnabled="True" Visibility="Visible">
             <Grid.ColumnDefinitions>
