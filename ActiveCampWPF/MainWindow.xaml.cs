@@ -101,7 +101,6 @@ namespace ActiveCampWPF
             if (tb != null)
             { 
 
-
             }
         }
 
@@ -114,14 +113,18 @@ namespace ActiveCampWPF
         {
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
-            MessageBox.Show($"Error");
+            
             User user = new User(username, password);
-            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
-            UserController userController = new UserController(connectionString);
-            if (userController.RegisterUser(user))
+            //string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController();
+            
+            if (userController.ValidateCredentials(user))
             {
                 //currentUser = new User { Username = username, Password = password };
-                MessageBox.Show($"{username}, {password}");
+                //MessageBox.Show($"{username}, {password}");
+                Background_of_window.IsEnabled = true;
+                Person_Validate.IsEnabled = false;
+                Person_Validate.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -131,28 +134,29 @@ namespace ActiveCampWPF
 
         private void Sign_up_button_Click(object sender, RoutedEventArgs e)
         {
-            // ActiveCampDbContext activeCampDbContext;
-            
-            string username = Login_textbox.Text;
-            string password = PasswordBox_UserPassword.Password;
-            User user = new User { Username = username, Password = password };
-            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
-            UserController userController = new UserController(connectionString);
+            //ActiveCampDbContext activeCampDbContext;
 
-            if (userController.RegisterUser(user))
-            {
-                //currentUser = new User { Username = username, Password = password };
-                MessageBox.Show($"{username}, {password}");
-            }
-            else
-            {
-                MessageBox.Show($"Error");
-            }
+            //string username = Login_textbox.Text;
+            //string password = PasswordBox_UserPassword.Password;
+            //User user = new User { Username = username, Password = password };
+            //string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
+            //UserController userController = new UserController();
+
+            //if (userController.RegisterUser(user))
+            //{
+            //    //currentUser = new User { Username = username, Password = password };
+            //    MessageBox.Show($"{username}, {password}");
+            //}
+            //else
+            //{
+            //    MessageBox.Show($"Error");
+            //}
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            
+            Person_Validate.IsEnabled = true;
+            Person_Validate.Visibility = Visibility.Visible;
         }
     }
 }
