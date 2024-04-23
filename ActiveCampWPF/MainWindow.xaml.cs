@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using ActiveCamp;
+using System.ComponentModel;
 
 
 
@@ -18,12 +19,11 @@ namespace ActiveCampWPF
     public partial class MainWindow : Window
     {
   
-        private User currentUser;   
+        //private User currentUser;   
         
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -155,8 +155,25 @@ namespace ActiveCampWPF
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            Person_Validate.IsEnabled = true;
-            Person_Validate.Visibility = Visibility.Visible;
+            Window gd = sender as Window;
+            if (gd != null)
+            {
+                Person_Validate.IsEnabled = true;
+                Person_Validate.Visibility = Visibility.Visible;
+                Person_Validate.Focusable = true;
+            }
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Window gd = sender as Window;
+            if (gd != null)
+            {
+                Person_Validate.IsEnabled = true;
+                Person_Validate.Visibility = Visibility.Visible;
+                Person_Validate.Focusable = true;
+            }
         }
     }
 }
