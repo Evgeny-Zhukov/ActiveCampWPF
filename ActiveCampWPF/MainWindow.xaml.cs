@@ -139,8 +139,8 @@ namespace ActiveCampWPF
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
             User user = new User { Username = username, Password = password };
-            string connectionString = ""; // Как я понимаю сюда нужно вставить адрес базы данных;
-            UserController userController = new UserController(connectionString);
+            //string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController();
 
             //if (userController.RegisterUser(user))
             //{
