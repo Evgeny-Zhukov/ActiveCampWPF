@@ -15,8 +15,8 @@ namespace ActiveCamp.CMD
     {
         static void Main(string[] args)
         {
-            string name = Console.ReadLine();
-            double weight = double.Parse(Console.ReadLine());
+            //string name = Console.ReadLine();
+            //double weight = double.Parse(Console.ReadLine());
             /*ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext(connectionString);
                     string username = Console.ReadLine();
                     string password = Console.ReadLine();
@@ -31,7 +31,9 @@ namespace ActiveCamp.CMD
                         Console.WriteLine("Error");
                     }*/
             string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
-
+            ActiveCampDbContext db = new ActiveCampDbContext();
+            Route route = new Route("Name1",2,4.5,"A1",1);
+            db.AddRoute(route);
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -74,7 +76,7 @@ namespace ActiveCamp.CMD
                     Console.WriteLine("Ошибка: " + ex.Message);
                 }
             }*/
-            Console.WriteLine("Введите ID снаряжения для удаления");
+            /*Console.WriteLine("Введите ID снаряжения для удаления");
             int id = int.Parse(Console.ReadLine());
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -93,7 +95,7 @@ namespace ActiveCamp.CMD
                 {
                     Console.WriteLine("Ошибка: " + ex.Message);
                 }
-            }
+            }*/
             //Пример работы скалярной функции
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {

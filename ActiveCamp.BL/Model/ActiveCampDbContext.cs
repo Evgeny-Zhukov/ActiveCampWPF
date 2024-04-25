@@ -42,7 +42,6 @@ namespace ActiveCamp.BL.Model
 
             }
         }
-
         public bool RegisterUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -52,16 +51,13 @@ namespace ActiveCamp.BL.Model
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue ("Password", user.Password);
-                try
-                {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    return true;
-                }
-                catch 
-                {
-                    return false;
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
+                int count = (int)command.ExecuteScalar();
+                bool isValid = count > 0;
+                return isValid;
+                
+                
             }
         }
         public void GetUser(int Id)
@@ -86,6 +82,25 @@ namespace ActiveCamp.BL.Model
                         }
                     }
                 }
+            }
+        }
+        public bool AddRoute(Route route)//  TODO: Почему-то создает 2 записи в БД
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand("AddRoute", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@routeName", route.RouteName);
+                command.Parameters.AddWithValue("@DurationInDays", route.Duration);
+                command.Parameters.AddWithValue("@LengthInKm", route.Length);
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
+                connection.Open();
+                command.ExecuteNonQuery();
+                int count = (int)command.ExecuteScalar();
+                bool isValid = count > 0;
+                return true;
             }
         }
     }
