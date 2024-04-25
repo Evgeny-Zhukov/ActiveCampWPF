@@ -119,13 +119,15 @@ namespace ActiveCampWPF
             
             if (activeCampDbContext.ValidateCredentials(user.Username, user.Password))
             {
+                //currentUser = new User { Username = username, Password = password };
+                //MessageBox.Show($"{username}, {password}");
                 Background_of_window.IsEnabled = true;
                 Person_Validate.IsEnabled = false;
                 Person_Validate.Visibility = Visibility.Hidden;
             }
             else
             {
-                MessageBox.Show($"Error");
+                MessageBox.Show($"Incorrect password or login, please, try again.");
             }
         }
 
@@ -136,15 +138,18 @@ namespace ActiveCampWPF
             string username = Login_textbox.Text;
             string password = PasswordBox_UserPassword.Password;
             User user = new User { Username = username, Password = password };
-            ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            if(activeCampDbContext.RegisterUser(user))
-            {
-                MessageBox.Show($"{username}, {password}");
-            }
-            else
-            {
-                MessageBox.Show($"Error");
-            }
+            //string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True"; // Как я понимаю сюда нужно вставить адрес базы данных;
+            UserController userController = new UserController();
+
+            //if (userController.RegisterUser(user))
+            //{
+            //    //currentUser = new User { Username = username, Password = password };
+            //    MessageBox.Show($"{username}, {password}");
+            //}
+            //else
+            //{
+            //    MessageBox.Show($"Error");
+            //}
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -161,13 +166,7 @@ namespace ActiveCampWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Window gd = sender as Window;
-            if (gd != null)
-            {
-                Person_Validate.IsEnabled = true;
-                Person_Validate.Visibility = Visibility.Visible;
-                Person_Validate.Focusable = true;
-            }
+
         }
     }
 }
