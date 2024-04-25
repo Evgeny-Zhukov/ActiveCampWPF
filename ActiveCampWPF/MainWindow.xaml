@@ -12,7 +12,7 @@
         Loaded="Window_Loaded">
     <Grid x:Name="Background_of_window">
 
-        <Grid x:Name="Main_controls" IsEnabled="False">
+        <Grid x:Name="Main_controls" IsEnabled="True"> <!-- now is "true" for aproove, default "false" -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="340"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -21,27 +21,16 @@
 
             <!-- Window Background -->
             <Image x:Name="mainPicture" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="Resources/Images/reka_trava_derevia_153970_1920x1080.jpg">
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="Resources/Images/reka_trava_derevia_153970_1920x1080.jpg">
                 <Image.BitmapEffect>
                     <BlurBitmapEffect Radius="0" KernelType="Gaussian"></BlurBitmapEffect>
                 </Image.BitmapEffect>
             </Image>
 
-            <!-- BackgroundButton -->
-            <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-        Visibility="Hidden" Focusable="False"
-        Click="MenuBackgroundButton_Click"
-        x:Name="MenuBackground">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border BorderThickness="0" Background="Black" Opacity="0.75"></Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Grid Grid.Row="0" Grid.Column="0" x:Name="MainPlace">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="MainPlace">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -49,20 +38,112 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
+                <!--#region News Section -->
+                <Grid x:Name="News_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                      IsEnabled="True" Visibility="Visible">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- News List -->
+                    <ListBox x:Name="NewsList" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5"
+                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
+                        <ListBox.Background>
+                            <!--<SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>-->
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Image Source="{Binding Source, ElementName=AvavtarImage}" Opacity="0.55">
+                                        <Image.Effect>
+                                            <BlurEffect Radius="20" KernelType="Gaussian"></BlurEffect>
+                                        </Image.Effect>
+                                    </Image>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </ListBox.Background>
+                        <ListBox.Template>
+                            <ControlTemplate TargetType="{x:Type ListBox}">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="5" CornerRadius="10">
+                                    <ScrollViewer Margin="0" Focusable="false">
+                                        <ItemsControl>
+                                            <StackPanel Margin="2" IsItemsHost="True" />
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        <ListBox.Items>
+                            <ListBoxItem Background="{x:Null}" Width="290" VerticalAlignment="Stretch" Selected="ListBoxItem_Selected">
+                                <TextBox Text="Guten Abend" Width="280" Height="40"></TextBox>
+                            </ListBoxItem>
+                        </ListBox.Items>
+                    </ListBox>
+
+                    <!-- News description-->
+                    <RichTextBox Grid.Column="2" Grid.Row="0" Margin="5" Grid.RowSpan="2"
+                    FontSize="14" FontWeight="Bold"
+                    IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
+                        <RichTextBox.Background>
+                            <SolidColorBrush Color="Azure" Opacity="0.85"></SolidColorBrush>
+                        </RichTextBox.Background>
+                        <RichTextBox.Template>
+                            <ControlTemplate TargetType="{x:Type RichTextBox}">
+                                <Border Background="{TemplateBinding Background}" BorderThickness="0,5,0,5" BorderBrush="Black" CornerRadius="20">
+                                    <ScrollViewer Margin="10" x:Name="PART_ContentHost"/>
+                                </Border>
+                            </ControlTemplate>
+                        </RichTextBox.Template>
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="check the vision"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Settings Section -->
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Width="300" Height="480" 
+                Background="#000080"
+                Visibility="Hidden" Focusable="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <!--#endregion-->
+
+                <!-- BackgroundButton -->
+                <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"
+                    Visibility="Hidden" Focusable="False"
+                    Click="MenuBackgroundButton_Click"
+                    x:Name="MenuBackground">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border BorderThickness="0" Background="Black" Opacity="0.75"></Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
                 <!-- Menu Button -->
                 <Button Width="50" Height="50" x:Name="MenuButton" Click="MenuButton_Click" 
-            IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
+                        IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}" x:Name="MenuButtonTemplate">
                             <Border x:Name="MenuButtonBorder"
-                    CornerRadius="25"
-                    BorderBrush = "AliceBlue"
-                    BorderThickness = "0"
-                    Background = "#0000">
-                                <Grid Width="30" Height="30" 
-                          VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" 
-                                  Margin="0,1,0,1">
+                                    CornerRadius="25"
+                                    BorderBrush = "AliceBlue"
+                                    BorderThickness = "0"
+                                    Background = "#0000">
+                                <Grid Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" Margin="0,1,0,1">
                                         <Path.Data>
                                             <PathGeometry>
                                                 <PathFigure IsClosed="False" StartPoint="3,4">
@@ -130,22 +211,11 @@
                IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                 </TextBlock>
 
-                <!--#region News Section -->
-                <ListBox x:Name="NewsList" Grid.Column="1" Grid.Row="1" Margin="0,0,0,5"
-             Background="{x:Null}" IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
-                    <ListBox.Template>
-                        <ControlTemplate TargetType="{x:Type ListBox}">
-                            <Border Background="Pink"></Border>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                </ListBox>
-                <!--#endregion-->
-
                 <!--#region Menu -->
                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" 
-           Width="0" HorizontalAlignment="Left"
-           Background="#1b1a1c" Opacity="1" Visibility="Hidden" Focusable="False"
-           x:Name="MenuPanel">
+                        Width="0" HorizontalAlignment="Left"
+                        Background="#1b1a1c" Opacity="1" Visibility="Hidden" Focusable="False"
+                        x:Name="MenuPanel">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="140"></RowDefinition>
                         <RowDefinition Height="70"></RowDefinition>
@@ -296,41 +366,6 @@
                 <!--#endregion-->
 
             </Grid>
-
-            <!-- RichTextBox. thats box for news -->
-            <RichTextBox Grid.Column="1" Grid.Row="0" Margin="5" IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
-                <RichTextBox.Template>
-                    <ControlTemplate TargetType="{x:Type RichTextBox}">
-                        <Border Background="{x:Null}" BorderThickness="2" BorderBrush="Black" CornerRadius="20">
-                            <ContentPresenter  HorizontalAlignment="Stretch" VerticalAlignment="Top">
-
-                            </ContentPresenter>
-                        </Border>
-                    </ControlTemplate>
-                </RichTextBox.Template>
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text=""/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-
-            <!--#region Settings Section -->
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                VerticalAlignment="Center" HorizontalAlignment="Center"
-                Width="300" Height="480" 
-                Background="#000080"
-                Visibility="Hidden" Focusable="False">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="30"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-            </Grid>
-            <!--#endregion-->
         </Grid>
         
         <!--#region Registration plane.-->
@@ -469,7 +504,6 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
             </Grid>
         </Grid>
         <!--#endregion-->

@@ -50,6 +50,7 @@ namespace ActiveCampWPF
         }
         private void HikingButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderOfSection.Text = "Hiking";
             CloseMenu();
             //Treatment of Hiking button.
         }
@@ -147,17 +148,27 @@ namespace ActiveCampWPF
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            Window gd = sender as Window;
-            if (gd != null)
-            {
-                Person_Validate.IsEnabled = true;
-                Person_Validate.Visibility = Visibility.Visible;
-                Person_Validate.Focusable = true;
-            }
+            //Window gd = sender as Window;
+            //if (gd != null)
+            //{
+            //    Person_Validate.IsEnabled = true;
+            //    Person_Validate.Visibility = Visibility.Visible;
+            //    Person_Validate.Focusable = true;
+            //}
 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
 
         }
