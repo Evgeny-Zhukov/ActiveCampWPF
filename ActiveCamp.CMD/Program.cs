@@ -15,6 +15,8 @@ namespace ActiveCamp.CMD
     {
         static void Main(string[] args)
         {
+            string name = Console.ReadLine();
+            double weight = double.Parse(Console.ReadLine());
             /*ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext(connectionString);
                     string username = Console.ReadLine();
                     string password = Console.ReadLine();
@@ -30,7 +32,7 @@ namespace ActiveCamp.CMD
                     }*/
             string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -51,6 +53,45 @@ namespace ActiveCamp.CMD
                             Console.WriteLine($"ID: {id}, Username: {username}, Password: {password}");
                         }
                     }
+                }
+            }*/
+            /*using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddEquipment", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@equipmentName", name);
+                command.Parameters.AddWithValue("@equipmentWeight", weight); 
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Хранимая процедура успешно выполнена.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Ошибка: " + ex.Message);
+                }
+            }*/
+            Console.WriteLine("Введите ID снаряжения для удаления");
+            int id = int.Parse(Console.ReadLine());
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleteEquipmentByID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@equipmentID", id);
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Хранимая процедура успешно выполнена.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Ошибка: " + ex.Message);
                 }
             }
             //Пример работы скалярной функции

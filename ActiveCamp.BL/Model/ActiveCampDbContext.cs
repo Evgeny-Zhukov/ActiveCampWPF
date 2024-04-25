@@ -14,9 +14,8 @@ namespace ActiveCamp.BL.Model
     {
         private readonly string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
-        public ActiveCampDbContext(string connectionString)
+        public ActiveCampDbContext()
         {
-            this.connectionString = connectionString;
         }
 
         public static SqlConnection GetSqlConnection()
@@ -31,14 +30,16 @@ namespace ActiveCamp.BL.Model
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password", connection);
+                using (command)
                 {
                     command.Parameters.AddWithValue("@Username", username);
                     command.Parameters.AddWithValue("@Password", password);
                     int count = (int)command.ExecuteScalar();
-                    return count > 0;
+                    bool isValid = count > 0;
+                    return isValid;
                 }
+
             }
         }
 
@@ -46,15 +47,20 @@ namespace ActiveCamp.BL.Model
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "INSERT INTO Users (Username, Password) " +
-                               "VALUES (@Username, @Password)";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                
+                SqlCommand command = new SqlCommand("CreateUser", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@username", user.Username);
+                command.Parameters.AddWithValue ("Password", user.Password);
+                try
                 {
-                    command.Parameters.AddWithValue("@Username", user.Username);
-                    command.Parameters.AddWithValue("@Password", user.Password);
-                    int rowsAffected = command.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch 
+                {
+                    return false;
                 }
             }
         }
@@ -68,7 +74,7 @@ namespace ActiveCamp.BL.Model
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.Add("@UserId", SqlDbType.Int).Value = Id; // тут 1 это по какому id ищем
+                    command.Parameters.Add("@UserId", SqlDbType.Int).Value = Id;
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
