@@ -100,7 +100,21 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
                 int count = (int)command.ExecuteScalar();
                 bool isValid = count > 0;
-                return true;
+                return isValid;
+            }
+        }
+        public bool DeleteRoute(int  routeId) 
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateRouteById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@RouteID", routeId);
+                connection.Open();
+                command.ExecuteNonQuery();
+                int count = (int)command.ExecuteScalar();
+                bool isValid = count > 0;
+                return isValid;
             }
         }
     }

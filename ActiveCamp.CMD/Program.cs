@@ -32,8 +32,8 @@ namespace ActiveCamp.CMD
                     }*/
             string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
             ActiveCampDbContext db = new ActiveCampDbContext();
-            Route route = new Route("Name1",2,4.5,"A1",1);
-            db.AddRoute(route);
+            //Route route = new Route("Name1",2,4.5,"A1",1);
+            db.DeleteRoute(1);
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
