@@ -35,27 +35,38 @@ namespace ActiveCampWPF
             MenuPanel.Focusable = true;
         }
 
-        private void AccountButton_Click(object sender, RoutedEventArgs e)
-        {
-            HeaderOfSection.Text = "Account";
-            CloseMenu();
-            //Treatment of account button.
-        }
+        //private void AccountButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    HeaderOfSection.Text = "Account";
+        //    CloseMenu();
+        //    //Treatment of account button.
+        //}
 
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
+            DisableAllControlOfsections();
+
+            News_Section.Visibility = Visibility.Visible;
+            News_Section.IsEnabled = true;
+            
             HeaderOfSection.Text = "News";
             CloseMenu();
             //Treatment of News button.
         }
         private void HikingButton_Click(object sender, RoutedEventArgs e)
         {
+            DisableAllControlOfsections();
+
+            Hikking_Section.Visibility = Visibility.Visible;
+            Hikking_Section.IsEnabled = true;
+
             HeaderOfSection.Text = "Hiking";
             CloseMenu();
             //Treatment of Hiking button.
         }
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
+            DisableAllControlOfsections();
             HeaderOfSection.Text = "Equipment";
             CloseMenu();
             //Treatment of Equipment button.
@@ -63,6 +74,7 @@ namespace ActiveCampWPF
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
+            DisableAllControlOfsections();
             HeaderOfSection.Text = "Setting";
             CloseMenu();
             //Treatment of Setting button.
@@ -171,6 +183,49 @@ namespace ActiveCampWPF
         private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DisableAllControlOfsections()
+        {
+            News_Section.Visibility = Visibility.Hidden;
+            News_Section.IsEnabled = false;
+
+            Hikking_Section .Visibility = Visibility.Hidden;
+            Hikking_Section.IsEnabled = false;
+        }
+
+        private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
+        {
+            BorderOfCancelAproovingform.Visibility = Visibility.Visible;
+            BorderOfCancelAproovingform.IsEnabled = true;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
+            BorderOfCancelAproovingform.IsEnabled = false;
+
+            NewHikkingFormBorder.Visibility = Visibility.Hidden;
+            NewHikkingFormBorder.IsEnabled = false;
+
+            LittleDiscription.Text = "";
+            PointFrom.Text = "";
+            PointTo.Text = "";
+            DateTo.Text = "Choose a date";
+            DateFrom.Text = "Choose a date";
+            LevelOfHiking.Text = "";
+        }
+
+        private void ContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
+            BorderOfCancelAproovingform.IsEnabled = false;
+        }
+
+        private void AddNewHikking_Click(object sender, RoutedEventArgs e)
+        {
+            NewHikkingFormBorder.Visibility = Visibility.Visible;
+            NewHikkingFormBorder.IsEnabled = true;
         }
     }
 }
