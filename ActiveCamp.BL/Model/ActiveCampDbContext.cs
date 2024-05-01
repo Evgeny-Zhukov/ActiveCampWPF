@@ -91,6 +91,26 @@ namespace ActiveCamp.BL.Model
 
                 SqlCommand command = new SqlCommand("AddRoute", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@StartData", route.startDate);
+                command.Parameters.AddWithValue("@EndData", route.endDate);
+                command.Parameters.AddWithValue("@Description", route.Description);
+                command.Parameters.AddWithValue("@StartPoint", route.startPoint);
+                command.Parameters.AddWithValue("@EndPoint", route.endPoint);
+                connection.Open();
+                command.ExecuteNonQuery();
+                int count = (int)command.ExecuteScalar();
+                bool isValid = count > 0;
+                return isValid;
+            }
+        }
+        public bool UpdateRoute(Route route)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand("UpdateRoute", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@routeName", route.RouteName);
                 command.Parameters.AddWithValue("@DurationInDays", route.Duration);
                 command.Parameters.AddWithValue("@LengthInKm", route.Length);
