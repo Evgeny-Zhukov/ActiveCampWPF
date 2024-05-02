@@ -57,8 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\BaseController.cs" />
-    <Compile Include="Controller\DBController.cs" />
     <Compile Include="Controller\DishController.cs" />
     <Compile Include="Controller\EquipmentController.cs" />
     <Compile Include="Controller\UserController.cs" />

@@ -20,57 +20,5 @@ namespace ActiveCamp.BL.Controller
         {
             
         }
-
-        public bool ValidateCredentials(User user)
-        {
-            int count = 0;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Username", user.Username);
-                        command.Parameters.AddWithValue("@Password", user.Password);
-                        count = (int)command.ExecuteScalar();
-                        //return count > 0;
-                    }
-                }
-            }
-            catch(Exception ex)
-            { 
-                ex.ToString();
-            }
-            return count > 0;
-
-        }
-
-        public bool RegisterUser(User user)
-        {
-            int rowsAffected = 0;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "INSERT INTO Users (Username, Password) " +
-                                   "VALUES (@Username, @Password)";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Username", user.Username);
-                        command.Parameters.AddWithValue("@Password", user.Password);
-                        rowsAffected = command.ExecuteNonQuery();
-                        //return rowsAffected > 0;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                ex.ToString();
-            }
-            return rowsAffected > 0;
-        }
     }
 }

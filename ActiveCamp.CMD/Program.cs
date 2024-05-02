@@ -32,8 +32,16 @@ namespace ActiveCamp.CMD
                     }*/
             string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
             ActiveCampDbContext db = new ActiveCampDbContext();
-            //Route route = new Route("Name1",2,4.5,"A1",1);
-            db.DeleteRoute(1);
+            DateTime sd = new DateTime(2024, 4, 2);
+            DateTime ed = DateTime.Now;
+            Console.WriteLine("Введите описание:");
+            string description = Console.ReadLine();
+            Console.WriteLine("Введите начальную точку:");
+            string sp = Console.ReadLine();
+            Console.WriteLine("Введите конечную точку:");
+            string ep = Console.ReadLine();
+            Route route = new Route(sd, ed, description, sp, ep, "А1");
+            db.AddRoute(route);
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();

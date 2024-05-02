@@ -98,13 +98,12 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@StartPoint", route.startPoint);
                 command.Parameters.AddWithValue("@EndPoint", route.endPoint);
                 connection.Open();
-                command.ExecuteNonQuery();
                 int count = (int)command.ExecuteScalar();
                 bool isValid = count > 0;
                 return isValid;
             }
         }
-        public bool UpdateRoute(Route route)
+        public bool UpdateRoute(Route route) 
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -117,7 +116,6 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
                 connection.Open();
-                command.ExecuteNonQuery();
                 int count = (int)command.ExecuteScalar();
                 bool isValid = count > 0;
                 return isValid;
