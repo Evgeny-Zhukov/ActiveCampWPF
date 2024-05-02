@@ -20,7 +20,11 @@ namespace ActiveCamp.BL.Model
         public string Difficulty { get; set; }
         public int AuthorId { get; set; }
 
-        public Route() { }
+        public Route() 
+        { 
+        
+        }
+
         public Route(DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, string difficulty)
         {
             this.startDate = startDate;
@@ -30,6 +34,7 @@ namespace ActiveCamp.BL.Model
             this.endPoint = endPoint;
             Difficulty = difficulty;
         }
+
         public Route(string routeName, int duration, double length, string difficulty, int authorId)
         {
             RouteName = routeName;
