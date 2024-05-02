@@ -49,15 +49,6 @@
                          IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
                         <ListBox.Background>
                             <SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>
-                            <!--<VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Image Source="{Binding Source, ElementName=AvavtarImage}" Opacity="0.55">
-                                        <Image.Effect>
-                                            <BlurEffect Radius="20" KernelType="Gaussian"></BlurEffect>
-                                        </Image.Effect>
-                                    </Image>
-                                </VisualBrush.Visual>
-                            </VisualBrush>-->
                         </ListBox.Background>
                         <ListBox.Template>
                             <ControlTemplate TargetType="{x:Type ListBox}">
