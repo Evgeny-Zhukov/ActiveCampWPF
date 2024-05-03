@@ -35,13 +35,14 @@ namespace ActiveCamp.CMD
             DateTime sd = new DateTime(2024, 4, 2);
             DateTime ed = DateTime.Now;
             Console.WriteLine("Введите описание:");
-            string description = Console.ReadLine();
+            string description = "Тут описание";
             Console.WriteLine("Введите начальную точку:");
-            string sp = Console.ReadLine();
+            string sp = "Старт";
             Console.WriteLine("Введите конечную точку:");
-            string ep = Console.ReadLine();
+            string ep = "Финиш";
             Route route = new Route(sd, ed, description, sp, ep, "А1");
             db.AddRoute(route);
+            Console.WriteLine("sdf");
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();

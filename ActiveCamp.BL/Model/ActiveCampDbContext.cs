@@ -84,6 +84,49 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+        public Route GetRouteById(int id)
+        {
+            Route route = new Route();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM HikingRoutes WHERE RouteId = @Id";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        route.RouteId = Convert.ToInt32(reader["RouteId"]);
+                        route.RouteName = reader["RouteName"].ToString();
+                        route.Description = reader["Description"].ToString();
+                        route.StartDate = Convert.ToDateTime(reader["StartDate"]);
+                        route.EndDate = Convert.ToDateTime(reader["EndDate"]);
+                        route.StartPoint = reader["StartPoint"].ToString();
+                        route.EndPoint = reader["EndPoint"].ToString();
+                        //route.Duration = Convert.ToInt32(reader["DurationInDays"].);
+                        //route.Length = Convert.ToDouble(reader["LengthInKm"]);
+                        route.Difficulty = reader["Difficulty"].ToString();
+                        //route.AuthorId = Convert.ToInt32(reader["AuthorId"]);
+                        Console.WriteLine($"RouteID { route.RouteId} RouteName {route.RouteName} Description {route.Description} StartDate {route.StartDate} EndDate {route.EndDate} StartPoint {route.StartPoint} EndPoint {route.EndPoint} Difficulty {route.Difficulty}");
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+
+            return route;
+        }
         public bool AddRoute(Route route)//  TODO: Почему-то создает 2 записи в БД
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -92,11 +135,11 @@ namespace ActiveCamp.BL.Model
                 SqlCommand command = new SqlCommand("AddRoute", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
-                command.Parameters.AddWithValue("@StartData", route.startDate);
-                command.Parameters.AddWithValue("@EndData", route.endDate);
+                command.Parameters.AddWithValue("@StartData", route.StartDate);
+                command.Parameters.AddWithValue("@EndData", route.EndDate);
                 command.Parameters.AddWithValue("@Description", route.Description);
-                command.Parameters.AddWithValue("@StartPoint", route.startPoint);
-                command.Parameters.AddWithValue("@EndPoint", route.endPoint);
+                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
+                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
                 connection.Open();
                 int count = (int)command.ExecuteScalar();
                 bool isValid = count > 0;
