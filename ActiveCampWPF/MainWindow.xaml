@@ -49,15 +49,6 @@
                          IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
                         <ListBox.Background>
                             <SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>
-                            <!--<VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Image Source="{Binding Source, ElementName=AvavtarImage}" Opacity="0.55">
-                                        <Image.Effect>
-                                            <BlurEffect Radius="20" KernelType="Gaussian"></BlurEffect>
-                                        </Image.Effect>
-                                    </Image>
-                                </VisualBrush.Visual>
-                            </VisualBrush>-->
                         </ListBox.Background>
                         <ListBox.Template>
                             <ControlTemplate TargetType="{x:Type ListBox}">
@@ -138,20 +129,25 @@
                                     <Border.Background>
                                         <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
                                     </Border.Background>
-                                    <Grid Width="35" Height="35" 
-                                          HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Path Stroke="Black" StrokeThickness="4">
-                                            <Path.Data>
-                                                <PathGeometry>
-                                                    <PathFigure StartPoint="18,3" IsClosed="False">
-                                                        <LineSegment Point="18,33"></LineSegment>
-                                                    </PathFigure>
-                                                    <PathFigure StartPoint="3,17">
-                                                        <LineSegment Point="33,17"></LineSegment>
-                                                    </PathFigure>
-                                                </PathGeometry>
-                                            </Path.Data>
-                                        </Path>
+                                    <Grid>
+                                        <Grid Width="35" Height="35" Margin="0,0,25,0"
+                                          HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Path Stroke="Black" StrokeThickness="4">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="18,7" IsClosed="False">
+                                                            <LineSegment Point="18,29"></LineSegment>
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="7,17">
+                                                            <LineSegment Point="29,17"></LineSegment>
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Grid>
+                                        <Label Content="Добавить запись" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               FontFamily="TimesNewRoman" FontSize="22" FontWeight="Bold" 
+                                               Width="200"></Label>
                                     </Grid>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -197,7 +193,7 @@
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
-                            Visibility="Hidden" IsEnabled="False">
+                            Visibility="Visible" IsEnabled="True">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
@@ -211,7 +207,7 @@
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <Label Content="Creating a request for a trip" 
+                                <Label Content="Создание заявки на проведение тур-похода" 
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        FontSize="24" FontWeight="ExtraBold" FontFamily="TimesnewFamily"></Label>
 
@@ -262,20 +258,23 @@
                                         <RowDefinition Height="250"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
+                                        <RowDefinition Height="80"></RowDefinition>
+                                        <RowDefinition Height="80"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
 
                                     <!-- Date of hiking begining -->
-                                    <Label Grid.Row="0" Content="Plaese,enter the start and end date of your trip:" 
+                                    <Label Grid.Row="0" Content="Пожалуйста, введите даты начала и окончания плвнируемого похода:" 
                                        FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                        Height="30" VerticalAlignment="Top"></Label>
-                                    <Label Grid.Row="0" Content="From:" 
+                                    <Label Grid.Row="0" Content="С:" 
                                         VerticalContentAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="0,25,0,0" Height="25" Width="45" 
+                                        Margin="20,25,0,0" Height="25" Width="25" 
                                         FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
                                     <DatePicker x:Name="DateFrom" Grid.Row="0" Margin="50,40,0,0"
                                         Width="200" Height="25"
                                         VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
-                                    <Label Grid.Row="0" Content="to:" 
+                                    <Label Grid.Row="0" Content="По:" 
                                        VerticalContentAlignment="Top" HorizontalAlignment="Left" 
                                        Margin="260,25,0,0" Height="25" Width="30" 
                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
@@ -284,7 +283,7 @@
                                         VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
 
                                     <!-- Discription of your next trip -->
-                                    <Label Grid.Row="1" Content="Plaese,enter some description of the upcoming trip:" 
+                                    <Label Grid.Row="1" Content="Пожалуйста, введите приветсвенное описание вашего мероприятия:" 
                                         FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                         Height="30" VerticalAlignment="Top"></Label>
                                     <TextBox x:Name="LittleDiscription" Grid.Row="1" Margin="0,35,0,0" 
@@ -293,29 +292,49 @@
                                     </TextBox>
 
                                     <!-- Points of your trip -->
-                                    <Label Grid.Row="2" Content="Please, enter the details from where you will start your hike and where you will end it:" 
+                                    <Label Grid.Row="2" Content="Пожалуйста, опишите маршрут вашего похода для потенциальных участников:" 
                                         FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                         Height="30" VerticalAlignment="Top"></Label>
-                                    <Label Grid.Row="2" Content="Enter start point:" 
+                                    <TextBlock Grid.Row="2" Text="Точка старта маршрута:" TextWrapping="Wrap"
                                         VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="0,35,0,0" Height="25" Width="180" 
-                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
+                                        Margin="0,35,0,0" Height="35" Width="150" 
+                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></TextBlock>
                                     <TextBox x:Name="PointFrom" Grid.Row="2" 
-                                             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="112,35,0,0"
+                                             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,35,0,0"
                                              Width="300" Height="30"></TextBox>
-                                    <Label Grid.Row="2" Content="Enter end point:" 
+                                    <TextBlock Grid.Row="2" Text="Точка окончания маршрута:" TextWrapping="Wrap"
                                         VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="430,35,0,0" Height="25" Width="180" 
-                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
+                                        Margin="420,35,0,0" Height="35" Width="180" 
+                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></TextBlock>
                                     <TextBox x:Name="PointTo" Grid.Row="2" 
                                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="540,35,0,0"
                                         Width="300" Height="30"></TextBox>
 
+                                    <!-- Discription of the location -->
+                                    <Label Grid.Row="3" Content="Пожалуйста, опишити характер местности маршрута:"
+                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                           Height="30" VerticalAlignment="Top"></Label>
+                                    <ComboBox Name="LocationMark" Grid.Row="3" Height="30" Width="300" 
+                                              HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
+                                        <TextBlock Text="Лесная"></TextBlock>
+                                        <TextBlock Text="Горная"></TextBlock>
+                                        <TextBlock Text="Равнинная"></TextBlock>
+                                        <TextBlock Text="Водная"></TextBlock>
+                                        <TextBlock Text="Смешанная"></TextBlock>
+                                    </ComboBox>
+
+                                    <!-- Count of members -->
+                                    <Label Grid.Row="4" Content="Введите ориентировочное количество участников группы:"
+                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                           Height="30" VerticalAlignment="Top"></Label>
+                                    <TextBox Grid.Row="4" Height="30" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"></TextBox>
+
                                     <!-- Level of hiking -->
-                                    <Label Grid.Row="3" Content="Plaese,enter Level of the upcoming trip:" 
+                                    <Label Grid.Row="5" Content="Пожалуйста, укажите уровень сложности планируемого похода:" 
                                                 FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                                 Height="30" VerticalAlignment="Top"></Label>
-                                    <ComboBox Name="LevelOfHiking" Grid.Row="3" Height="30" Width="300" 
+                                    <ComboBox Name="LevelOfHiking" Grid.Row="5" Height="30" Width="300" 
                                               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
                                         <TextBlock Text="Very Hard"></TextBlock>
                                         <TextBlock Text="Hard"></TextBlock>
@@ -323,6 +342,35 @@
                                         <TextBlock Text="Easy"></TextBlock>
                                         <TextBlock Text="Very Easy"></TextBlock>
                                     </ComboBox>
+                                    
+                                    <!-- Save and accept button -->
+                                    <Button x:Name="SaveAndContinue" Grid.Row="6" Content="Сохранить и отправить" 
+                                            FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                            Width="300" Height="40"
+                                            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,15,15">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="SaveAndContinueButtonBorder" Background="AliceBlue" BorderBrush="Black" BorderThickness="1" CornerRadius="20"
+                                                        Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Trigger.Setters>
+                                                            <Setter TargetName="SaveAndContinueButtonBorder" Property="BorderBrush" Value="Gray"></Setter>
+                                                            <Setter TargetName="SaveAndContinueButtonBorder" Property="Cursor" Value="Hand"/>
+                                                        </Trigger.Setters>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Trigger.Setters>
+                                                            <Setter TargetName="SaveAndContinueButtonBorder" Property="Opacity" Value="0.75"></Setter>
+                                                            <Setter TargetName="SaveAndContinueButtonBorder" Property="Opacity" Value="0.75"/>
+                                                        </Trigger.Setters>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button> 
                                 </Grid>
                             </Grid>
                         </ScrollViewer>
@@ -355,8 +403,8 @@
 
                             <Button x:Name="ContinueButton" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
                                     HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Margin="2" Content="Continue"
-                                    Width="70" Height="20" Click="ContinueButton_Click">
+                                    Margin="2" Content="Продолжить"
+                                    Width="100" Height="20" Click="ContinueButton_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="ButtonYesBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
@@ -385,7 +433,7 @@
                             </Button>
 
                             <Button x:Name="CancelButton" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
-                                    Margin="2" Content="Cancel" Width="70" Height="20" 
+                                    Margin="2" Content="Отменить" Width="100" Height="20" 
                                     HorizontalAlignment="Right" VerticalAlignment="Center"
                                     Click="CancelButton_Click">
                                 <Button.Template>
@@ -416,9 +464,9 @@
                             </Button>
 
                             <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,15,0,0"
-                                       Height="70" Width="170" Text="Are you sure you want to go through the filling process?"
+                                       Height="120" Width="170" Text="Желаете прервать процесс создания заявки? Введенные данные будут утрачены"
                                        TextWrapping="Wrap"
-                                       VerticalAlignment="Top" HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" HorizontalAlignment="Stretch"
                                        FontSize="14" FontWeight="Bold"></TextBlock>
                         </Grid>
                     </Border>
@@ -529,7 +577,7 @@
 
                 <!-- Header Of Section -->
                 <TextBlock x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
-               Text="News" FontWeight="Bold" FontSize="34" Foreground="AliceBlue" 
+               Text="Походы" FontWeight="Bold" FontSize="34" Foreground="AliceBlue" 
                HorizontalAlignment="Center" VerticalAlignment="Center"
                IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                 </TextBlock>
@@ -675,14 +723,14 @@
                      Fill="Green" Stroke="{x:Null}" StrokeThickness="0"></Ellipse>
                     </Grid>
 
-                    <Button Grid.Column="0" Grid.Row="1" Content="News" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
+                    <Button Grid.Column="0" Grid.Row="1" Content="Новости" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                 Click="NewsButton_Click"></Button>
-                    <Button Grid.Column="0" Grid.Row="2" Content="Hiking" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
+                    <Button Grid.Column="0" Grid.Row="2" Content="Походы" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                 Click="HikingButton_Click"></Button>
                     <!-- Под вопросом, нужно уточнить - нужна ли какая-нибудь квалификация для работы экспидитором -->
-                    <Button Grid.Column="0" Grid.Row="3" Content="Equipment" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
+                    <Button Grid.Column="0" Grid.Row="3" Content="Подготовка к походу" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                 Click="EquipmentButton_Click"></Button>
-                    <Button Grid.Column="0" Grid.Row="4" Content="Setting" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
+                    <Button Grid.Column="0" Grid.Row="4" Content="Настройки" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                 Click="SettingButton_Click"></Button>
                 </Grid>
                 <!--#endregion-->

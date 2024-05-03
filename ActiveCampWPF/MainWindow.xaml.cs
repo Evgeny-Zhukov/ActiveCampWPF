@@ -49,7 +49,7 @@ namespace ActiveCampWPF
             News_Section.Visibility = Visibility.Visible;
             News_Section.IsEnabled = true;
             
-            HeaderOfSection.Text = "News";
+            HeaderOfSection.Text = "Новости";
             CloseMenu();
             //Treatment of News button.
         }
@@ -60,14 +60,14 @@ namespace ActiveCampWPF
             Hikking_Section.Visibility = Visibility.Visible;
             Hikking_Section.IsEnabled = true;
 
-            HeaderOfSection.Text = "Hiking";
+            HeaderOfSection.Text = "Походы";
             CloseMenu();
             //Treatment of Hiking button.
         }
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
-            HeaderOfSection.Text = "Equipment";
+            HeaderOfSection.Text = "Подготовка к походу";
             CloseMenu();
             //Treatment of Equipment button.
         }
@@ -75,7 +75,7 @@ namespace ActiveCampWPF
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
-            HeaderOfSection.Text = "Setting";
+            HeaderOfSection.Text = "Настройки";
             CloseMenu();
             //Treatment of Setting button.
         }
