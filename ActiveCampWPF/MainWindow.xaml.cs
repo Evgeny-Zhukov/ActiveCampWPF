@@ -227,5 +227,12 @@ namespace ActiveCampWPF
             NewHikkingFormBorder.Visibility = Visibility.Visible;
             NewHikkingFormBorder.IsEnabled = true;
         }
+
+        private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
+        {
+            ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
+            Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text);
+            activeCampDbContext.AddRoute(NewRoute);
+        }
     }
 }
