@@ -12,10 +12,9 @@
         Loaded="Window_Loaded">
     <Grid x:Name="Background_of_window">
 
-        <Grid x:Name="Main_controls" IsEnabled="True">
-            <!-- now is "true" for aproove, default "false" -->
+        <Grid x:Name="Main_controls" IsEnabled="True">  <!-- now is "true" for aproove, default "false" -->
 
-            <!-- Window Background -->
+            <!-- Window of background -->
             <Image x:Name="mainPicture" Grid.Row="0" Grid.Column="0" 
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Source="Resources/Images/reka_trava_derevia_153970_1920x1080.jpg">
                 <Image.BitmapEffect>
@@ -36,6 +35,7 @@
                 </Grid.RowDefinitions>
 
                 <!--#region News Section -->
+                
                 <Grid x:Name="News_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                       IsEnabled="False" Visibility="Hidden">
 
@@ -61,11 +61,11 @@
                                 </Border>
                             </ControlTemplate>
                         </ListBox.Template>
-                        <!--<ListBox.Items>
-                            <ListBoxItem Background="{x:Null}" Width="290" VerticalAlignment="Stretch" Selected="ListBoxItem_Selected">
-                                <TextBox Text="Guten Abend" Width="280" Height="40"></TextBox>
+                        <ListBox.Items>
+                            <ListBoxItem Background="{x:Null}" Width="290" VerticalAlignment="Center" HorizontalAlignment="Center" Selected="ListBoxItem_Selected">
+                                <local:NewHikkingListItem Width="280" Height="60"></local:NewHikkingListItem>
                             </ListBoxItem>
-                        </ListBox.Items>-->
+                        </ListBox.Items>
                     </ListBox>
 
                     <!-- News description-->
@@ -89,11 +89,13 @@
                         </FlowDocument>
                     </RichTextBox>
                 </Grid>
+                
                 <!--#endregion-->
 
-                <!-- #region Hikking -->
+                <!-- #region Hikking Section-->
+                
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -111,7 +113,7 @@
                                 <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="10,0,0,0">
                                     <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
                                         <ItemsControl>
-                                            <StackPanel Margin="2" IsItemsHost="True" />
+                                            <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
                                         </ItemsControl>
                                     </ScrollViewer>
                                 </Border>
@@ -193,7 +195,7 @@
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
-                            Visibility="Visible" IsEnabled="True">
+                            Visibility="Hidden" IsEnabled="False">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
@@ -215,7 +217,9 @@
                                         Margin="0,5,5,0" Width="35" Height="35" Click="BackFromCreatingWindow_Click">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border x:Name="BackFromCreatingWindowBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="20"
+                                            <Border x:Name="BackFromCreatingWindowBorder" 
+                                                    Background="Transparent"
+                                                    BorderBrush="Black" BorderThickness="1" CornerRadius="20"
                                                     Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                                                 <Grid x:Name="FieldOfButton">
                                                     <Path x:Name="ArrowIcon" Stroke="Black" StrokeThickness="3">
@@ -238,7 +242,7 @@
                                                     <Trigger.Setters>
                                                         <Setter TargetName="BackFromCreatingWindowBorder" Property="BorderBrush" Value="Gray"></Setter>
                                                         <Setter TargetName="ArrowIcon" Property="Stroke" Value="Gray"></Setter>
-                                                        <Setter TargetName="FieldOfButton" Property="Cursor" Value="Hand"/>
+                                                        <Setter TargetName="BackFromCreatingWindowBorder" Property="Cursor" Value="Hand"/>
                                                     </Trigger.Setters>
                                                 </Trigger>
                                                 <Trigger Property="IsPressed" Value="true">
@@ -472,9 +476,132 @@
                         </Grid>
                     </Border>
                 </Grid>
+                
                 <!--#endregion-->
+                
+                <!--#region Prepering for Hikking Section-->
+                
+                <!-- Workplaces -->
+                <Grid x:Name="Foodplace" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                      IsEnabled="True" Visibility="Visible">
+                    <Border x:Name="BackgroundOfWorkplace" Margin="0,0,5,5" CornerRadius="10">
+                        <Border.Background>
+                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
+                        </Border.Background>
+                        <Grid Margin="10">
+                            
+                        </Grid>
+                    </Border>
+                </Grid>
 
+                <!-- Instrumental grid -->
+                <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <Style x:Key="StyleOfInstrument_ToggleButton">
+                            <Setter Property="ToggleButton.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ToggleButton.FontSize" Value="14"></Setter>
+                            <Setter Property="ToggleButton.FontStyle" Value="Normal"></Setter>
+                            <Setter Property="ToggleButton.FontWeight" Value="Bold"></Setter>
+                            <Setter Property="ToggleButton.FontFamily" Value="TimesNewRoman"></Setter>
+                            <Setter Property="ToggleButton.VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="ToggleButton.HorizontalAlignment" Value="Center"></Setter>
+                            <Setter Property="ToggleButton.Margin" Value="2"></Setter>
+                            <Setter Property="ToggleButton.Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="BorderOfInstrument_ToggleButton" 
+                                                CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}">
+                                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="BorderBrush" Value="Gray"></Setter>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.75"/>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Cursor" Value="Hand"/>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.75"></Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background" Value="AliceBlue"></Setter>
+                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.55"></Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Grid.Resources>
+
+                    <ToggleButton x:Name="Food_ToggleButton" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}">
+                        <ToggleButton.Content>
+                            <Grid Width="50" Height="50">
+                                <!--<Path Grid.Column="0" Grid.Row="0" 
+                                      Stroke="Black" StrokeThickness="1" Fill="Transparent"                                      
+                                      StrokeLineJoin="Round" StrokeEndLineCap="Round" StrokeDashCap="Round" >
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathFigure StartPoint="5,5" IsClosed="True" IsFilled="True">
+                                                
+                                            </PathFigure>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                </Path>-->
+                                <Grid Margin="1,0,0,0">
+                                    <Rectangle Width="2" Height="25" Margin="2,0,0,5" Fill="Black" 
+                                               RadiusY="5" RadiusX="5"
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Left"></Rectangle>
+                                    <Ellipse Height="12" Width="6" Margin="0,12,0,0" Fill="Black"  
+                                             VerticalAlignment="Top" HorizontalAlignment="Left"></Ellipse>
+                                </Grid>
+
+                                <Grid Margin="0,0,1,0">
+                                    <Rectangle Width="2" Height="25" Margin="0,0,2,5" Fill="Black" 
+                                               RadiusY="5" RadiusX="5"
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Right"></Rectangle>
+                                    <Ellipse Height="20" Width="4" Margin="0,10,1,0" Fill="Black"  
+                                             VerticalAlignment="Top" HorizontalAlignment="Right"></Ellipse>
+                                </Grid>
+
+                                <Grid>
+                                    <Ellipse Stroke="Black" StrokeThickness="2" Width="35" Height="35"></Ellipse>
+                                    <Ellipse Stroke="Black" StrokeThickness="1" Width="30" Height="30"></Ellipse>
+                                </Grid>
+                            </Grid>
+                        </ToggleButton.Content>
+                    </ToggleButton>
+                    
+                </Grid>
+
+                <!--#endregion-->
+                
                 <!--#region Settings Section -->
+                
                 <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
                 Width="300" Height="480" 
@@ -491,8 +618,10 @@
                 </Grid>
 
                 <!--#endregion-->
-
-                <!-- BackgroundButton -->
+                
+                <!--#region Main Controls-->
+                
+                <!-- Background Plane_Button -->
                 <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"
                     Visibility="Hidden" Focusable="False"
                     Click="MenuBackgroundButton_Click"
@@ -565,7 +694,7 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="MenuPanel" 
+                                        <DoubleAnimation Storyboard.TargetName="MainMenuPanel" 
                                                      Storyboard.TargetProperty="(Grid.Width)"
                                                      Duration="0:0:0:0.28"
                                                      From="0" To="320"/>
@@ -577,17 +706,22 @@
                 </Button>
 
                 <!-- Header Of Section -->
-                <TextBlock x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
-               Text="Походы" FontWeight="Bold" FontSize="34" Foreground="AliceBlue" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"
-               IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
-                </TextBlock>
-
+                <TextBox x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
+                         Text="Походы" FontWeight="Bold" FontSize="34" TextWrapping="Wrap" TextAlignment="Center"
+                         Foreground="AliceBlue" Background="{x:Null}" BorderThickness="0"  
+                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" Focusable="False">
+                </TextBox>
+                
+                <!--#endregion-->
+                
                 <!--#region Menu -->
+                
                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" 
                         Width="0" HorizontalAlignment="Left"
                         Background="#1b1a1c" Opacity="1" Visibility="Hidden" Focusable="False"
-                        x:Name="MenuPanel">
+                        x:Name="MainMenuPanel">
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="140"></RowDefinition>
                         <RowDefinition Height="70"></RowDefinition>
@@ -596,6 +730,7 @@
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
+                    
                     <Grid.Resources>
                         <Style x:Key="MenuListButtonStyle">
                             <Setter Property="Control.Background" Value="#0000"></Setter>
@@ -661,8 +796,8 @@
 
                         <!-- Avatar Photo -->
                         <Image Grid.Row="0" Grid.Column="0" x:Name="AvavtarImage" Grid.ColumnSpan="4" Grid.RowSpan="3"
-                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5,0,0"
-                                Height="100" Width="100" >
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,5,0,0"
+                               Height="100" Width="100" >
                             <Image.Source>
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
@@ -692,8 +827,8 @@
                                     Width="185" Height="80"
                                     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="120,15,0,0"
                                     Background="{x:Null}" Foreground="#1b1a1c" 
-                                    FontSize="18" FontFamily="Sans serif" FontWeight="Bold"
-                                    Text="Abdullova Gulnaz">
+                                    FontSize="18" FontFamily="TimesNewRoman" FontWeight="Bold"
+                                    Text="Абдуллова Гульназ">
                             <TextBox.Template>
                                 <ControlTemplate TargetType="TextBox">
                                     <Border BorderThickness="0">
@@ -704,7 +839,7 @@
                             </TextBox.Template>
                         </TextBox>
 
-                        <!-- Status -->
+                        <!-- Status presenter-->
                         <TextBox x:Name="ClientStatus" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"
                             FontSize="14" FontFamily="Sans serif" FontWeight="Bold"
                             Text="Online" TextChanged="ClientStatus_TextChanged">
@@ -718,28 +853,30 @@
                                 </ControlTemplate>
                             </TextBox.Template>
                         </TextBox>
+                        
                         <!-- Status Indicate -->
                         <Ellipse x:Name="Indicator" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"
-                     Width="10" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0"
-                     Fill="Green" Stroke="{x:Null}" StrokeThickness="0"></Ellipse>
+                                 Width="10" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0"
+                                 Fill="Green" Stroke="{x:Null}" StrokeThickness="0"/>
                     </Grid>
 
                     <Button Grid.Column="0" Grid.Row="1" Content="Новости" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
-                Click="NewsButton_Click"></Button>
-                    <Button Grid.Column="0" Grid.Row="2" Content="Походы" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
-                Click="HikingButton_Click"></Button>
-                    <!-- Под вопросом, нужно уточнить - нужна ли какая-нибудь квалификация для работы экспидитором -->
+                            Click="NewsButton_Click"></Button>
+                    <Button Grid.Column="0" Grid.Row="2" Content="Актуальные походы" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
+                            Click="HikingButton_Click"></Button>
                     <Button Grid.Column="0" Grid.Row="3" Content="Подготовка к походу" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
-                Click="EquipmentButton_Click"></Button>
+                            Click="EquipmentButton_Click"></Button>
                     <Button Grid.Column="0" Grid.Row="4" Content="Настройки" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
-                Click="SettingButton_Click"></Button>
+                            Click="SettingButton_Click"></Button>
                 </Grid>
+                
                 <!--#endregion-->
-
+            
             </Grid>
         </Grid>
 
-        <!--#region Registration plane.-->
+        <!--#region Registration plane-->
+        
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
               IsEnabled="False" Visibility="Hidden" Focusable="False">
             <Grid.ColumnDefinitions>
@@ -877,6 +1014,8 @@
                 </Button>
             </Grid>
         </Grid>
+        
         <!--#endregion-->
+    
     </Grid>
 </Window>

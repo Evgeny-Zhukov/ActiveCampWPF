@@ -31,8 +31,8 @@ namespace ActiveCampWPF
             MenuBackground.Visibility = Visibility.Visible;
             MenuBackground.Focusable = true;
 
-            MenuPanel.Visibility = Visibility.Visible;
-            MenuPanel.Focusable = true;
+            MainMenuPanel.Visibility = Visibility.Visible;
+            MainMenuPanel.Focusable = true;
         }
 
         //private void AccountButton_Click(object sender, RoutedEventArgs e)
@@ -67,7 +67,7 @@ namespace ActiveCampWPF
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
-            HeaderOfSection.Text = "Подготовка к походу";
+            HeaderOfSection.Text = "Подготовка";
             CloseMenu();
             //Treatment of Equipment button.
         }
@@ -97,9 +97,9 @@ namespace ActiveCampWPF
                 To = 0,
                 Duration = new Duration(TimeSpan.Parse("0:0:0.5"))
             };
-            MenuPanel.BeginAnimation(Grid.WidthProperty, MenuCloseAnimation);
-            MenuPanel.Focusable = false;
-            MenuPanel.Visibility = Visibility.Hidden;
+            MainMenuPanel.BeginAnimation(Grid.WidthProperty, MenuCloseAnimation);
+            MainMenuPanel.Focusable = false;
+            MainMenuPanel.Visibility = Visibility.Hidden;
         }
 
         private void ClientStatus_TextChanged(object sender, TextChangedEventArgs e)
