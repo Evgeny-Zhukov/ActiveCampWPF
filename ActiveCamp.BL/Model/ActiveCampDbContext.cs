@@ -49,15 +49,16 @@ namespace ActiveCamp.BL.Model
                 
                 SqlCommand command = new SqlCommand("CreateUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue ("Password", user.Password);
                 connection.Open();
                 command.ExecuteNonQuery();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
-                
-                
+                bool success = (bool)successParameter.Value;
+                return success;
+
             }
         }
         public void GetUser(int Id)
@@ -82,6 +83,29 @@ namespace ActiveCamp.BL.Model
                         }
                     }
                 }
+            }
+        }
+        
+        public bool AddRoute(Route route)//  TODO: Почему-то создает 2 записи в БД
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand("AddRoute", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@StartData", route.StartDate);
+                command.Parameters.AddWithValue("@EndData", route.EndDate);
+                command.Parameters.AddWithValue("@Description", route.Description);
+                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
+                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
         public Route GetRouteById(int id)
@@ -114,9 +138,7 @@ namespace ActiveCamp.BL.Model
                         //route.Length = Convert.ToDouble(reader["LengthInKm"]);
                         route.Difficulty = reader["Difficulty"].ToString();
                         //route.AuthorId = Convert.ToInt32(reader["AuthorId"]);
-                        Console.WriteLine($"RouteID { route.RouteId} RouteName {route.RouteName} Description {route.Description} StartDate {route.StartDate} EndDate {route.EndDate} StartPoint {route.StartPoint} EndPoint {route.EndPoint} Difficulty {route.Difficulty}");
                     }
-
                     reader.Close();
                 }
                 catch (Exception ex)
@@ -124,27 +146,7 @@ namespace ActiveCamp.BL.Model
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-
             return route;
-        }
-        public bool AddRoute(Route route)//  TODO: Почему-то создает 2 записи в БД
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-
-                SqlCommand command = new SqlCommand("AddRoute", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
-                command.Parameters.AddWithValue("@StartData", route.StartDate);
-                command.Parameters.AddWithValue("@EndData", route.EndDate);
-                command.Parameters.AddWithValue("@Description", route.Description);
-                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
-                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
-                connection.Open();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
-            }
         }
         public bool UpdateRoute(Route route) 
         {
@@ -153,15 +155,18 @@ namespace ActiveCamp.BL.Model
 
                 SqlCommand command = new SqlCommand("UpdateRoute", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@routeName", route.RouteName);
                 command.Parameters.AddWithValue("@DurationInDays", route.Duration);
                 command.Parameters.AddWithValue("@LengthInKm", route.Length);
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
                 connection.Open();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
         public bool DeleteRoute(int  routeId) 
@@ -171,11 +176,13 @@ namespace ActiveCamp.BL.Model
                 SqlCommand command = new SqlCommand("DeleateRouteById", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@RouteID", routeId);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 connection.Open();
                 command.ExecuteNonQuery();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
     }

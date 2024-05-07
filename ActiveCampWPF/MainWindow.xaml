@@ -95,7 +95,7 @@
                 <!-- #region Hikking Section-->
                 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden">
+                      IsEnabled="True" Visibility="Visible">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -483,7 +483,7 @@
                 
                 <!-- Workplaces -->
                 <Grid x:Name="Foodplace" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
                     <Border x:Name="BackgroundOfWorkplace" Margin="0,0,5,5" CornerRadius="10">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
