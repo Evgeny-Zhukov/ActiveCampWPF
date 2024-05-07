@@ -95,7 +95,7 @@
                 <!-- #region Hikking Section-->
                 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -480,19 +480,23 @@
                 <!--#endregion-->
                 
                 <!--#region Prepering for Hikking Section-->
-                
-                <!-- Workplaces -->
-                <Grid x:Name="Foodplace" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden">
-                    <Border x:Name="BackgroundOfWorkplace" Margin="0,0,5,5" CornerRadius="10">
-                        <Border.Background>
-                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-                        <Grid Margin="10">
+                <Grid x:Name="PreperingForHiking" 
+                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                      Visibility="Visible" IsEnabled="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Workplaces -->
+                    <TabControl Grid.Column="1">
+                        <TabItem Header="tab 1">
                             
-                        </Grid>
-                    </Border>
-                </Grid>
+                        </TabItem>
+                        <TabItem Header="tab 2">
+
+                        </TabItem>
+                    </TabControl>
 
                     <!-- Instrumental grid -->
                     <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
@@ -607,11 +611,10 @@
                                     <Grid Width="50" Height="50"></Grid>
                                 </Grid>
                             </ToggleButton.Content>
-
                         </ToggleButton>
-
                     </Grid>
                 </Grid>
+                <!--</Grid>-->
                 
 
                 <!--#endregion-->
@@ -896,6 +899,7 @@
         
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
               IsEnabled="False" Visibility="Hidden" Focusable="False">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>
@@ -1032,7 +1036,7 @@
             </Grid>
         </Grid>
         
-        <!--#endregion-->
+            <!--#endregion-->
     
     </Grid>
 </Window>
