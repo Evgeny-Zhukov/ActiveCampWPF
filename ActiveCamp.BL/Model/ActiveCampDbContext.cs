@@ -49,15 +49,16 @@ namespace ActiveCamp.BL.Model
                 
                 SqlCommand command = new SqlCommand("CreateUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue ("Password", user.Password);
                 connection.Open();
                 command.ExecuteNonQuery();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
-                
-                
+                bool success = (bool)successParameter.Value;
+                return success;
+
             }
         }
         public void GetUser(int Id)
@@ -134,6 +135,9 @@ namespace ActiveCamp.BL.Model
 
                 SqlCommand command = new SqlCommand("AddRoute", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@StartData", route.StartDate);
                 command.Parameters.AddWithValue("@EndData", route.EndDate);
@@ -141,9 +145,9 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
                 command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
                 connection.Open();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
         public bool UpdateRoute(Route route) 
@@ -153,15 +157,18 @@ namespace ActiveCamp.BL.Model
 
                 SqlCommand command = new SqlCommand("UpdateRoute", connection);
                 command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@routeName", route.RouteName);
                 command.Parameters.AddWithValue("@DurationInDays", route.Duration);
                 command.Parameters.AddWithValue("@LengthInKm", route.Length);
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
                 connection.Open();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
         public bool DeleteRoute(int  routeId) 
@@ -171,11 +178,13 @@ namespace ActiveCamp.BL.Model
                 SqlCommand command = new SqlCommand("DeleateRouteById", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@RouteID", routeId);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 connection.Open();
                 command.ExecuteNonQuery();
-                int count = (int)command.ExecuteScalar();
-                bool isValid = count > 0;
-                return isValid;
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
     }
