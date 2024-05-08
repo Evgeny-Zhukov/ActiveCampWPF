@@ -500,7 +500,7 @@
                                                 <SolidColorBrush Color="AliceBlue" Opacity="0.75"></SolidColorBrush>
                                             </Border.Background>
                                             <ContentPresenter 
-                                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                                Width="130" Height="25"
                                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                                 Content ="{TemplateBinding Header}"/>
                                         </Border>
@@ -616,13 +616,21 @@
                     </Grid.Resources>
 
                     <!-- Workplaces -->
-                    <TabControl Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabCintrol}">
+                    <TabControl Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabCintrol}" Margin="5">
                         <TabItem Header="tab 1" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                  VerticalAlignment="Center" HorizontalAlignment="Center">
 
                         </TabItem>
-                        <TabItem Header="tab 2" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
+                        <TabItem Header="tab 2" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <DataGrid AutoGenerateColumns="True" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+
+                        <TabItem Header="tab 3" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                  VerticalAlignment="Center" HorizontalAlignment="Center">
 
