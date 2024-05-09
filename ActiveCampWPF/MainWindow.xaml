@@ -12,7 +12,8 @@
         Loaded="Window_Loaded">
     <Grid x:Name="Background_of_window">
 
-        <Grid x:Name="Main_controls" IsEnabled="True">  <!-- now is "true" for aproove, default "false" -->
+        <Grid x:Name="Main_controls" IsEnabled="True">
+            <!-- now is "true" for aproove, default "false" -->
 
             <!-- Window of background -->
             <Image x:Name="mainPicture" Grid.Row="0" Grid.Column="0" 
@@ -35,7 +36,7 @@
                 </Grid.RowDefinitions>
 
                 <!--#region News Section -->
-                
+
                 <Grid x:Name="News_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                       IsEnabled="False" Visibility="Hidden">
 
@@ -89,11 +90,11 @@
                         </FlowDocument>
                     </RichTextBox>
                 </Grid>
-                
+
                 <!--#endregion-->
 
                 <!-- #region Hikking Section-->
-                
+
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                       IsEnabled="True" Visibility="Visible">
 
@@ -189,8 +190,8 @@
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>
-                    
-                    
+
+
                     <!-- form of new trip request -->
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
@@ -346,7 +347,7 @@
                                         <TextBlock Text="Easy"></TextBlock>
                                         <TextBlock Text="Very Easy"></TextBlock>
                                     </ComboBox>
-                                    
+
                                     <!-- Save and accept button -->
                                     <Button x:Name="SaveAndContinue" Grid.Row="6" Content="Сохранить и отправить" 
                                             FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
@@ -375,13 +376,13 @@
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Button.Template>
-                                    </Button> 
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </ScrollViewer>
                     </Border>
-                    
-                    
+
+
                     <!-- Question window -->
                     <Rectangle Grid.Column="0" Grid.ColumnSpan="2"
                                Fill="Black" Opacity="0.75" 
@@ -476,80 +477,136 @@
                         </Grid>
                     </Border>
                 </Grid>
-                
-                <!--#endregion-->
-                
-                <!--#region Prepering for Hikking Section-->
-                
-                <!-- Workplaces -->
-                <Grid x:Name="Foodplace" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden">
-                    <Border x:Name="BackgroundOfWorkplace" Margin="0,0,5,5" CornerRadius="10">
-                        <Border.Background>
-                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-                        <Grid Margin="10">
-                            
-                        </Grid>
-                    </Border>
-                </Grid>
 
-                <!-- Instrumental grid -->
-                <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"></RowDefinition>
-                        <RowDefinition Height="60"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
+                <!--#endregion-->
+
+                <!--#region Prepering for Hikking Section-->
+                <Grid x:Name="PreperingForHiking" 
+                      Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                      Visibility="Visible" IsEnabled="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
                     <Grid.Resources>
-                        <Style x:Key="StyleOfInstrument_ToggleButton">
-                            <Setter Property="ToggleButton.Background">
+                        <Style x:Key="StyleForTabItem" TargetType="TabItem">
+                            <Setter Property="Template">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="ToggleButton.FontSize" Value="14"></Setter>
-                            <Setter Property="ToggleButton.FontStyle" Value="Normal"></Setter>
-                            <Setter Property="ToggleButton.FontWeight" Value="Bold"></Setter>
-                            <Setter Property="ToggleButton.FontFamily" Value="TimesNewRoman"></Setter>
-                            <Setter Property="ToggleButton.VerticalAlignment" Value="Center"></Setter>
-                            <Setter Property="ToggleButton.HorizontalAlignment" Value="Center"></Setter>
-                            <Setter Property="ToggleButton.Margin" Value="2"></Setter>
-                            <Setter Property="ToggleButton.Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border x:Name="BorderOfInstrument_ToggleButton" 
-                                                CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}">
-                                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border x:Name="BorderOfTabItem" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5,5,0,0"
+                                                Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="AliceBlue" Opacity="0.75"></SolidColorBrush>
+                                            </Border.Background>
+                                            <ContentPresenter 
+                                                Width="130" Height="25"
+                                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                Content ="{TemplateBinding Header}"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="BorderBrush" Value="Gray"></Setter>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.75"/>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Cursor" Value="Hand"/>
-                                                </Trigger.Setters>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="BorderOfTabItem" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="AliceBlue" Opacity="1"/>
+                                                    </Setter.Value>
+                                                </Setter>
                                             </Trigger>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.75"></Setter>
-                                                </Trigger.Setters>
+                                            <Trigger Property="IsSelected" Value="False">
+                                                <Setter TargetName="BorderOfTabItem" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="AliceBlue" Opacity="0.75"/>
+                                                    </Setter.Value>
+                                                </Setter>
                                             </Trigger>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger.Setters>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        
+                        <Style x:Key="StyleForTabCintrol" TargetType="TabControl">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TabControl}">
+                                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Name="ColumnDefinition0" />
+                                                <ColumnDefinition Width="0" Name="ColumnDefinition1" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" Name="RowDefinition0" />
+                                                <RowDefinition Height="*" Name="RowDefinition1" />
+                                            </Grid.RowDefinitions>
+
+                                            <Border x:Name="HeaderBorder"  
+                                                    CornerRadius="5" 
+                                                    Background="Transparent">
+                                                <ItemsControl>
+                                                    <TabPanel IsItemsHost="True"
+                                                              Name="HeaderPanel" 
+                                                              Panel.ZIndex="1" 
+                                                              KeyboardNavigation.TabIndex="1"
+                                                              Grid.Column="0" 
+                                                              Grid.Row="0"/>
+                                                </ItemsControl>
+                                            </Border>
+
+                                            <Grid Name="ContentPanel" 
+                                                  KeyboardNavigation.TabIndex="2" 
+                                                  KeyboardNavigation.TabNavigation="Local" 
+                                                  KeyboardNavigation.DirectionalNavigation="Contained" 
+                                                  Grid.Column="0" 
+                                                  Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="129*"/>
+                                                    <ColumnDefinition Width="811*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="AliceBlue"
+                                                        CornerRadius="0,0,5,5" Grid.ColumnSpan="2">
+                                                    <ContentPresenter Content="{TemplateBinding SelectedContent}" 
+                                                                              ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
+                                                                              ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" 
+                                                                              ContentSource="SelectedContent" 
+                                                                              Name="PART_SelectedContentHost" 
+                                                                              Margin="2" 
+                                                                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="TabControl.TabStripPlacement" Value="Bottom">
+                                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
+                                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
+                                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
+                                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="Auto" />
+                                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="0,5,0,0" />
                                             </Trigger>
-                                            <Trigger Property="IsChecked" Value="False">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background" Value="AliceBlue"></Setter>
-                                                    <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.55"></Setter>
-                                                </Trigger.Setters>
+                                            <Trigger Property="TabControl.TabStripPlacement" Value="Left">
+                                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
+                                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
+                                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
+                                                <Setter TargetName="ColumnDefinition0" Property="ColumnDefinition.Width" Value="Auto" />
+                                                <Setter TargetName="ColumnDefinition1" Property="ColumnDefinition.Width" Value="*" />
+                                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
+                                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="0" />
+                                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="0,0,5,0" />
+                                            </Trigger>
+                                            <Trigger Property="TabControl.TabStripPlacement" Value="Right">
+                                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
+                                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
+                                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
+                                                <Setter TargetName="ColumnDefinition0" Property="ColumnDefinition.Width" Value="*" />
+                                                <Setter TargetName="ColumnDefinition1" Property="ColumnDefinition.Width" Value="Auto" />
+                                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
+                                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="0" />
+                                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="5,0,0,0" />
+                                            </Trigger>
+                                            <Trigger Property="UIElement.IsEnabled" Value="False">
+                                                <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -558,51 +615,152 @@
                         </Style>
                     </Grid.Resources>
 
-                    <ToggleButton x:Name="Food_ToggleButton" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}">
-                        <ToggleButton.Content>
-                            <Grid Width="50" Height="50">
-                                <!--<Path Grid.Column="0" Grid.Row="0" 
-                                      Stroke="Black" StrokeThickness="1" Fill="Transparent"                                      
-                                      StrokeLineJoin="Round" StrokeEndLineCap="Round" StrokeDashCap="Round" >
-                                    <Path.Data>
-                                        <PathGeometry>
-                                            <PathFigure StartPoint="5,5" IsClosed="True" IsFilled="True">
-                                                
-                                            </PathFigure>
-                                        </PathGeometry>
-                                    </Path.Data>
-                                </Path>-->
-                                <Grid Margin="1,0,0,0">
-                                    <Rectangle Width="2" Height="25" Margin="2,0,0,5" Fill="Black" 
-                                               RadiusY="5" RadiusX="5"
-                                               VerticalAlignment="Bottom" HorizontalAlignment="Left"></Rectangle>
-                                    <Ellipse Height="12" Width="6" Margin="0,12,0,0" Fill="Black"  
-                                             VerticalAlignment="Top" HorizontalAlignment="Left"></Ellipse>
-                                </Grid>
+                    <!-- Workplaces -->
+                    <TabControl Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabCintrol}" Margin="5">
+                        <TabItem Header="tab 1" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                 VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                                <Grid Margin="0,0,1,0">
-                                    <Rectangle Width="2" Height="25" Margin="0,0,2,5" Fill="Black" 
-                                               RadiusY="5" RadiusX="5"
-                                               VerticalAlignment="Bottom" HorizontalAlignment="Right"></Rectangle>
-                                    <Ellipse Height="20" Width="4" Margin="0,10,1,0" Fill="Black"  
-                                             VerticalAlignment="Top" HorizontalAlignment="Right"></Ellipse>
-                                </Grid>
-
+                        </TabItem>
+                        <TabItem Header="tab 2" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid>
-                                    <Ellipse Stroke="Black" StrokeThickness="2" Width="35" Height="35"></Ellipse>
-                                    <Ellipse Stroke="Black" StrokeThickness="1" Width="30" Height="30"></Ellipse>
+                                    <DataGrid AutoGenerateColumns="True" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True"/>
                                 </Grid>
-                            </Grid>
-                        </ToggleButton.Content>
-                    </ToggleButton>
-                    
+                            </ScrollViewer>
+                        </TabItem>
+
+                        <TabItem Header="tab 3" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                 VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                        </TabItem>
+                    </TabControl>
+
+                    <!-- Instrumental grid -->
+                    <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.Resources>
+                            <Style x:Key="StyleOfInstrument_ToggleButton">
+                                <Setter Property="ToggleButton.Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="ToggleButton.FontSize" Value="14"></Setter>
+                                <Setter Property="ToggleButton.FontStyle" Value="Normal"></Setter>
+                                <Setter Property="ToggleButton.FontWeight" Value="Bold"></Setter>
+                                <Setter Property="ToggleButton.FontFamily" Value="TimesNewRoman"></Setter>
+                                <Setter Property="ToggleButton.VerticalAlignment" Value="Center"></Setter>
+                                <Setter Property="ToggleButton.HorizontalAlignment" Value="Center"></Setter>
+                                <Setter Property="ToggleButton.Margin" Value="2"></Setter>
+                                <Setter Property="ToggleButton.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border x:Name="BorderOfInstrument_ToggleButton" 
+                                                    CornerRadius="10" BorderThickness="0" Background="{TemplateBinding Background}">
+                                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Cursor" Value="Hand"/>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.75"></Setter>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="AliceBlue" Opacity="1"></SolidColorBrush>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Background" Value="AliceBlue"></Setter>
+                                                        <Setter TargetName="BorderOfInstrument_ToggleButton" Property="Opacity" Value="0.55"></Setter>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Grid.Resources>
+
+                        <ToggleButton x:Name="Food_ToggleButton" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
+                                      Checked="Food_ToggleButton_Checked">
+                            <ToggleButton.Content>
+                                <Grid Width="50" Height="50">
+                                    <Grid Margin="1,0,0,0">
+                                        <Rectangle Width="2" Height="25" Margin="2,0,0,5" Fill="Black" 
+                                                   RadiusY="5" RadiusX="5"
+                                                   VerticalAlignment="Bottom" HorizontalAlignment="Left"></Rectangle>
+                                        <Ellipse Height="12" Width="6" Margin="0,12,0,0" Fill="Black"  
+                                                 VerticalAlignment="Top" HorizontalAlignment="Left"></Ellipse>
+                                    </Grid>
+
+                                    <Grid Margin="0,0,1,0">
+                                        <Rectangle Width="2" Height="25" Margin="0,0,2,5" Fill="Black" 
+                                                   RadiusY="5" RadiusX="5"
+                                                   VerticalAlignment="Bottom" HorizontalAlignment="Right"></Rectangle>
+                                        <Ellipse Height="20" Width="4" Margin="0,10,1,0" Fill="Black"  
+                                                 VerticalAlignment="Top" HorizontalAlignment="Right"></Ellipse>
+                                    </Grid>
+
+                                    <Grid>
+                                        <Ellipse Stroke="Black" StrokeThickness="2" Width="35" Height="35"></Ellipse>
+                                        <Ellipse Stroke="Black" StrokeThickness="1" Width="25" Height="25"></Ellipse>
+                                    </Grid>
+                                </Grid>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+
+                        <ToggleButton x:Name="Equipment" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
+                                      Grid.Row="1" Checked="Equipment_Checked">
+                            <ToggleButton.Content>
+                                <Grid Width="50" Height="50">
+                                    <Grid Width="50" Height="50">
+                                        <Border Width="40" Height="40" CornerRadius="10" BorderThickness="1,6,1,1" BorderBrush="Black"></Border>
+                                        <Border Width="38" Height="10" CornerRadius="5" BorderThickness="1,0,1,1" BorderBrush="Black" Margin="0,12,0,0" VerticalAlignment="Top"></Border>
+                                        <Path Stroke="Black" StrokeThickness="5" StrokeEndLineCap="Triangle">
+                                            <Path.Data>
+                                                <PathGeometry>
+                                                    <PathFigure StartPoint="13,21.5" IsFilled="False" IsClosed="False">
+                                                        <LineSegment Point="13,32"></LineSegment>
+                                                    </PathFigure>
+                                                    <PathFigure StartPoint="37,21.5">
+                                                        <LineSegment Point="37,32"></LineSegment>
+                                                    </PathFigure>
+                                                </PathGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Grid>
+                                    <Grid Width="50" Height="50"></Grid>
+                                </Grid>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+                    </Grid>
                 </Grid>
+                <!--</Grid>-->
+
 
                 <!--#endregion-->
-                
+
                 <!--#region Settings Section -->
-                
-                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+
+                <Grid x:Name="Settings" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 VerticalAlignment="Center" HorizontalAlignment="Center"
                 Width="300" Height="480" 
                 Background="#000080"
@@ -618,9 +776,9 @@
                 </Grid>
 
                 <!--#endregion-->
-                
+
                 <!--#region Main Controls-->
-                
+
                 <!-- Background Plane_Button -->
                 <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"
                     Visibility="Hidden" Focusable="False"
@@ -707,21 +865,22 @@
 
                 <!-- Header Of Section -->
                 <TextBox x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
-                         Text="Походы" FontWeight="Bold" FontSize="34" TextWrapping="Wrap" TextAlignment="Center"
+                         FontWeight="Bold" FontSize="34" TextWrapping="Wrap" TextAlignment="Center"
                          Foreground="AliceBlue" Background="{x:Null}" BorderThickness="0"  
                          HorizontalAlignment="Center" VerticalAlignment="Center"
-                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" Focusable="False">
+                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" Focusable="False"
+                         Text="Подготовка">
                 </TextBox>
-                
+
                 <!--#endregion-->
-                
+
                 <!--#region Menu -->
-                
+
                 <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" 
                         Width="0" HorizontalAlignment="Left"
                         Background="#1b1a1c" Opacity="1" Visibility="Hidden" Focusable="False"
                         x:Name="MainMenuPanel">
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="140"></RowDefinition>
                         <RowDefinition Height="70"></RowDefinition>
@@ -730,7 +889,7 @@
                         <RowDefinition Height="70"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid.Resources>
                         <Style x:Key="MenuListButtonStyle">
                             <Setter Property="Control.Background" Value="#0000"></Setter>
@@ -853,7 +1012,7 @@
                                 </ControlTemplate>
                             </TextBox.Template>
                         </TextBox>
-                        
+
                         <!-- Status Indicate -->
                         <Ellipse x:Name="Indicator" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"
                                  Width="10" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0"
@@ -869,16 +1028,17 @@
                     <Button Grid.Column="0" Grid.Row="4" Content="Настройки" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                             Click="SettingButton_Click"></Button>
                 </Grid>
-                
+
                 <!--#endregion-->
-            
+
             </Grid>
         </Grid>
 
         <!--#region Registration plane-->
-        
+
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
               IsEnabled="False" Visibility="Hidden" Focusable="False">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="500"></ColumnDefinition>
@@ -1014,8 +1174,8 @@
                 </Button>
             </Grid>
         </Grid>
-        
+
         <!--#endregion-->
-    
+
     </Grid>
 </Window>

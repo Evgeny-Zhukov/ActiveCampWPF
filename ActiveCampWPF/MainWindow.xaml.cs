@@ -67,9 +67,23 @@ namespace ActiveCampWPF
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
+
+            PreperingForHiking.Visibility = Visibility.Visible;
+            PreperingForHiking.IsEnabled = true;
+
             HeaderOfSection.Text = "Подготовка";
             CloseMenu();
             //Treatment of Equipment button.
+        }
+
+        private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Equipment.IsChecked = false;
+        }
+
+        private void Equipment_Checked(object sender, RoutedEventArgs e)
+        {
+            Food_ToggleButton.IsChecked = false;
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
@@ -192,6 +206,9 @@ namespace ActiveCampWPF
 
             Hikking_Section .Visibility = Visibility.Hidden;
             Hikking_Section.IsEnabled = false;
+
+            PreperingForHiking.Visibility = Visibility.Hidden;
+            PreperingForHiking.IsEnabled = false;    
         }
 
         private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
@@ -234,5 +251,6 @@ namespace ActiveCampWPF
             Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text);
             activeCampDbContext.AddRoute(NewRoute);
         }
+
     }
 }

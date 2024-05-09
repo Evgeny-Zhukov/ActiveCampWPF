@@ -148,6 +148,28 @@ namespace ActiveCamp.BL.Model
             }
             return route;
         }
+        public bool AddRoute(Route route)//  TODO: Почему-то создает 2 записи в БД
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand("AddRoute", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@StartData", route.StartDate);
+                command.Parameters.AddWithValue("@EndData", route.EndDate);
+                command.Parameters.AddWithValue("@Description", route.Description);
+                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
+                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
         public bool UpdateRoute(Route route) 
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
