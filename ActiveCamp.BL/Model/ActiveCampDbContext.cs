@@ -198,7 +198,7 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@StringNumber", foodConsuption.StringNumber);
                 command.Parameters.AddWithValue("@Dish", foodConsuption.Dish);
                 command.Parameters.AddWithValue("@ConsumptionTime", foodConsuption.ConsumptionTime);
-                command.Parameters.AddWithValue("@Day", foodConsuption.DayOfRoute);
+                command.Parameters.AddWithValue("@DayOfRoute", foodConsuption.DayOfRoute);
                 command.Parameters.AddWithValue("@AmountPerPerson", foodConsuption.AmountPerPerson);
                 command.Parameters.AddWithValue("@AmountPerGroup", foodConsuption.AmountPerGroup);
                 connection.Open();
