@@ -41,8 +41,10 @@ namespace ActiveCamp.CMD
             Console.WriteLine("Введите конечную точку:");
             string ep = "Финиш";
             Route route = new Route(sd, ed, description, sp, ep, "А1");*/
-            db.DeleteRoute(25);
-            Console.WriteLine("sdf");
+            Route route = db.GetRouteById(26);
+            FoodConsuption foodConsuption = new FoodConsuption(route,1,"Омлет","Завтрак", 1,150,150);
+            db.AddFoodConsumption(foodConsuption);
+
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();

@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Model
 {
-    internal class FoodConsuption
+    /// <summary>
+    /// Прием пищи
+    /// </summary>
+    public class FoodConsuption
     {
+        #region Свойства
         /// <summary>
-        /// Свойства
+        /// ИД
         /// </summary>
         public int FCId { get; set; }
         public Route Route { get; set; }
@@ -19,10 +23,10 @@ namespace ActiveCamp.BL.Model
         public int DayOfRoute { get; set; }
         public int AmountPerPerson { get; set; }
         public int AmountPerGroup { get; set; }
+        #endregion
         public FoodConsuption() { }
-        public FoodConsuption(int fCId, Route route, int stringNumber, string dish, string consuptionTime, int dayOfRoute, int amountPerPerson, int amountPerGroup)
+        public FoodConsuption(Route route, int stringNumber, string dish, string consuptionTime, int dayOfRoute, int amountPerPerson, int amountPerGroup)
         {
-            FCId = fCId;
             Route = route;
             StringNumber = stringNumber;
             Dish = dish;

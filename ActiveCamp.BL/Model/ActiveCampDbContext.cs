@@ -185,22 +185,23 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public bool AddFoodConsuption()
+        public bool AddFoodConsumption(FoodConsuption foodConsuption)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                SqlCommand command = new SqlCommand("AddRoute", connection);
+                SqlCommand command = new SqlCommand("AddFoodConsumption", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
-                command.Parameters.AddWithValue("@StartData", route.StartDate);
-                command.Parameters.AddWithValue("@EndData", route.EndDate);
-                command.Parameters.AddWithValue("@Description", route.Description);
-                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
-                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
+                command.Parameters.AddWithValue("@RouteID", foodConsuption.Route.RouteId);
+                command.Parameters.AddWithValue("@StringNumber", foodConsuption.StringNumber);
+                command.Parameters.AddWithValue("@Dish", foodConsuption.Dish);
+                command.Parameters.AddWithValue("@ConsumptionTime", foodConsuption.ConsuptionTime);
+                command.Parameters.AddWithValue("@Day", foodConsuption.DayOfRoute);
+                command.Parameters.AddWithValue("@AmountPerPerson", foodConsuption.AmountPerPerson);
+                command.Parameters.AddWithValue("@AmountPerGroup", foodConsuption.AmountPerGroup);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;

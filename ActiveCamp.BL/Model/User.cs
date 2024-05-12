@@ -5,7 +5,6 @@ namespace ActiveCamp.BL
     /// <summary>
     /// Пользователь.
     /// </summary>
-    [Serializable]
     public class User
     {
         #region Свойства
