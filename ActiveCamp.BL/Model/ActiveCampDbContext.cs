@@ -185,11 +185,10 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public bool AddFoodConsumption(FoodConsuption foodConsuption)
+        public bool AddFoodConsumption(FoodConsumption foodConsuption)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-
                 SqlCommand command = new SqlCommand("AddFoodConsumption", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
@@ -198,10 +197,63 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@RouteID", foodConsuption.Route.RouteId);
                 command.Parameters.AddWithValue("@StringNumber", foodConsuption.StringNumber);
                 command.Parameters.AddWithValue("@Dish", foodConsuption.Dish);
-                command.Parameters.AddWithValue("@ConsumptionTime", foodConsuption.ConsuptionTime);
+                command.Parameters.AddWithValue("@ConsumptionTime", foodConsuption.ConsumptionTime);
                 command.Parameters.AddWithValue("@Day", foodConsuption.DayOfRoute);
                 command.Parameters.AddWithValue("@AmountPerPerson", foodConsuption.AmountPerPerson);
                 command.Parameters.AddWithValue("@AmountPerGroup", foodConsuption.AmountPerGroup);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public FoodConsumption GetFoodConsumptionByID(int id)
+        {
+           FoodConsumption foodConsuption = new FoodConsumption();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM HikingRoutes WHERE RouteId = @Id";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        foodConsuption.FCId = Convert.ToInt32(reader["ID"]);
+                        foodConsuption.Route.RouteId = Convert.ToInt32(reader["RouteID"]);
+                        foodConsuption.StringNumber = Convert.ToInt32(reader["StringNumber"]);
+                        foodConsuption.Dish = reader["Dish"].ToString();
+                        foodConsuption.ConsumptionTime = reader["ConsumptionTime"].ToString();
+                        foodConsuption.DayOfRoute = Convert.ToInt32(reader["DayOfRoute"]);
+                        foodConsuption.AmountPerPerson = Convert.ToInt32(reader["AmountPerPerson"]);
+                        foodConsuption.AmountPerGroup = Convert.ToInt32(reader["AmountPerGroup"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return foodConsuption;
+        }
+        public bool DeleteFoodConsumption(int routeId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateFoodConsumptionById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ID", routeId);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;

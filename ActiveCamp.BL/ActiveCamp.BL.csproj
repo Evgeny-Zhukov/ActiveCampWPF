@@ -64,7 +64,7 @@
     <Compile Include="Model\Allergy.cs" />
     <Compile Include="Model\Dish.cs" />
     <Compile Include="Model\Equipment.cs" />
-    <Compile Include="Model\FoodConsuption.cs" />
+    <Compile Include="Model\FoodConsumption.cs" />
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Route.cs" />

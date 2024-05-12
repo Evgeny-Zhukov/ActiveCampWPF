@@ -42,7 +42,7 @@ namespace ActiveCamp.CMD
             string ep = "Финиш";
             Route route = new Route(sd, ed, description, sp, ep, "А1");*/
             Route route = db.GetRouteById(26);
-            FoodConsuption foodConsuption = new FoodConsuption(route,1,"Омлет","Завтрак", 1,150,150);
+            FoodConsumption foodConsuption = new FoodConsumption(route,1,"Омлет","Завтрак", 1,150,150);
             db.AddFoodConsumption(foodConsuption);
 
             /*using (SqlConnection connection = new SqlConnection(connectionString))
