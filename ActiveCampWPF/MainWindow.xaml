@@ -4,12 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ActiveCampWPF"
+        xmlns:local1="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Active Camp" 
         Height="500" Width="1000"
         MinHeight="500" MinWidth="360" 
         Initialized="Window_Initialized" 
         Loaded="Window_Loaded">
+    
+    <Window.Resources>
+        <local1:RecordsOfFoodTable x:Key="records"/>
+        <CollectionViewSource x:Key="cvsRecords" Source="{StaticResource records}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Day"/>
+                <PropertyGroupDescription PropertyName="FoodTime"/>
+            </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="FoodName"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
+    
     <Grid x:Name="Background_of_window">
 
         <Grid x:Name="Main_controls" IsEnabled="True">
@@ -96,7 +112,7 @@
                 <!-- #region Hikking Section-->
 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -495,12 +511,12 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="TabItem">
                                         <Border x:Name="BorderOfTabItem" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5,5,0,0"
-                                                Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                                                Height="30" Width="220">
                                             <Border.Background>
                                                 <SolidColorBrush Color="AliceBlue" Opacity="0.75"></SolidColorBrush>
                                             </Border.Background>
                                             <ContentPresenter 
-                                                Width="130" Height="25"
+                                                Width="210" Height="18"
                                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                                 Content ="{TemplateBinding Header}"/>
                                         </Border>
@@ -523,13 +539,18 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="FontSize" Value="14"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                            <Setter Property="FontFamily" Value="TimesNewRoman"></Setter>
                         </Style>
                         
-                        <Style x:Key="StyleForTabCintrol" TargetType="TabControl">
+                        <Style x:Key="StyleForTabControl" TargetType="TabControl">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type TabControl}">
-                                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+                                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" 
+                                              KeyboardNavigation.TabNavigation="Local">
+                                            
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Name="ColumnDefinition0" />
                                                 <ColumnDefinition Width="0" Name="ColumnDefinition1" />
@@ -539,39 +560,39 @@
                                                 <RowDefinition Height="*" Name="RowDefinition1" />
                                             </Grid.RowDefinitions>
 
-                                            <Border x:Name="HeaderBorder"  
-                                                    CornerRadius="5" 
-                                                    Background="Transparent">
+                                            <Border x:Name="HeaderBorder" Background="Transparent">
+                                                
                                                 <ItemsControl>
                                                     <TabPanel IsItemsHost="True"
                                                               Name="HeaderPanel" 
                                                               Panel.ZIndex="1" 
                                                               KeyboardNavigation.TabIndex="1"
-                                                              Grid.Column="0" 
-                                                              Grid.Row="0"/>
+                                                              Grid.Column="0" Grid.Row="0"/>
                                                 </ItemsControl>
+                                            
                                             </Border>
 
                                             <Grid Name="ContentPanel" 
                                                   KeyboardNavigation.TabIndex="2" 
                                                   KeyboardNavigation.TabNavigation="Local" 
                                                   KeyboardNavigation.DirectionalNavigation="Contained" 
-                                                  Grid.Column="0" 
-                                                  Grid.Row="1">
+                                                  Grid.Column="0" Grid.Row="1">
+                                                
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="129*"/>
                                                     <ColumnDefinition Width="811*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Border Background="AliceBlue"
-                                                        CornerRadius="0,0,5,5" Grid.ColumnSpan="2">
+                                                
+                                                <Border Background="AliceBlue" CornerRadius="0,5,5,5" Grid.ColumnSpan="2">
                                                     <ContentPresenter Content="{TemplateBinding SelectedContent}" 
-                                                                              ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
-                                                                              ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" 
-                                                                              ContentSource="SelectedContent" 
-                                                                              Name="PART_SelectedContentHost" 
-                                                                              Margin="2" 
-                                                                              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
+                                                                      ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
+                                                                      ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" 
+                                                                      ContentSource="SelectedContent" 
+                                                                      Name="PART_SelectedContentHost" 
+                                                                      Margin="2" 
+                                                                      SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                                                 </Border>
+                                            
                                             </Grid>
                                         </Grid>
 
@@ -616,23 +637,162 @@
                     </Grid.Resources>
 
                     <!-- Workplaces -->
-                    <TabControl Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabCintrol}" Margin="5">
-                        <TabItem Header="tab 1" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
-                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                 VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <!-- Main info of hiking -->
+                    
+                    
+                    
+                    <!-- Food info -->
 
-                        </TabItem>
-                        <TabItem Header="tab 2" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30">
+                    <TabControl x:Name="TabControlOfFoodInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
+                                IsEnabled="True" Visibility="Visible">
+                        
+                        <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                <Grid>
-                                    <DataGrid AutoGenerateColumns="True" CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="True"/>
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
+
+                                    <Grid.RowDefinitions>
+
+                                        <RowDefinition></RowDefinition>
+                                        
+                                    </Grid.RowDefinitions>
+
+                                    <DataGrid Grid.Row="0" x:Name="FoodTable" 
+                                              AutoGenerateColumns="False"
+                                              ItemsSource="{Binding Source={StaticResource cvsRecords}}"
+                                              Background="Transparent"
+                                              CanUserReorderColumns="False"
+                                              CanUserAddRows="False">
+
+                                        <DataGrid.Columns>
+                                            <!--<DataGridTextColumn Header="День" Binding="{Binding Path=Day}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Время приема пищи" Binding="{Binding Path=FoodTime}"></DataGridTextColumn>-->
+                                            <DataGridTextColumn Header="Наименование пищи" Binding="{Binding Path=FoodName}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Гр. на человека" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Гр. на Группу" Binding="{Binding Path=AmountPerGroup}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path=Description}"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+
+                                        <DataGrid.GroupStyle>
+                                            
+                                            <!-- Style for groups at top level. -->
+                                            <GroupStyle>
+                                                <GroupStyle.ContainerStyle>
+                                                    <Style TargetType="{x:Type GroupItem}">
+                                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                                    <Expander IsExpanded="True" Background="Coral" BorderBrush="Coral" Foreground="#FFEEEEEE" BorderThickness="1,1,1,5">
+                                                                        <Expander.Header>
+                                                                            <DockPanel>
+                                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100"/>
+                                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
+                                                                            </DockPanel>
+                                                                        </Expander.Header>
+                                                                        <Expander.Content>
+                                                                            <ItemsPresenter>
+                                                                            </ItemsPresenter>
+                                                                        </Expander.Content>
+                                                                    </Expander>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </GroupStyle.ContainerStyle>
+                                            </GroupStyle>
+                                            
+                                            <!-- Style for groups under the top level. -->
+                                            <GroupStyle>
+                                                <GroupStyle.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel Background="Wheat">
+                                                            <TextBlock Text="{Binding Path=Name}" Foreground="Black" Margin="30,0,0,0" Width="100"/>
+                                                            <TextBlock Text="{Binding Path=ItemCount}" Foreground="Black"/>
+                                                        </DockPanel>
+                                                    </DataTemplate>
+                                                </GroupStyle.HeaderTemplate>
+                                            </GroupStyle>
+                                        </DataGrid.GroupStyle>
+
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Setter Property="Foreground" Value="Black" />
+                                            </Style>
+                                        </DataGrid.RowStyle>
+
+                                    </DataGrid>
+
+                                    <!--<Button Grid.Row="2" x:Name="AddNewDinnerRecord" 
+                                            Background="Transparent" BorderBrush="Black" 
+                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
+                                    </Button>-->
+                                                
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                        
+                        <TabItem Header="Распределение по участникам" Style="{StaticResource ResourceKey=StyleForTabItem}">
+                            
+                        </TabItem>
+
+                        <!--<TabItem Header="" Style="{StaticResource ResourceKey=StyleForTabItem}">
+
+                        </TabItem>-->
+                    
+                    </TabControl>
+                    
+                    <!-- Equipment info -->
+
+                    <TabControl x:Name="TabCintrolOfEquipmentInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
+                                IsEnabled="False" Visibility="Hidden">
+                        <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Content="Завтрак:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
+                                    <DataGrid x:Name="ц1" Grid.Row="1" CanUserReorderColumns="False" Background="Transparent"/>
+                                    <Button x:Name="rf" Grid.Row="2" 
+                                            Background="Transparent" BorderBrush="Black" 
+                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
+                                    </Button>
+
+                                    <Label Grid.Row="3" Content="Обед:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
+                                    <DataGrid x:Name="ц3" Grid.Row="4" CanUserReorderColumns="False" Background="Transparent"/>
+                                    <Button x:Name="re" Grid.Row="5" 
+                                            Background="Transparent" BorderBrush="Black" 
+                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
+                                    </Button>
+
+                                    <Label Grid.Row="6" Content="Ужин:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
+                                    <DataGrid x:Name="ц5" Grid.Row="7" CanUserReorderColumns="False" Background="Transparent"/>
+                                    <Button x:Name="ew" Grid.Row="8" 
+                                            Background="Transparent" BorderBrush="Black" 
+                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
+                                    </Button>
+
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
 
-                        <TabItem Header="tab 3" Style="{StaticResource ResourceKey=StyleForTabItem}" Width="150" Height="30"
-                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                 VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TabItem Header="Распределение по участникам" Style="{StaticResource ResourceKey=StyleForTabItem}">
 
                         </TabItem>
                     </TabControl>
@@ -640,6 +800,7 @@
                     <!-- Instrumental grid -->
                     <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition></RowDefinition>
@@ -700,7 +861,7 @@
                         </Grid.Resources>
 
                         <ToggleButton x:Name="Food_ToggleButton" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
-                                      Checked="Food_ToggleButton_Checked">
+                                      Grid.Row="1" Checked="Food_ToggleButton_Checked" Unchecked="Food_ToggleButton_Unchecked">
                             <ToggleButton.Content>
                                 <Grid Width="50" Height="50">
                                     <Grid Margin="1,0,0,0">
@@ -728,7 +889,7 @@
                         </ToggleButton>
 
                         <ToggleButton x:Name="Equipment" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
-                                      Grid.Row="1" Checked="Equipment_Checked">
+                                      Grid.Row="2" Checked="Equipment_Checked">
                             <ToggleButton.Content>
                                 <Grid Width="50" Height="50">
                                     <Grid Width="50" Height="50">
@@ -747,7 +908,21 @@
                                             </Path.Data>
                                         </Path>
                                     </Grid>
-                                    <Grid Width="50" Height="50"></Grid>
+                                </Grid>
+                            </ToggleButton.Content>
+                        </ToggleButton>
+
+                        <ToggleButton x:Name="HikingInfo" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
+                                      Grid.Row="0" Checked="HikingInfo_Checked">
+                            <ToggleButton.Content>
+                                <Grid Width="50" Height="50">
+                                    <Grid Width="50" Height="50">
+                                        <Rectangle Width="6" Height="28" Stroke="Transparent" Fill="Black"
+                                                   VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,5"
+                                                   RadiusX="3" RadiusY="3"/>
+                                        <Ellipse Width="6" Height="6" Fill="Black"
+                                                 VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                                    </Grid>
                                 </Grid>
                             </ToggleButton.Content>
                         </ToggleButton>

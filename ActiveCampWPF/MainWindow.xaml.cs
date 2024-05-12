@@ -8,6 +8,10 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using ActiveCamp;
 using System.ComponentModel;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
 
 
 
@@ -35,13 +39,12 @@ namespace ActiveCampWPF
             MainMenuPanel.Focusable = true;
         }
 
-        //private void AccountButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    HeaderOfSection.Text = "Account";
-        //    CloseMenu();
-        //    //Treatment of account button.
-        //}
-
+        private void MenuBackgroundButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseMenu();
+            //Treatment of BackGaround button.
+        }
+        
         private void NewsButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
@@ -75,17 +78,7 @@ namespace ActiveCampWPF
             CloseMenu();
             //Treatment of Equipment button.
         }
-
-        private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            Equipment.IsChecked = false;
-        }
-
-        private void Equipment_Checked(object sender, RoutedEventArgs e)
-        {
-            Food_ToggleButton.IsChecked = false;
-        }
-
+        
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
@@ -93,12 +86,82 @@ namespace ActiveCampWPF
             CloseMenu();
             //Treatment of Setting button.
         }
-
-        private void MenuBackgroundButton_Click(object sender, RoutedEventArgs e)
+        
+        //++  Prepering for Hiking
+        private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            CloseMenu();
-            //Treatment of BackGaround button.
+            Equipment.IsChecked = false;
+            HikingInfo.IsChecked = false;
+
+            TabControlOfFoodInfo.IsEnabled = true;
+            TabControlOfFoodInfo.Visibility = Visibility.Visible;
+
+            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["records"];
+
+            _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", "Сахар", "Пробное описание", 30, 150));
+            _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(0, "Обед", "День 1", "Гречка", "Пробное описание", 30, 300));
+            _records.Add( new RecordOfFoodTable(1, "Завтрак", "День 2", "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(1, "Ужин", "День 2", "Перловка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(2, "Завтрак", "День 3", "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(2, "Обед", "День 3", "Гречка", "Пробное описание", 40, 200));
+
+            ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
+            if(cvRecords != null && cvRecords.CanGroup == true)
+            {
+                cvRecords.GroupDescriptions.Clear();
+                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
+                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
+            }
+
+            FoodTable.ItemsSource = cvRecords;
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    DataGridTextColumn day = new DataGridTextColumn();
+            //    day.Header = $"День {i}";
+            //    day.Width = 70;
+            //    day.CanUserReorder = false;
+
+            //    DataGridTextColumn gr_person = new DataGridTextColumn();
+            //    gr_person.Header = $"грм. на чел. {i}";
+            //    gr_person.Width = 120;
+            //    gr_person.CanUserReorder = false;
+
+            //    DataGridTextColumn gr_group = new DataGridTextColumn();
+            //    gr_group.Header = $"грм. на группу {i}";
+            //    gr_group.Width = 130;
+            //    gr_group.CanUserReorder = false;
+
+            //    BreakfastTable.Columns.Add(day);
+
+            //    BreakfastTable.Columns.Add(gr_person);
+
+            //    BreakfastTable.Columns.Add(gr_group);
+            //}
+
+
         }
+
+        private void Food_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TabControlOfFoodInfo.IsEnabled = false;
+            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+        }
+
+        private void Equipment_Checked(object sender, RoutedEventArgs e)
+        {
+            Food_ToggleButton.IsChecked = false;
+            HikingInfo.IsChecked = false;
+        }
+        
+        private void HikingInfo_Checked(object sender, RoutedEventArgs e)
+        {
+            Food_ToggleButton.IsChecked = false;
+            Equipment.IsChecked = false;
+        }
+        //--  Prepering for Hiking
+
 
         private void CloseMenu()
         {
@@ -174,14 +237,6 @@ namespace ActiveCampWPF
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            //Window gd = sender as Window;
-            //if (gd != null)
-            //{
-            //    Person_Validate.IsEnabled = true;
-            //    Person_Validate.Visibility = Visibility.Visible;
-            //    Person_Validate.Focusable = true;
-            //}
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -228,8 +283,8 @@ namespace ActiveCampWPF
             LittleDiscription.Text = "";
             PointFrom.Text = "";
             PointTo.Text = "";
-            DateTo.Text = "Choose a date";
-            DateFrom.Text = "Choose a date";
+            DateTo.Text = "Выберете дату";
+            DateFrom.Text = "Выберете дату";
             LevelOfHiking.Text = "";
         }
 
@@ -252,5 +307,9 @@ namespace ActiveCampWPF
             activeCampDbContext.AddRoute(NewRoute);
         }
 
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
