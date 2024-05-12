@@ -244,13 +244,13 @@ namespace ActiveCamp.BL.Model
             }
             return foodConsuption;
         }
-        public bool DeleteFoodConsumption(int routeId)
+        public bool DeleteFoodConsumption(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateFoodConsumptionById", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ID", routeId);
+                command.Parameters.AddWithValue("@ID", id);
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
