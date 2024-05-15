@@ -22,12 +22,13 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-  
+
         //private User currentUser;   
-        
+        public ObservableCollection<Questionnaire> QuestionnaireItems { get; set; } = new ObservableCollection<Questionnaire>();
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
