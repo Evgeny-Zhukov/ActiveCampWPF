@@ -24,7 +24,6 @@ namespace ActiveCampWPF
     {
 
         //private User currentUser;   
-        public ObservableCollection<Questionnaire> QuestionnaireItems { get; set; } = new ObservableCollection<Questionnaire>();
         public MainWindow()
         {
             InitializeComponent();

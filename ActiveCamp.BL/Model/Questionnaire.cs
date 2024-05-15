@@ -11,15 +11,28 @@ namespace ActiveCamp.BL.Model
     {
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
-        public int Rating { get; set; }
+        public int UserId { get; set; } // Идентификатор пользователя, который дал ответ
+        public int Rating { get; set; } // Оценка, данная пользователем
+        
 
         public Questionnaire() { }
-        public Questionnaire(int questionId, string questionText, int rating)
+
+        public Questionnaire(int questionId, string questionText)
         {
             QuestionId = questionId;
             QuestionText = questionText;
+        }
+
+        public Questionnaire(int questionId, string questionText, int userId, int rating)
+            : this(questionId, questionText)
+        {
+            UserId = userId;
             Rating = rating;
         }
+        public void SaveUserAnswers(Questionnaire questionnaire)
+        {
+            ActiveCampDbContext db = new ActiveCampDbContext();
+            db.AddSurveyResults(questionnaire);
+        }
     }
-
 }
