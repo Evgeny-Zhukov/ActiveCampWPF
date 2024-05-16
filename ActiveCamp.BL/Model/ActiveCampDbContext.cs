@@ -284,7 +284,7 @@ namespace ActiveCamp.BL.Model
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM HikingRoutes WHERE RouteId = @Id";
+                string query = "SELECT * FROM Questionnaire WHERE RouteId = @Id";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Id", id);
@@ -331,5 +331,70 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-    }
-}
+        public bool AddUserAllergy(UserAllergy allergy)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddUserAllergies", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@Name", allergy.Name);
+                command.Parameters.AddWithValue("@UserID", allergy.UserID);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public UserAllergy GetUserAllergies(int id)
+        {
+            UserAllergy userAllergy = new UserAllergy();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM UserAllergies WHERE AllergyId = @Id";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        userAllergy.AllergyId = Convert.ToInt32(reader["AllergyId"]);
+                        userAllergy.Name = reader["Name"].ToString();
+                        userAllergy.UserID = Convert.ToInt32(reader["UserID"]);
+                        
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return userAllergy;
+        }
+        public bool DeleteUserAllergy(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateUserAllergyById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+
+            }
+        }
