@@ -116,6 +116,24 @@ namespace ActiveCampWPF
 
             FoodTable.ItemsSource = cvRecords;
 
+
+            RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
+
+            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(0, "Zurab", "Kasha", 30, ""));
+            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(1, "Bulvar", "Kasha", 40, ""));
+            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(2, "Kostya", "Grechka", 30, ""));
+            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(3, "Miver", "Makaronyu", 40, ""));
+
+
+            ICollectionView cvRecordOfFoodTablePerPerson = CollectionViewSource.GetDefaultView(FoodTablePerPerson.ItemsSource);
+            if (cvRecords != null && cvRecords.CanGroup == true)
+            {
+                cvRecordOfFoodTablePerPerson.GroupDescriptions.Clear();
+                cvRecordOfFoodTablePerPerson.GroupDescriptions.Add(new PropertyGroupDescription("Person"));
+            }
+
+            FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
+
             //for (int i = 0; i < 10; i++)
             //{
             //    DataGridTextColumn day = new DataGridTextColumn();
