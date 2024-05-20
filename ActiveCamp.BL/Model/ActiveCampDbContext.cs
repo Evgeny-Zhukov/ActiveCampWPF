@@ -46,14 +46,14 @@ namespace ActiveCamp.BL.Model
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                
+
                 SqlCommand command = new SqlCommand("CreateUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@username", user.Username);
-                command.Parameters.AddWithValue ("Password", user.Password);
+                command.Parameters.AddWithValue("Password", user.Password);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -84,7 +84,7 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-        
+
         public bool AddRoute(Route route)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -147,8 +147,8 @@ namespace ActiveCamp.BL.Model
             }
             return route;
         }
-        
-        public bool UpdateRoute(Route route) 
+
+        public bool UpdateRoute(Route route)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -169,7 +169,7 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public bool DeleteRoute(int  routeId) 
+        public bool DeleteRoute(int routeId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -209,7 +209,7 @@ namespace ActiveCamp.BL.Model
         }
         public FoodConsumption GetFoodConsumptionByID(int id)
         {
-           FoodConsumption foodConsuption = new FoodConsumption();
+            FoodConsumption foodConsuption = new FoodConsumption();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -370,7 +370,7 @@ namespace ActiveCamp.BL.Model
                         userAllergy.AllergyId = Convert.ToInt32(reader["AllergyId"]);
                         userAllergy.Name = reader["Name"].ToString();
                         userAllergy.UserID = Convert.ToInt32(reader["UserID"]);
-                        
+
                     }
                     reader.Close();
                 }
@@ -398,3 +398,5 @@ namespace ActiveCamp.BL.Model
 
             }
         }
+    }
+}

@@ -61,8 +61,7 @@
     <Compile Include="Controller\EquipmentController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ActiveCampDbContext.cs" />
-    <Compile Include="Model\Allergy.cs" />
-    <Compile Include="Model\RecordOfEqiupmentTable.cs" />
+    <Compile Include="Model\RecordOfFoodTablePerPerson.cs" />
     <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="Model\RecordOfFoodTable.cs" />
     <Compile Include="Model\Dish.cs" />
