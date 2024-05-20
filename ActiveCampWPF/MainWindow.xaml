@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ActiveCampWPF"
         xmlns:FT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:ACBL="clr-namespace:ActiveCamp.BL;assembly=ActiveCamp.BL"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Active Camp" 
@@ -15,8 +16,9 @@
 
     <Window.Resources>
 
+        <!--<FT:RecordsOfFoodTablePerPerson x:Key="records"/>-->
         <FT:RecordsOfFoodTable x:Key="records"/>
-        
+
         <CollectionViewSource x:Key="cvsRecords" Source="{StaticResource records}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Day"/>
