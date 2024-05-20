@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ActiveCampWPF"
-        xmlns:local1="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:FT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Active Camp" 
@@ -12,9 +12,11 @@
         MinHeight="500" MinWidth="360" 
         Initialized="Window_Initialized" 
         Loaded="Window_Loaded">
-    
+
     <Window.Resources>
-        <local1:RecordsOfFoodTable x:Key="records"/>
+
+        <FT:RecordsOfFoodTable x:Key="records"/>
+        
         <CollectionViewSource x:Key="cvsRecords" Source="{StaticResource records}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Day"/>
@@ -24,12 +26,15 @@
                 <scm:SortDescription PropertyName="FoodName"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <local1:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"></local1:RecordsOfFoodTablePerPerson>
+
+        <FT:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"/>
+        
         <CollectionViewSource x:Key="cvsRecordsOfFoodTablePerPerson" Source="{StaticResource recordsOfFoodTablePerPerson}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Person"></PropertyGroupDescription>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
+        
     </Window.Resources>
     
     <Grid x:Name="Background_of_window">

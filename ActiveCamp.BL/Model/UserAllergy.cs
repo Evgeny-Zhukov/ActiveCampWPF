@@ -39,5 +39,6 @@ namespace ActiveCamp.BL.Model
         {
             Name = name ?? throw new ArgumentNullException("Название аллергии не может быть пустым или NULL", nameof(name));
         }
+        
     }
 }
