@@ -13,7 +13,8 @@ namespace ActiveCamp.BL.Model
         public string QuestionText { get; set; }
         public int UserId { get; set; } // Идентификатор пользователя, который дал ответ
         public int Rating { get; set; } // Оценка, данная пользователем
-        
+        public List<Tuple<int, int>> UserAnswers { get; set; }
+
 
         public Questionnaire() { }
 
@@ -29,10 +30,24 @@ namespace ActiveCamp.BL.Model
             UserId = userId;
             Rating = rating;
         }
-        public void SaveUserAnswers(Questionnaire questionnaire)
+        public void AddUserAnswer(int userId, int rating)
+        {
+            UserAnswers.Add(new Tuple<int, int>(userId, rating));
+        }
+        private void SaveAnswersToDatabase(List<Tuple<int, int>> userAnswers)
         {
             ActiveCampDbContext db = new ActiveCampDbContext();
-            db.AddSurveyResults(questionnaire);
+            foreach (var answer in userAnswers)
+            {
+                var questionnaire = new Questionnaire
+                {
+                    QuestionId = this.QuestionId,
+                    QuestionText = this.QuestionText,
+                    UserId = answer.Item1,
+                    Rating = answer.Item2
+                };
+                db.AddSurveyResults(questionnaire);
+            }
         }
     }
 }
