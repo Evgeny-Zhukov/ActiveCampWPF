@@ -74,6 +74,10 @@ namespace ActiveCampWPF
             PreperingForHiking.Visibility = Visibility.Visible;
             PreperingForHiking.IsEnabled = true;
 
+            MainInfoAboutHiking.IsEnabled = true;
+            MainInfoAboutHiking.Visibility = Visibility.Visible;
+            HikingInfo.IsChecked = true;
+
             HeaderOfSection.Text = "Подготовка";
             CloseMenu();
             //Treatment of Equipment button.
@@ -87,11 +91,16 @@ namespace ActiveCampWPF
             //Treatment of Setting button.
         }
         
-        //++  Prepering for Hiking
+        #region  Prepering_for_Hiking
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             Equipment.IsChecked = false;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
+            TabControlOfEquipmentInfo.IsEnabled = false;
+
             HikingInfo.IsChecked = false;
+            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+            TabControlOfFoodInfo.IsEnabled = false;
 
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
@@ -134,31 +143,6 @@ namespace ActiveCampWPF
 
             FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    DataGridTextColumn day = new DataGridTextColumn();
-            //    day.Header = $"День {i}";
-            //    day.Width = 70;
-            //    day.CanUserReorder = false;
-
-            //    DataGridTextColumn gr_person = new DataGridTextColumn();
-            //    gr_person.Header = $"грм. на чел. {i}";
-            //    gr_person.Width = 120;
-            //    gr_person.CanUserReorder = false;
-
-            //    DataGridTextColumn gr_group = new DataGridTextColumn();
-            //    gr_group.Header = $"грм. на группу {i}";
-            //    gr_group.Width = 130;
-            //    gr_group.CanUserReorder = false;
-
-            //    BreakfastTable.Columns.Add(day);
-
-            //    BreakfastTable.Columns.Add(gr_person);
-
-            //    BreakfastTable.Columns.Add(gr_group);
-            //}
-
-
         }
 
         private void Food_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -170,15 +154,45 @@ namespace ActiveCampWPF
         private void Equipment_Checked(object sender, RoutedEventArgs e)
         {
             Food_ToggleButton.IsChecked = false;
+            TabControlOfFoodInfo.IsEnabled = false;
+            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+
             HikingInfo.IsChecked = false;
+            MainInfoAboutHiking.Visibility = Visibility.Hidden;
+            MainInfoAboutHiking.IsEnabled = false;
+
+            TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
+            TabControlOfEquipmentInfo.IsEnabled = true;
+
+        }
+        
+        private void Equipment_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
+            TabControlOfEquipmentInfo.IsEnabled = false;
         }
         
         private void HikingInfo_Checked(object sender, RoutedEventArgs e)
         {
             Food_ToggleButton.IsChecked = false;
+            TabControlOfFoodInfo.IsEnabled = false;
+            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+
             Equipment.IsChecked = false;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
+            TabControlOfEquipmentInfo.IsEnabled = false;
+
+            MainInfoAboutHiking.Visibility = Visibility.Visible;
+            MainInfoAboutHiking.IsEnabled = true;
         }
-        //--  Prepering for Hiking
+
+        private void HikingInfo_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MainInfoAboutHiking.Visibility = Visibility.Hidden;
+            MainInfoAboutHiking.IsEnabled = false;
+        }
+
+        #endregion
 
 
         private void CloseMenu()
@@ -329,5 +343,6 @@ namespace ActiveCampWPF
         {
 
         }
+
     }
 }
