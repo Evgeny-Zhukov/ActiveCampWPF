@@ -278,16 +278,17 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public FoodConsumption GetSurveyResults(int id)
+        public Questionnaire GetSurveyResults(int UserID, int QuestionID)
         {
-            FoodConsumption foodConsuption = new FoodConsumption();
+            Questionnaire questionnaire = new Questionnaire();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Questionnaire WHERE RouteId = @Id";
+                string query = "SELECT * FROM Questionnaire WHERE UserId = @UserId AND QuestionId = @QuestionId";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@UserId", UserID);
+                command.Parameters.AddWithValue("@QuestionId", QuestionID);
 
                 try
                 {
@@ -297,14 +298,9 @@ namespace ActiveCamp.BL.Model
                     if (reader.Read())
                     {
                         // Чтение данных маршрута из результата запроса
-                        foodConsuption.FCId = Convert.ToInt32(reader["ID"]);
-                        foodConsuption.Route.RouteId = Convert.ToInt32(reader["RouteID"]);
-                        foodConsuption.StringNumber = Convert.ToInt32(reader["StringNumber"]);
-                        foodConsuption.Dish = reader["Dish"].ToString();
-                        foodConsuption.ConsumptionTime = reader["ConsumptionTime"].ToString();
-                        foodConsuption.DayOfRoute = Convert.ToInt32(reader["DayOfRoute"]);
-                        foodConsuption.AmountPerPerson = Convert.ToInt32(reader["AmountPerPerson"]);
-                        foodConsuption.AmountPerGroup = Convert.ToInt32(reader["AmountPerGroup"]);
+                        questionnaire.QuestionId = Convert.ToInt32(reader["QuestionId"]);
+                        questionnaire.UserId = Convert.ToInt32(reader["UserId"]);
+                        questionnaire.Rating = Convert.ToInt32(reader["Rating"]);
                     }
                     reader.Close();
                 }
@@ -313,7 +309,7 @@ namespace ActiveCamp.BL.Model
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return foodConsuption;
+            return questionnaire;
         }
         public bool DeleteSurveyResults(int id)
         {
@@ -348,17 +344,17 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public UserAllergy GetUserAllergies(int id)
+        public UserAllergy GetUserAllergies(int AllergyID, int UserID)
         {
             UserAllergy userAllergy = new UserAllergy();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM UserAllergies WHERE AllergyId = @Id";
+                string query = "SELECT * FROM UserAllergies WHERE UserID = @UserID AND AllergyID = @AllergyID";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", id);
-
+                command.Parameters.AddWithValue("@AllergyID", AllergyID);
+                command.Parameters.AddWithValue("@UserID", UserID);
                 try
                 {
                     connection.Open();
