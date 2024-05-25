@@ -72,7 +72,11 @@
     <Compile Include="Model\Route.cs" />
     <Compile Include="Model\RouteType.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="Model\UserAllergy.cs" />
+    <Compile Include="Model\Illness.cs" />
+    <Compile Include="Model\UserEquipment.cs" />
+    <Compile Include="Model\UserDish.cs" />
+    <Compile Include="Model\UserIllness.cs" />
+    <Compile Include="Model\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

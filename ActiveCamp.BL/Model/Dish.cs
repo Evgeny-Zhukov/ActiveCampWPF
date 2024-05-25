@@ -15,7 +15,7 @@ namespace ActiveCamp.BL.Model
         /// <summary>
         /// ИД блюда.
         /// </summary>
-        public int DishId { get;}
+        public int DishID { get;}
         /// <summary>
         /// Название блюда.
         /// </summary>

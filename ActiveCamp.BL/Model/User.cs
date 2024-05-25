@@ -17,18 +17,12 @@ namespace ActiveCamp.BL
         /// </summary>
         public string Username { get; set; }
         /// <summary>
-        /// Электронная почта пользователя.
-        /// </summary>
-        public string Email { get; set; }
-        /// <summary>
         /// Пароль пользователя.
         /// </summary>
         public string Password { get; set; }
         /// <summary>
         /// Имя пользователя.
         /// </summary>
-        public string Name { get; }
-        public Gender Gender { get; set; }
         #endregion
 
         /// <summary>
@@ -46,15 +40,6 @@ namespace ActiveCamp.BL
         /// Создает пользователя.
         /// </summary>
         public User() { }
-        /// <summary>
-        /// Создает пользователя.
-        /// </summary>
-        /// <param name="name">Имя</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public User(string name)
-        {
-            Name = name ?? throw new ArgumentNullException("Имя не может быть пустым или null.", nameof(name));
-        }
         public override string ToString()
         {
             return Username;

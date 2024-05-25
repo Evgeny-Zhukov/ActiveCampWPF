@@ -133,10 +133,7 @@ namespace ActiveCamp.BL.Model
                         route.EndDate = Convert.ToDateTime(reader["EndDate"]);
                         route.StartPoint = reader["StartPoint"].ToString();
                         route.EndPoint = reader["EndPoint"].ToString();
-                        //route.Duration = Convert.ToInt32(reader["DurationInDays"].);
-                        //route.Length = Convert.ToDouble(reader["LengthInKm"]);
                         route.Difficulty = reader["Difficulty"].ToString();
-                        //route.AuthorId = Convert.ToInt32(reader["AuthorId"]);
                     }
                     reader.Close();
                 }
@@ -327,7 +324,7 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public bool AddUserAllergy(UserAllergy allergy)
+        public bool AddUserAllergy(Illness allergy)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -336,17 +333,16 @@ namespace ActiveCamp.BL.Model
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@Name", allergy.Name);
-                command.Parameters.AddWithValue("@UserID", allergy.UserID);
+                command.Parameters.AddWithValue("@Name", allergy.IllnessName);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
             }
         }
-        public UserAllergy GetUserAllergies(int AllergyID, int UserID)
+        public Illness GetUserAllergies(int AllergyID, int UserID)
         {
-            UserAllergy userAllergy = new UserAllergy();
+            Illness userAllergy = new Illness();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -363,9 +359,9 @@ namespace ActiveCamp.BL.Model
                     if (reader.Read())
                     {
                         // Чтение данных маршрута из результата запроса
-                        userAllergy.AllergyId = Convert.ToInt32(reader["AllergyId"]);
-                        userAllergy.Name = reader["Name"].ToString();
-                        userAllergy.UserID = Convert.ToInt32(reader["UserID"]);
+                        userAllergy.IllnessID = Convert.ToInt32(reader["AllergyId"]);
+                        userAllergy.IllnessName = reader["Name"].ToString();
+
 
                     }
                     reader.Close();
@@ -392,6 +388,24 @@ namespace ActiveCamp.BL.Model
                 bool success = (bool)successParameter.Value;
                 return success;
 
+            }
+        }
+        public bool AddEquipment(Equipment equipment)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddEquipment", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@equipmentName", equipment.equipmentName);
+                command.Parameters.AddWithValue("@equipmentWeight", equipment.equipmentWeight);
+                command.Parameters.AddWithValue("@UserID", equipment.UserID);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
             }
         }
     }
