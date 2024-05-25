@@ -652,13 +652,24 @@
                     <!-- Workplaces -->
                     
                     <!-- Main info of hiking -->
-                    
-                    
+
+                    <Border x:Name="MainInfoAboutHiking" Grid.Column="1" Margin="10"
+                            IsEnabled="False" Visibility="Hidden"
+                            BorderBrush="Transparent" BorderThickness="0" CornerRadius="5">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
+                        </Border.Background>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10">
+                            <Grid x:Name="MainInfoAboutHiking_Grid">
+                                <TextBlock x:Name="InfoTextBlock"/>
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
                     
                     <!-- Food info -->
 
                     <TabControl x:Name="TabControlOfFoodInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
-                                IsEnabled="True" Visibility="Visible">
+                                IsEnabled="False" Visibility="Hidden">
                         
                         <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -678,8 +689,6 @@
                                               CanUserAddRows="False">
 
                                         <DataGrid.Columns>
-                                            <!--<DataGridTextColumn Header="День" Binding="{Binding Path=Day}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Время приема пищи" Binding="{Binding Path=FoodTime}"></DataGridTextColumn>-->
                                             <DataGridTextColumn Header="Наименование пищи" Binding="{Binding Path=FoodName}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Гр. на человека" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Гр. на Группу" Binding="{Binding Path=AmountPerGroup}"></DataGridTextColumn>
@@ -687,7 +696,7 @@
                                         </DataGrid.Columns>
 
                                         <DataGrid.GroupStyle>
-                                            
+
                                             <!-- Style for groups at top level. -->
                                             <GroupStyle>
                                                 <GroupStyle.ContainerStyle>
@@ -714,7 +723,7 @@
                                                     </Style>
                                                 </GroupStyle.ContainerStyle>
                                             </GroupStyle>
-                                            
+
                                             <!-- Style for groups under the top level. -->
                                             <GroupStyle>
                                                 <GroupStyle.HeaderTemplate>
@@ -735,18 +744,12 @@
                                         </DataGrid.RowStyle>
 
                                     </DataGrid>
-
-                                    <!--<Button Grid.Row="2" x:Name="AddNewDinnerRecord" 
-                                            Background="Transparent" BorderBrush="Black" 
-                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
-                                    </Button>-->
-                                                
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
-                        
+
                         <TabItem Header="Распределение по участникам" Style="{StaticResource ResourceKey=StyleForTabItem}">
+                            
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
 
@@ -819,26 +822,16 @@
                                         </DataGrid.RowStyle>
 
                                     </DataGrid>
-
-                                    <!--<Button Grid.Row="2" x:Name="AddNewDinnerRecord" 
-                                         Background="Transparent" BorderBrush="Black" 
-                                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                         FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
-                                    </Button>-->
-
                                 </Grid>
+                            
                             </ScrollViewer>
+                            
                         </TabItem>
-
-                        <!--<TabItem Header="" Style="{StaticResource ResourceKey=StyleForTabItem}">
-
-                        </TabItem>-->
-                    
                     </TabControl>
                     
                     <!-- Equipment info -->
 
-                    <TabControl x:Name="TabCintrolOfEquipmentInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
+                    <TabControl x:Name="TabControlOfEquipmentInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
                                 IsEnabled="False" Visibility="Hidden">
                         <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -982,7 +975,7 @@
                         </ToggleButton>
 
                         <ToggleButton x:Name="Equipment" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
-                                      Grid.Row="2" Checked="Equipment_Checked">
+                                      Grid.Row="2" Checked="Equipment_Checked" Unchecked="Equipment_Unchecked">
                             <ToggleButton.Content>
                                 <Grid Width="50" Height="50">
                                     <Grid Width="50" Height="50">
@@ -1006,7 +999,7 @@
                         </ToggleButton>
 
                         <ToggleButton x:Name="HikingInfo" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
-                                      Grid.Row="0" Checked="HikingInfo_Checked">
+                                      Grid.Row="0" Checked="HikingInfo_Checked" Unchecked="HikingInfo_Unchecked">
                             <ToggleButton.Content>
                                 <Grid Width="50" Height="50">
                                     <Grid Width="50" Height="50">
