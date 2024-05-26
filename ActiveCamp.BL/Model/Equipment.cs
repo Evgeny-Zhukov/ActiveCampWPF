@@ -12,7 +12,7 @@ namespace ActiveCamp
         /// <summary>
         /// ИД снаряжения.
         /// </summary>
-        public int equipmentID { get; }
+        public int equipmentID { get; set; }
         /// <summary>
         /// Название снаряжения.
         /// </summary>
@@ -35,7 +35,7 @@ namespace ActiveCamp
         {
             this.equipmentName = equipmentName ?? throw new ArgumentNullException("Название снаряжение не может быть пустым или NULL", nameof(equipmentName));
 
-            if(equipmentWeight <= 0)
+            if (equipmentWeight <= 0)
             {
                 throw new ArgumentOutOfRangeException("Вес снаряжения должен быть положительным числом и не равен нулю.", nameof(equipmentWeight));
             }

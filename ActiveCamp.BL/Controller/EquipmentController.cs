@@ -8,9 +8,9 @@ namespace ActiveCamp.BL.Controller
 {
     internal class EquipmentController
     {
-        public Equipment Equipment { get; set;}
+        public Dish Equipment { get; set;}
 
-        public EquipmentController(Equipment equipment)
+        public EquipmentController(Dish equipment)
         {
             Equipment = equipment;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Model
 {
-    internal class UserEquipment
+    public class UserEquipment
     {
         public int UserEquipmentID { get; set; }
         public int UserID { get; set; }

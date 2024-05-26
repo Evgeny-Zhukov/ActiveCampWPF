@@ -42,7 +42,8 @@ namespace ActiveCamp.BL.Model
 
             }
         }
-        public bool RegisterUser(User user)
+        #region User 2/4
+        public bool RegisterUser(User user) // AddUser
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -84,7 +85,8 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-
+        #endregion
+        #region Route 4/4
         public bool AddRoute(Route route)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -144,7 +146,6 @@ namespace ActiveCamp.BL.Model
             }
             return route;
         }
-
         public bool UpdateRoute(Route route)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -182,6 +183,8 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
+        #endregion
+        #region FoodConsumption 3/4
         public bool AddFoodConsumption(FoodConsumption foodConsuption)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -257,6 +260,8 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
+        #endregion
+        #region SyrveyResult 3/4
         public bool AddSurveyResults(Questionnaire questionnaire)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -324,32 +329,34 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public bool AddUserAllergy(Illness allergy)
+        #endregion
+        #region UserIllness 3/4
+        public bool AddUserIllness(Illness illness)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand("AddUserAllergies", connection);
+                SqlCommand command = new SqlCommand("AddUserIllness", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@Name", allergy.IllnessName);
+                command.Parameters.AddWithValue("@Name", illness.IllnessName);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
             }
         }
-        public Illness GetUserAllergies(int AllergyID, int UserID)
+        public Illness GetUserIllness(int IllnessID, int UserID)
         {
-            Illness userAllergy = new Illness();
+            Illness userIllness = new Illness();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM UserAllergies WHERE UserID = @UserID AND AllergyID = @AllergyID";
+                string query = "SELECT * FROM UserIllness WHERE UserID = @UserID AND IllnessID = @IllnessID";
 
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@AllergyID", AllergyID);
+                command.Parameters.AddWithValue("@IllnessID", IllnessID);
                 command.Parameters.AddWithValue("@UserID", UserID);
                 try
                 {
@@ -359,10 +366,8 @@ namespace ActiveCamp.BL.Model
                     if (reader.Read())
                     {
                         // Чтение данных маршрута из результата запроса
-                        userAllergy.IllnessID = Convert.ToInt32(reader["AllergyId"]);
-                        userAllergy.IllnessName = reader["Name"].ToString();
-
-
+                        userIllness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
+                        userIllness.IllnessName = reader["Name"].ToString();
                     }
                     reader.Close();
                 }
@@ -371,13 +376,13 @@ namespace ActiveCamp.BL.Model
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return userAllergy;
+            return userIllness;
         }
-        public bool DeleteUserAllergy(int id)
+        public bool DeleteUserIllness(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand("DeleateUserAllergyById", connection);
+                SqlCommand command = new SqlCommand("DeleateUserIllnessById", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ID", id);
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
@@ -387,9 +392,142 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
-
             }
         }
+        #endregion
+        #region UserEquipment 3/4
+        public bool AddUserEquipment(UserEquipment userEquipment)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddUserEquipment", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
+                command.Parameters.AddWithValue("@UserID", userEquipment.UserID);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public UserEquipment GetUserEquipment(int EquipmentID, int UserID)
+        {
+            UserEquipment userEquipment = new UserEquipment();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM UserEquipment WHERE UserID = @UserID AND EquipmentID = @EquipmentID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@EquipmentID", EquipmentID);
+                command.Parameters.AddWithValue("@UserID", UserID);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        userEquipment.EquipmentID = Convert.ToInt32(reader["EquipmentID"]);
+                        userEquipment.UserID = Convert.ToInt32(reader["UserID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return userEquipment;
+        }
+        public bool DeleteUserEquipment(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleteUserEquipmentById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserEquipmentID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        #endregion
+        #region UserDish 3/4
+        public bool AddUserDish(UserDish userDish)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddUserDishes", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@DishID", userDish.DishID);
+                command.Parameters.AddWithValue("@UserID", userDish.UserID);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public UserDish GetUserDish(int DishID, int UserID)
+        {
+            UserDish userDish = new UserDish();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM UserDishes WHERE UserID = @UserID AND DishesID = @DishesID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@DishesID", DishID);
+                command.Parameters.AddWithValue("@UserID", UserID);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        userDish.DishID = Convert.ToInt32(reader["EquipmentID"]);
+                        userDish.UserID = Convert.ToInt32(reader["UserID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return userDish;
+        }
+        public bool DeleteUserDish(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleteUserDishById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserDishID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        #endregion
+        #region Equipment 3/4
         public bool AddEquipment(Equipment equipment)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -401,12 +539,198 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@equipmentName", equipment.equipmentName);
                 command.Parameters.AddWithValue("@equipmentWeight", equipment.equipmentWeight);
-                command.Parameters.AddWithValue("@UserID", equipment.UserID);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
             }
         }
+        public Equipment GetEquipment(int equipmentID)
+        {
+            Equipment equipment = new Equipment();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Equipment WHERE equipmentID = @equipmentID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@equipmentID", equipmentID);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        equipment.equipmentID = Convert.ToInt32(reader["equipmentID"]);
+                        equipment.equipmentName = reader["equipmentName"].ToString();
+                        equipment.equipmentWeight = Convert.ToDouble(reader["equipmentWeight"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return equipment;
+        }
+        public bool DeleteEquipment(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateEquipmentById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@equipmentID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        #endregion
+        #region Dish 3/4
+        public bool AddDish(Dish dish)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddDish", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@Name", dish.Name);
+                command.Parameters.AddWithValue("@Proteins", dish.Proteins);
+                command.Parameters.AddWithValue("@Fats", dish.Fats);
+                command.Parameters.AddWithValue("@Carbohydrates", dish.Carbohydrates);
+                command.Parameters.AddWithValue("@Calories", dish.Calories);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public Dish GetDish(int DishID)
+        {
+            Dish dish = new Dish();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Dish WHERE DishID = @DishID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@DishID", DishID);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        dish.DishID = Convert.ToInt32(reader["DishID"]);
+                        dish.Name = reader["Name"].ToString();
+                        dish.Proteins = Convert.ToDouble(reader["Proteins"]);
+                        dish.Fats = Convert.ToDouble(reader["Fats"]);
+                        dish.Carbohydrates = Convert.ToDouble(reader["Carbohydrates"]);
+                        dish.Calories = Convert.ToDouble(reader["Calories"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return dish;
+        }
+        public bool DeleteDish(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateDishById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@DishID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        #endregion 
+        #region Illness 3/4
+        public bool AddIllness(Illness illness)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("AddIllness", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@IllnessID", illness.IllnessID);
+                command.Parameters.AddWithValue("@IllnessName", illness.IllnessName);
+                command.Parameters.AddWithValue("@IllnessDescription", illness.IllnessDescription);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        public Illness GetIllness(int IllnessID)
+        {
+            Illness illness = new Illness();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Illness WHERE IllnessID = @IllnessID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@IllnessID", IllnessID);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Чтение данных маршрута из результата запроса
+                        illness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
+                        illness.IllnessName = reader["IllnessName"].ToString();
+                        illness.IllnessDescription = reader["IllnessDescription"].ToString();
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return illness;
+        }
+        public bool DeleteIllness(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("DeleateIllnessById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IllnessID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
+        #endregion 
     }
 }

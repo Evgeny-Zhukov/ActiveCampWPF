@@ -9,17 +9,17 @@ namespace ActiveCamp.BL.Model
     /// <summary>
     /// Блюдо
     /// </summary>
-    internal class Dish
+    public class Dish
     {
         #region Свойства
         /// <summary>
         /// ИД блюда.
         /// </summary>
-        public int DishID { get;}
+        public int DishID { get; set; }
         /// <summary>
         /// Название блюда.
         /// </summary>
-        public string Name { get;}
+        public string Name { get; set; }
         /// <summary>
         /// Белки.
         /// </summary>
