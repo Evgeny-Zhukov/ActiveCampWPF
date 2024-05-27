@@ -19,13 +19,14 @@ namespace ActiveCamp.BL.Model
         public double Length { get; set; }
         public string Difficulty { get; set; }
         public int AuthorId { get; set; }
+        public bool IsPrivate { get; set; }
 
         public Route() 
         { 
         
         }
 
-        public Route(DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, string difficulty)
+        public Route(DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, string difficulty, bool isPrivate)
         {
             this.StartDate = startDate;
             this.EndDate = endDate;
@@ -33,6 +34,7 @@ namespace ActiveCamp.BL.Model
             this.StartPoint = startPoint;
             this.EndPoint = endPoint;
             Difficulty = difficulty;
+            IsPrivate = isPrivate;
         }
 
         public Route(string routeName, int duration, double length, string difficulty, int authorId)

@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DishController.cs" />
-    <Compile Include="Controller\EquipmentController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\ActiveCampDbContext.cs" />
     <Compile Include="Model\Dish.cs" />
