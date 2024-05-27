@@ -64,8 +64,29 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <!--#region News Section -->
+                 <!--#region Chat-Bot -->
+                <TextBox x:Name="Chat_Bot" Grid.Column="2" Margin="5" TextWrapping="Wrap">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border BorderThickness="0" CornerRadius="10"
+                                    ForceCursor="True" x:Name="Chat_Bot_border">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.55"></SolidColorBrush>
+                                </Border.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <ScrollViewer Margin="3" x:Name="PART_ContentHost"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+                <!--#endregion-->
 
+                <!--#region News Section -->
                 <Grid x:Name="News_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                       IsEnabled="False" Visibility="Hidden">
 
