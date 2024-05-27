@@ -105,7 +105,7 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
-            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["records"];
+            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["food_records"];
 
             _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", "Сахар", "Пробное описание", 30, 150));
             _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", "Гречка", "Пробное описание", 40, 200));

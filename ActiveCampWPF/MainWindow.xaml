@@ -17,9 +17,9 @@
     <Window.Resources>
 
         <!--<FT:RecordsOfFoodTablePerPerson x:Key="records"/>-->
-        <FT:RecordsOfFoodTable x:Key="records"/>
+        <FT:RecordsOfFoodTable x:Key="food_records"/>
 
-        <CollectionViewSource x:Key="cvsRecords" Source="{StaticResource records}">
+        <CollectionViewSource x:Key="food_cvsRecords" Source="{StaticResource food_records}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Day"/>
                 <PropertyGroupDescription PropertyName="FoodTime"/>
@@ -36,7 +36,29 @@
                 <PropertyGroupDescription PropertyName="Person"></PropertyGroupDescription>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-        
+
+        <FT:RecordsOfFoodTable x:Key="equipment_records"/>
+
+        <CollectionViewSource x:Key="equipment_cvsRecords" Source="{StaticResource equipment_records}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Day"/>
+                <PropertyGroupDescription PropertyName="FoodTime"/>
+            </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="FoodName"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
+        <FT:RecordsOfFoodTablePerPerson x:Key="recordsOfEquipmentTablePerPerson"/>
+
+        <CollectionViewSource x:Key="cvsRecordsOfEquipmentTablePerPerson" Source="{StaticResource recordsOfEquipmentTablePerPerson}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Person"></PropertyGroupDescription>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+
+
     </Window.Resources>
     
     <Grid x:Name="Background_of_window">
@@ -577,14 +599,14 @@
                             <Setter Property="FontWeight" Value="Bold"></Setter>
                             <Setter Property="FontFamily" Value="TimesNewRoman"></Setter>
                         </Style>
-                        
+
                         <Style x:Key="StyleForTabControl" TargetType="TabControl">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type TabControl}">
                                         <Grid ClipToBounds="True" SnapsToDevicePixels="True" 
                                               KeyboardNavigation.TabNavigation="Local">
-                                            
+
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Name="ColumnDefinition0" />
                                                 <ColumnDefinition Width="0" Name="ColumnDefinition1" />
@@ -595,7 +617,7 @@
                                             </Grid.RowDefinitions>
 
                                             <Border x:Name="HeaderBorder" Background="Transparent">
-                                                
+
                                                 <ItemsControl>
                                                     <TabPanel IsItemsHost="True"
                                                               Name="HeaderPanel" 
@@ -603,7 +625,7 @@
                                                               KeyboardNavigation.TabIndex="1"
                                                               Grid.Column="0" Grid.Row="0"/>
                                                 </ItemsControl>
-                                            
+
                                             </Border>
 
                                             <Grid Name="ContentPanel" 
@@ -611,12 +633,12 @@
                                                   KeyboardNavigation.TabNavigation="Local" 
                                                   KeyboardNavigation.DirectionalNavigation="Contained" 
                                                   Grid.Column="0" Grid.Row="1">
-                                                
+
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="129*"/>
                                                     <ColumnDefinition Width="811*"/>
                                                 </Grid.ColumnDefinitions>
-                                                
+
                                                 <Border Background="AliceBlue" CornerRadius="0,5,5,5" Grid.ColumnSpan="2">
                                                     <ContentPresenter Content="{TemplateBinding SelectedContent}" 
                                                                       ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
@@ -626,7 +648,7 @@
                                                                       Margin="2" 
                                                                       SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                                                 </Border>
-                                            
+
                                             </Grid>
                                         </Grid>
 
@@ -704,7 +726,7 @@
 
                                     <DataGrid Grid.Row="0" x:Name="FoodTable" 
                                               AutoGenerateColumns="False"
-                                              ItemsSource="{Binding Source={StaticResource cvsRecords}}"
+                                              ItemsSource="{Binding Source={StaticResource food_cvsRecords}}"
                                               Background="Transparent"
                                               CanUserReorderColumns="False"
                                               CanUserAddRows="False">
@@ -857,50 +879,79 @@
                         <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
+                                    <DataGrid Grid.Row="0" x:Name="EquipmentTable" 
+                                              AutoGenerateColumns="False"
+                                              ItemsSource="{Binding Source={StaticResource equipment_cvsRecords}}"
+                                              Background="Transparent"
+                                              CanUserReorderColumns="False"
+                                              CanUserAddRows="False">
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="20"></RowDefinition>
-                                        <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="20"></RowDefinition>
-                                        <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="20"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Наименование вещей" Binding="{Binding Path=FoodName}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Кол-во на человека" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Кол-во на группу" Binding="{Binding Path=AmountPerGroup}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path=Description}"></DataGridTextColumn>
+                                        </DataGrid.Columns>
 
-                                    <Label Grid.Row="0" Content="Завтрак:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
-                                    <DataGrid x:Name="ц1" Grid.Row="1" CanUserReorderColumns="False" Background="Transparent"/>
-                                    <Button x:Name="rf" Grid.Row="2" 
-                                            Background="Transparent" BorderBrush="Black" 
-                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
-                                    </Button>
+                                        <DataGrid.GroupStyle>
 
-                                    <Label Grid.Row="3" Content="Обед:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
-                                    <DataGrid x:Name="ц3" Grid.Row="4" CanUserReorderColumns="False" Background="Transparent"/>
-                                    <Button x:Name="re" Grid.Row="5" 
-                                            Background="Transparent" BorderBrush="Black" 
-                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
-                                    </Button>
+                                            <!-- Style for groups at top level. -->
+                                            <GroupStyle>
+                                                <GroupStyle.ContainerStyle>
+                                                    <Style TargetType="{x:Type GroupItem}">
+                                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                                    <Expander IsExpanded="True" Background="Coral" BorderBrush="Coral" Foreground="#FFEEEEEE" BorderThickness="1,1,1,5">
+                                                                        <Expander.Header>
+                                                                            <DockPanel>
+                                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="100"/>
+                                                                                <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
+                                                                            </DockPanel>
+                                                                        </Expander.Header>
+                                                                        <Expander.Content>
+                                                                            <ItemsPresenter>
+                                                                            </ItemsPresenter>
+                                                                        </Expander.Content>
+                                                                    </Expander>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </GroupStyle.ContainerStyle>
+                                            </GroupStyle>
 
-                                    <Label Grid.Row="6" Content="Ужин:" FontSize="16" FontWeight="Bold" FontFamily="TimesNewRoman" Background="Transparent"/>
-                                    <DataGrid x:Name="ц5" Grid.Row="7" CanUserReorderColumns="False" Background="Transparent"/>
-                                    <Button x:Name="ew" Grid.Row="8" 
-                                            Background="Transparent" BorderBrush="Black" 
-                                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                            FontSize="12" FontFamily="TimesnewRoman" Content="Добавить новую строку">
-                                    </Button>
+                                            <!-- Style for groups under the top level. -->
+                                            <GroupStyle>
+                                                <GroupStyle.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <DockPanel Background="Wheat">
+                                                            <TextBlock Text="{Binding Path=Name}" Foreground="Black" Margin="30,0,0,0" Width="100"/>
+                                                            <TextBlock Text="{Binding Path=ItemCount}" Foreground="Black"/>
+                                                        </DockPanel>
+                                                    </DataTemplate>
+                                                </GroupStyle.HeaderTemplate>
+                                            </GroupStyle>
+                                        </DataGrid.GroupStyle>
 
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Setter Property="Foreground" Value="Black" />
+                                            </Style>
+                                        </DataGrid.RowStyle>
+
+                                    </DataGrid>
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
 
                         <TabItem Header="Распределение по участникам" Style="{StaticResource ResourceKey=StyleForTabItem}">
-
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
+                                    
+                                </Grid>
+                            </ScrollViewer>
                         </TabItem>
                     </TabControl>
 

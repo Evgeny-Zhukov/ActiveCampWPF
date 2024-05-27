@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Model
 {
-    public class RecordOfFoodTablePerPerson : INotifyCollectionChanged ,IEditableObject
+    public class RecordOfFoodTablePerPerson : INotifyPropertyChanged ,IEditableObject
     {
         private int _id;
         private string _person;
@@ -102,7 +102,6 @@ namespace ActiveCamp.BL.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         private void NotifyPropertyChanged(string propertyName)
         {
