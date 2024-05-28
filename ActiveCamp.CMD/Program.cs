@@ -30,20 +30,29 @@ namespace ActiveCamp.CMD
                     {
                         Console.WriteLine("Error");
                     }*/
-            string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
-            ActiveCampDbContext db = new ActiveCampDbContext();
-            /*DateTime sd = new DateTime(2024, 4, 2);
-            DateTime ed = DateTime.Now;
-            Console.WriteLine("Введите описание:");
-            string description = "Тут описание";
-            Console.WriteLine("Введите начальную точку:");
-            string sp = "Старт";
-            Console.WriteLine("Введите конечную точку:");
-            string ep = "Финиш";
-            Route route = new Route(sd, ed, description, sp, ep, "А1");*/
-            Route route = db.GetRouteById(26);
-            FoodConsumption foodConsuption = new FoodConsumption(route,1,"Омлет","Завтрак", 1,150,150);
-            db.AddFoodConsumption(foodConsuption);
+            Session userSession = new Session("User");
+            Console.WriteLine($"Initial Session: {userSession.SessionId}, {userSession.LoginTime}");
+
+            // Save session
+            SessionManager.SaveSession(userSession);
+
+            // Load session
+            Session loadedSession = SessionManager.LoadSession();
+            Console.WriteLine($"Loaded Session: {loadedSession.SessionId}, {loadedSession.LoginTime}");
+
+            // Clear session (delete from storage)
+            SessionManager.ClearSession();
+
+            // In-memory objects remain unaffected
+            Console.WriteLine($"Session still in memory: {userSession.SessionId}, {userSession.LoginTime}");
+            Console.WriteLine($"Loaded session still in memory: {loadedSession.SessionId}, {loadedSession.LoginTime}");
+
+            // Attempt to load session after clearing
+            Session afterClearSession = SessionManager.LoadSession();
+            if (afterClearSession == null)
+            {
+                Console.WriteLine("Session file deleted. No session loaded.");
+            }
 
             /*using (SqlConnection connection = new SqlConnection(connectionString))
             {

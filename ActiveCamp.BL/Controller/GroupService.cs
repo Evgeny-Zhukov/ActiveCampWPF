@@ -36,7 +36,7 @@ namespace ActiveCamp.BL.Model
 
             if (user == null)
             {
-                throw new Exception("ПОльзователь не обнаружен");
+                throw new Exception("Пользователь не обнаружен");
             }
 
             group.UserIds.Add(userId);

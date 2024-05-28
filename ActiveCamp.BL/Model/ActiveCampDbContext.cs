@@ -56,6 +56,7 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
 
                 return (bool)successParameter.Value;
+                return (bool)successParameter.Value;
             }
         }
         public bool ValidateUser(string username, string password)

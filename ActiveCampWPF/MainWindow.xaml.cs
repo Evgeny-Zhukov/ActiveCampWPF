@@ -282,6 +282,20 @@ namespace ActiveCampWPF
             } 
         }
 
+        public void ShowMainContent(Session session)
+        {
+            Person_Validate.Visibility = Visibility.Collapsed;
+
+            Main_controls.Visibility = Visibility.Visible;
+
+        }
+
+        public void ShowLoginContent()
+        {
+            Person_Validate.Visibility = Visibility.Visible;
+
+            Main_controls.Visibility = Visibility.Collapsed;
+        }
         private void Window_Initialized(object sender, EventArgs e)
         {
         }

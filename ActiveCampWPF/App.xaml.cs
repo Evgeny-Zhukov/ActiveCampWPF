@@ -18,20 +18,17 @@ namespace ActiveCampWPF
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            //SessionManager.ClearSession();
+            MainWindow mainWindow = new MainWindow();
+            bool sessionLoaded = false;
 
             try
             {
                 Session session = SessionManager.LoadSession();
                 if (session != null)
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Нужно залогиниться");
-                    //LoginWindow loginWindow = new LoginWindow();
-                    //loginWindow.Show();
+                    mainWindow.ShowMainContent(session);
+                    sessionLoaded = true;
                 }
             }
             catch (FileNotFoundException ex)
@@ -46,7 +43,13 @@ namespace ActiveCampWPF
             {
                 MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка загрузки сессии", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
 
+            if (!sessionLoaded)
+            {
+                mainWindow.ShowLoginContent();
+            }
+
+            mainWindow.Show();
+        }
     }
 }
