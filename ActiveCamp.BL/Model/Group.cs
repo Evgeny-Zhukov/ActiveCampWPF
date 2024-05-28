@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Model
 {
-    internal class Group
+    public class Group
     {
-        public int GroupId { get;}
+        public int GroupId { get; set; }
         public int RouteId { get; set; }
         public string InvitationLink { get; set; }
+        public List<int> UserIds { get; set; } = new List<int>();
         public User GroupSupervisor { get;}
         // Добавить роли для участников
 

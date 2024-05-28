@@ -11,7 +11,7 @@ namespace ActiveCamp.BL
         /// <summary>
         /// Id пользователя.
         /// </summary>
-        public int UserID { get; }
+        public int UserID { get; set; }
         /// <summary>
         /// Псевдоним пользователя.
         /// </summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,66 +25,98 @@ namespace ActiveCamp.BL.Model
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
-
-        public bool ValidateCredentials(string username, string password)
+        #region User 2/4
+        public bool RegisterUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Users WHERE Username = @Username AND Password = @Password", connection);
-                using (command)
+                byte[] salt = new byte[16];
+                using (var rng = new RNGCryptoServiceProvider())
                 {
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Password", password);
-                    int count = (int)command.ExecuteScalar();
-                    bool isValid = count > 0;
-                    return isValid;
+                    rng.GetBytes(salt);
                 }
 
-            }
-        }
-        #region User 2/4
-        public bool RegisterUser(User user) // AddUser
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
+                byte[] hash = HashPasswordWithSalt(user.Password, salt);
 
-                SqlCommand command = new SqlCommand("CreateUser", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
-                successParameter.Direction = ParameterDirection.Output;
+                SqlCommand command = new SqlCommand("CreateUser", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Username", user.Username);
+                command.Parameters.AddWithValue("@PasswordHash", hash);
+                command.Parameters.AddWithValue("@Salt", salt);
+
+                SqlParameter successParameter = new SqlParameter("@Success", SqlDbType.Bit)
+                {
+                    Direction = ParameterDirection.Output
+                };
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@username", user.Username);
-                command.Parameters.AddWithValue("Password", user.Password);
+
                 connection.Open();
                 command.ExecuteNonQuery();
-                bool success = (bool)successParameter.Value;
-                return success;
+
+                return (bool)successParameter.Value;
             }
         }
-        public void GetUser(int Id)
+        public bool ValidateUser(string username, string password)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-
-                string sqlQuery = "SELECT * FROM dbo.GetUserById(@UserId)";
-
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                SqlCommand command = new SqlCommand("GetUserByUsername", connection)
                 {
-                    command.Parameters.Add("@UserId", SqlDbType.Int).Value = Id;
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Username", username);
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            int id = Id;
-                            string username = reader.GetString(1);
-                            string password = reader.GetString(2);
-                        }
+                        byte[] storedHash = (byte[])reader["PasswordHash"];
+                        byte[] storedSalt = (byte[])reader["Salt"];
+
+                        byte[] enteredHash = HashPasswordWithSalt(password, storedSalt);
+
+                        return storedHash.SequenceEqual(enteredHash);
                     }
                 }
             }
+
+            return false;
+        }
+        private byte[] HashPasswordWithSalt(string password, byte[] salt)
+        {
+            using (var rfc2898 = new Rfc2898DeriveBytes(password, salt, 10000))
+            {
+                return rfc2898.GetBytes(64);
+            }
+        }
+        public User GetUserById(int userId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand("GetUserById", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@UserID", userId);
+
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new User
+                        {
+                            UserID = (int)reader["UserId"],
+                            Username = reader["Username"].ToString(),
+                        };
+                    }
+                }
+            }
+
+            return null;
         }
         #endregion
         #region Route 4/4
@@ -731,6 +764,77 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        #endregion 
+        #endregion
+        #region Group
+        public Group CreateGroup(int routeId, string invitationLink)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand("CreateGroup", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@RouteID", routeId);
+                command.Parameters.AddWithValue("@InvitationLink", invitationLink);
+
+                var groupIdParam = new SqlParameter("@GroupID", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(groupIdParam);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                int groupId = (int)groupIdParam.Value;
+
+                return new Group { GroupId = groupId, RouteId = routeId, InvitationLink = invitationLink };
+            }
+        }
+
+        public void AddUserToGroup(int groupId, int userId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand("AddUserToGroup", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@GroupId", groupId);
+                command.Parameters.AddWithValue("@UserId", userId);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public List<User> GetUsersInGroup(int groupId)
+        {
+            var users = new List<User>();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand("GetUsersInGroup", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@GroupId", groupId);
+
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        users.Add(new User
+                        {
+                            UserID = (int)reader["UserId"],
+                            Username = reader["UserName"].ToString(),
+                        });
+                    }
+                }
+            }
+
+            return users;
+        }
+        #endregion
     }
 }

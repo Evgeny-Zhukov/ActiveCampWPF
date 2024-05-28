@@ -230,7 +230,6 @@ namespace ActiveCampWPF
         {
 
         }
-
         private void Log_In_button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login_textbox.Text;
@@ -239,7 +238,7 @@ namespace ActiveCampWPF
             User user = new User(username, password);
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
             
-            if (activeCampDbContext.ValidateCredentials(user.Username, user.Password))
+            if (activeCampDbContext.ValidateUser(user.Username, user.Password))
             {
                 Background_of_window.IsEnabled = true;
                 Person_Validate.IsEnabled = false;
@@ -335,7 +334,7 @@ namespace ActiveCampWPF
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text);
+            Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, false);
             activeCampDbContext.AddRoute(NewRoute);
         }
 
