@@ -25,7 +25,7 @@ namespace ActiveCamp.BL.Model
         { 
         
         }
-
+        //TestLogin
         public Route(DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, string difficulty, bool isPrivate)
         {
             this.StartDate = startDate;

@@ -11,7 +11,7 @@ namespace ActiveCamp.BL.Model
     {
         public string Username { get; set; }
         public DateTime LoginTime { get; set; }
-        public Guid SessionId { get; private set; }
+        public Guid SessionId { get; set; }
 
         public Session() { }
         public Session(string username)

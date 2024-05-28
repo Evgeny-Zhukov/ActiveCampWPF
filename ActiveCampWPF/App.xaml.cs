@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-
+// TestLogin
 namespace ActiveCampWPF
 {
     /// <summary>
@@ -18,17 +19,34 @@ namespace ActiveCampWPF
         {
             base.OnStartup(e);
 
-            Session session = SessionManager.LoadSession();
-            if (session != null)
+            try
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                Session session = SessionManager.LoadSession();
+                if (session != null)
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Нужно залогиниться");
+                    //LoginWindow loginWindow = new LoginWindow();
+                    //loginWindow.Show();
+                }
             }
-            else
+            catch (FileNotFoundException ex)
             {
-                //LoginWindow loginWindow = new LoginWindow();
-                //loginWindow.Show();
+                MessageBox.Show($"Файл сессии не найден: {ex.Message}", "Ошибка загрузки сессии", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке сессии: {ex.Message}", "Ошибка загрузки сессии", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Неизвестная ошибка: {ex.Message}", "Ошибка загрузки сессии", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

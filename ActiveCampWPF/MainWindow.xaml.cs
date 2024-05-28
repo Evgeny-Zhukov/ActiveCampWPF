@@ -22,12 +22,9 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        //private User currentUser;   
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -215,7 +212,6 @@ namespace ActiveCampWPF
         {
 
         }
-
         private void Login_textbox_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBox tb = sender as TextBox;
