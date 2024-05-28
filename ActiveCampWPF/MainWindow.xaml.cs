@@ -230,6 +230,7 @@ namespace ActiveCampWPF
         {
 
         }
+        // TestLogin TestPassword
         private void Log_In_button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login_textbox.Text;
@@ -238,7 +239,7 @@ namespace ActiveCampWPF
             User user = new User(username, password);
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
             
-            if (activeCampDbContext.ValidateUser(user.Username, user.Password))
+            if (Login(username, password))
             {
                 Background_of_window.IsEnabled = true;
                 Person_Validate.IsEnabled = false;
@@ -246,8 +247,18 @@ namespace ActiveCampWPF
             }
             else
             {
-                MessageBox.Show($"Incorrect password or login, please, try again.");
+                MessageBox.Show($"Неверный логин или пароль, попробуйте снова");
             }
+        }
+        private bool Login(string username, string password)
+        {
+            var activeCampDbContext = new ActiveCampDbContext();
+            if (activeCampDbContext.ValidateUser(username, password))
+            {
+                SessionManager.CreateSession(username);
+                return true;
+            }
+            return false;
         }
 
         private void Sign_up_button_Click(object sender, RoutedEventArgs e)
