@@ -255,11 +255,20 @@ namespace ActiveCampWPF
             var activeCampDbContext = new ActiveCampDbContext();
             if (activeCampDbContext.ValidateUser(username, password))
             {
-                SessionManager.CreateSession(username);
+                Session session = new Session(username);
+                SessionManager.SaveSession(session);
                 return true;
             }
             return false;
         }
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            SessionManager.ClearSession();
+            //LoginWindow loginWindow = new LoginWindow(); // Тут нужно создать логин окно и вывести его
+            //loginWindow.Show();
+            this.Close();
+        }
+
 
         private void Sign_up_button_Click(object sender, RoutedEventArgs e)
         {

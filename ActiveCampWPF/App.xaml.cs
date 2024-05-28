@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActiveCamp.BL.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,6 +14,21 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class App : Application
     {
-        
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Session session = SessionManager.LoadSession();
+            if (session != null)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+            else
+            {
+                //LoginWindow loginWindow = new LoginWindow();
+                //loginWindow.Show();
+            }
+        }
     }
 }

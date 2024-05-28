@@ -1,28 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ActiveCamp.BL.Model
 {
     public static class SessionManager
     {
-        private static Session _currentSession;
+        private static readonly string FileName = "session.dat";
 
-        public static void CreateSession(string username)
+        public static void SaveSession(Session session)
         {
-            _currentSession = new Session(username);
+            using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly())
+            {
+                using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(FileName, FileMode.Create, isolatedStorage))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Session));
+                    serializer.Serialize(stream, session);
+                }
+            }
         }
 
-        public static Session GetCurrentSession()
+        public static Session LoadSession()
         {
-            return _currentSession;
+            using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly())
+            {
+                if (isolatedStorage.FileExists(FileName))
+                {
+                    using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream(FileName, FileMode.Open, isolatedStorage))
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(Session));
+                        return (Session)serializer.Deserialize(stream);
+                    }
+                }
+            }
+            return null;
         }
 
-        public static void DestroySession()
+        public static void ClearSession()
         {
-            _currentSession = null;
+            using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly())
+            {
+                if (isolatedStorage.FileExists(FileName))
+                {
+                    isolatedStorage.DeleteFile(FileName);
+                }
+            }
         }
     }
 

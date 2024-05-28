@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Model
 {
+    [Serializable]
     public class Session
     {
         public string Username { get; set; }
         public DateTime LoginTime { get; set; }
         public Guid SessionId { get; private set; }
 
+        public Session() { }
         public Session(string username)
         {
             Username = username;
