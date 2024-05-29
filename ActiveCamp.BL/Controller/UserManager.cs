@@ -62,16 +62,7 @@ namespace ActiveCamp.BL.Controller
                 }
             }
         }
-        
-        public static string GenerateSalt()
-        {
-            byte[] saltBytes = new byte[32];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(saltBytes);
-            }
-            return Convert.ToBase64String(saltBytes);
-        }
+
         public User GetUserById(int userId)
         {
             using (var connection = new SqlConnection(_connectionString))
