@@ -13,7 +13,7 @@ namespace ActiveCamp.BL.Model
     // TODO: Можно выгрузить в xml 
     public class ActiveCampDbContext
     {
-        private readonly string connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
         public ActiveCampDbContext()
         {
@@ -26,104 +26,12 @@ namespace ActiveCamp.BL.Model
             return connection;
         }
         #region User 2/4
-        public bool RegisterUser(User user)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                byte[] salt = new byte[16];
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    rng.GetBytes(salt);
-                }
-
-                byte[] hash = HashPasswordWithSalt(user.Password, salt);
-
-                SqlCommand command = new SqlCommand("CreateUser", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@Username", user.Username);
-                command.Parameters.AddWithValue("@PasswordHash", hash);
-                command.Parameters.AddWithValue("@Salt", salt);
-
-                SqlParameter successParameter = new SqlParameter("@Success", SqlDbType.Bit)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                command.Parameters.Add(successParameter);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-
-                return (bool)successParameter.Value;
-                return (bool)successParameter.Value;
-            }
-        }
-        public bool ValidateUser(string username, string password)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand("GetUserByUsername", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@Username", username);
-
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        byte[] storedHash = (byte[])reader["PasswordHash"];
-                        byte[] storedSalt = (byte[])reader["Salt"];
-
-                        byte[] enteredHash = HashPasswordWithSalt(password, storedSalt);
-
-                        return storedHash.SequenceEqual(enteredHash);
-                    }
-                }
-            }
-
-            return false;
-        }
-        private byte[] HashPasswordWithSalt(string password, byte[] salt)
-        {
-            using (var rfc2898 = new Rfc2898DeriveBytes(password, salt, 10000))
-            {
-                return rfc2898.GetBytes(64);
-            }
-        }
-        public User GetUserById(int userId)
-        {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                var command = new SqlCommand("GetUserById", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@UserID", userId);
-
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new User
-                        {
-                            UserID = (int)reader["UserId"],
-                            Username = reader["Username"].ToString(),
-                        };
-                    }
-                }
-            }
-
-            return null;
-        }
+        
         #endregion
         #region Route 4/4
         public bool AddRoute(Route route)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
 
                 SqlCommand command = new SqlCommand("AddRoute", connection);
@@ -147,7 +55,7 @@ namespace ActiveCamp.BL.Model
         {
             Route route = new Route();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM HikingRoutes WHERE RouteId = @Id";
 
@@ -182,7 +90,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool UpdateRoute(Route route)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
 
                 SqlCommand command = new SqlCommand("UpdateRoute", connection);
@@ -203,7 +111,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteRoute(int routeId)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateRouteById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -221,7 +129,7 @@ namespace ActiveCamp.BL.Model
         #region FoodConsumption 3/4
         public bool AddFoodConsumption(FoodConsumption foodConsuption)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddFoodConsumption", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -245,7 +153,7 @@ namespace ActiveCamp.BL.Model
         {
             FoodConsumption foodConsuption = new FoodConsumption();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM HikingRoutes WHERE RouteId = @Id";
 
@@ -280,7 +188,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteFoodConsumption(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateFoodConsumptionById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -298,7 +206,7 @@ namespace ActiveCamp.BL.Model
         #region SyrveyResult 3/4
         public bool AddSurveyResults(Questionnaire questionnaire)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddQuestionnaire", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -318,7 +226,7 @@ namespace ActiveCamp.BL.Model
         {
             Questionnaire questionnaire = new Questionnaire();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Questionnaire WHERE UserId = @UserId AND QuestionId = @QuestionId";
 
@@ -349,7 +257,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteSurveyResults(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateFoodConsumptionById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -367,7 +275,7 @@ namespace ActiveCamp.BL.Model
         #region UserIllness 3/4
         public bool AddUserIllness(Illness illness)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddUserIllness", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -385,7 +293,7 @@ namespace ActiveCamp.BL.Model
         {
             Illness userIllness = new Illness();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM UserIllness WHERE UserID = @UserID AND IllnessID = @IllnessID";
 
@@ -414,7 +322,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteUserIllness(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateUserIllnessById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -432,7 +340,7 @@ namespace ActiveCamp.BL.Model
         #region UserEquipment 3/4
         public bool AddUserEquipment(UserEquipment userEquipment)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddUserEquipment", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -451,7 +359,7 @@ namespace ActiveCamp.BL.Model
         {
             UserEquipment userEquipment = new UserEquipment();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM UserEquipment WHERE UserID = @UserID AND EquipmentID = @EquipmentID";
 
@@ -480,7 +388,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteUserEquipment(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleteUserEquipmentById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -498,7 +406,7 @@ namespace ActiveCamp.BL.Model
         #region UserDish 3/4
         public bool AddUserDish(UserDish userDish)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddUserDishes", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -517,7 +425,7 @@ namespace ActiveCamp.BL.Model
         {
             UserDish userDish = new UserDish();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM UserDishes WHERE UserID = @UserID AND DishesID = @DishesID";
 
@@ -546,7 +454,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteUserDish(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleteUserDishById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -564,7 +472,7 @@ namespace ActiveCamp.BL.Model
         #region Equipment 3/4
         public bool AddEquipment(Equipment equipment)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddEquipment", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -583,7 +491,7 @@ namespace ActiveCamp.BL.Model
         {
             Equipment equipment = new Equipment();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Equipment WHERE equipmentID = @equipmentID";
 
@@ -612,7 +520,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteEquipment(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateEquipmentById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -630,7 +538,7 @@ namespace ActiveCamp.BL.Model
         #region Dish 3/4
         public bool AddDish(Dish dish)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddDish", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -652,7 +560,7 @@ namespace ActiveCamp.BL.Model
         {
             Dish dish = new Dish();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Dish WHERE DishID = @DishID";
 
@@ -684,7 +592,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteDish(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateDishById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -702,7 +610,7 @@ namespace ActiveCamp.BL.Model
         #region Illness 3/4
         public bool AddIllness(Illness illness)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("AddIllness", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -722,7 +630,7 @@ namespace ActiveCamp.BL.Model
         {
             Illness illness = new Illness();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Illness WHERE IllnessID = @IllnessID";
 
@@ -751,7 +659,7 @@ namespace ActiveCamp.BL.Model
         }
         public bool DeleteIllness(int id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand("DeleateIllnessById", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -769,7 +677,7 @@ namespace ActiveCamp.BL.Model
         #region Group
         public Group CreateGroup(int routeId, string invitationLink)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand("CreateGroup", connection)
                 {
@@ -794,7 +702,7 @@ namespace ActiveCamp.BL.Model
 
         public void AddUserToGroup(int groupId, int userId)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand("AddUserToGroup", connection)
                 {
@@ -812,7 +720,7 @@ namespace ActiveCamp.BL.Model
         {
             var users = new List<User>();
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand("GetUsersInGroup", connection)
                 {
@@ -825,11 +733,7 @@ namespace ActiveCamp.BL.Model
                 {
                     while (reader.Read())
                     {
-                        users.Add(new User
-                        {
-                            UserID = (int)reader["UserId"],
-                            Username = reader["UserName"].ToString(),
-                        });
+                        users.Add(new User((int)reader["UserId"], reader["UserName"].ToString()));
                     }
                 }
             }

@@ -11,15 +11,15 @@ namespace ActiveCamp.BL
         /// <summary>
         /// Id пользователя.
         /// </summary>
-        public int UserID { get; set; }
+        public int UserID { get; private set; }
         /// <summary>
         /// Псевдоним пользователя.
         /// </summary>
-        public string Username { get; set; }
+        public string Username { get; private set; }
         /// <summary>
         /// Пароль пользователя.
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; private set; }
         /// <summary>
         /// Имя пользователя.
         /// </summary>
@@ -35,6 +35,17 @@ namespace ActiveCamp.BL
         {
             Username = username ?? throw new ArgumentNullException("Псевдоним пользователя не может быть пустым или null.", nameof(username));
             Password = password ?? throw new ArgumentNullException("Password", nameof(password));
+        }
+        public User(int userID, string username)
+        {
+            Username = username ?? throw new ArgumentNullException("Псевдоним пользователя не может быть пустым или null.", nameof(username));
+            if (userID >0)
+            {
+                UserID = userID;
+            }
+            else
+                throw new ArgumentException("userID", nameof(userID));
+
         }
         /// <summary>
         /// Создает пользователя.

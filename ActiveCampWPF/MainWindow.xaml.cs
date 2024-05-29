@@ -22,6 +22,7 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
         public MainWindow()
         {
             InitializeComponent();
@@ -235,7 +236,7 @@ namespace ActiveCampWPF
             User user = new User(username, password);
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
             
-            if (Login(username, password))
+            if (Login(user))
             {
                 Background_of_window.IsEnabled = true;
                 Person_Validate.IsEnabled = false;
@@ -246,12 +247,12 @@ namespace ActiveCampWPF
                 MessageBox.Show($"Неверный логин или пароль, попробуйте снова");
             }
         }
-        private bool Login(string username, string password)
+        private bool Login(User user)
         {
-            var activeCampDbContext = new ActiveCampDbContext();
-            if (activeCampDbContext.ValidateUser(username, password))
+            var userManager = new UserManager(_connectionString);
+            if (userManager.VerifyUserByLogin(user.Username, user.Password))
             {
-                Session session = new Session(username);
+                Session session = new Session(user.Username);
                 SessionManager.SaveSession(session);
                 return true;
             }
@@ -260,8 +261,6 @@ namespace ActiveCampWPF
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             SessionManager.ClearSession();
-            //LoginWindow loginWindow = new LoginWindow(); // Тут нужно создать логин окно и вывести его
-            //loginWindow.Show();
             this.Close();
         }
 
@@ -272,14 +271,15 @@ namespace ActiveCampWPF
             string password = PasswordBox_UserPassword.Password;
 
             User user = new User(username, password);
-            ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
+            UserManager userManager = new UserManager(_connectionString);
 
-            if (activeCampDbContext.RegisterUser(user))
+            if (userManager.RegisterUser(user))
             {
                 Background_of_window.IsEnabled = true;
                 Person_Validate.IsEnabled = false;
                 Person_Validate.Visibility = Visibility.Hidden;
-            } 
+            }
+            else { MessageBox.Show("ОШИБКА, такой Username уже существует, пожалуйста, выберите другой."); }
         }
 
         public void ShowMainContent(Session session)

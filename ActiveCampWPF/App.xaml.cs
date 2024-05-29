@@ -49,7 +49,7 @@ namespace ActiveCampWPF
                 mainWindow.ShowLoginContent();
             }
 
-            mainWindow.Show();
+            //mainWindow.Show();
         }
     }
 }

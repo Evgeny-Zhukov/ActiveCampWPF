@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controller\DishController.cs" />
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Controller\UserManager.cs" />
     <Compile Include="Model\ActiveCampDbContext.cs" />
     <Compile Include="Model\Dish.cs" />
     <Compile Include="Model\Equipment.cs" />
