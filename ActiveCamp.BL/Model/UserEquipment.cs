@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ActiveCamp.BL.Model
 {
     public class UserEquipment : INotifyPropertyChanged, IEditableObject
     {
         private int _userEquipmentID;
-        private int _equipmentID;
         private string _equipmentName;
+        private int _countOfEquipment;
         private string _equipmentDescription;
-        private string _userID;
+        private int _ownerID;
 
         public int UserEquipmentID 
         { 
@@ -18,12 +19,65 @@ namespace ActiveCamp.BL.Model
                 if(value != this._userEquipmentID)
                 {
                     this._userEquipmentID = value;
-
+                    NotifyPropertyChanged("UserEquipmentID");
                 }
             } 
         }
-        public int UserID { get; set; }
-        public int EquipmentID { get; set; }
+
+        public string EquipmentName
+        {
+            get { return this._equipmentName; }
+            set 
+            { 
+                if(value != this._equipmentName)
+                {
+                    this._equipmentName = value;
+                    NotifyPropertyChanged("EquipmentName");
+                }
+            }
+        }
+
+        public int CountOfEquipment
+        {
+            get
+            {
+                return this._countOfEquipment;
+            }
+            set
+            {
+                if(this._countOfEquipment != value)
+                {
+                    this._countOfEquipment = value;
+                    NotifyPropertyChanged("CountOfEquipment");
+                }
+            }
+        }
+
+        public int OwnerID 
+        { 
+            get { return _ownerID; } 
+            set
+            {
+                if(value != this._ownerID)
+                {
+                    this._ownerID = value;
+                    NotifyPropertyChanged("OwnerID");
+                }
+            }
+        }
+
+        public string EquipmentDescription
+        {
+            get { return _equipmentDescription; }
+            set
+            {
+                if(value != this._equipmentDescription)
+                {
+                    this._equipmentDescription = value;
+                    NotifyPropertyChanged("EquipmentDescription");
+                }
+            } 
+        }
         
         public UserEquipment() { }
 
@@ -53,7 +107,10 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
-                
+                _ownerID = temp_Record.OwnerID;
+                _equipmentName = temp_Record.EquipmentName;
+                _equipmentDescription = temp_Record.EquipmentDescription;
+                _userEquipmentID = temp_Record.UserEquipmentID;
                 m_Editing = false;
             }
         }
@@ -65,5 +122,10 @@ namespace ActiveCamp.BL.Model
                 m_Editing = false;
             }
         }
+    }
+
+    public class RecordsOfEqipmentsTable : ObservableCollection<UserEquipment>
+    {
+
     }
 }

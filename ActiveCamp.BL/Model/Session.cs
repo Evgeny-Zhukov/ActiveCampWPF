@@ -5,17 +5,24 @@ namespace ActiveCamp.BL.Model
     [Serializable]
     public class Session
     {
-        public string Username { get; set; }
-        public DateTime LoginTime { get; set; }
-        public Guid SessionId { get;}
+
+        private string _userName;
+        private DateTime _loginTime;
+        private string _sessionID;
+
+        public string Username { get { return _userName; } set { } }
+        public DateTime LoginTime { get; set; }  
+        public Guid SessionID { get; set; }
 
         public Session() { }
+        
         public Session(string username)
         {
-            Username = username;
+            this._userName = username;
             LoginTime = DateTime.Now;
-            SessionId = Guid.NewGuid(); // Можно создавать любой другой идентификатор
+            SessionID = Guid.NewGuid(); // Можно создавать любой другой идентификатор
         }
+
     }
 
 }

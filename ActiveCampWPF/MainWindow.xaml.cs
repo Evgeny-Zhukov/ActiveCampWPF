@@ -1,17 +1,13 @@
 ﻿using System;
 using ActiveCamp.BL;
-using ActiveCamp.BL.Controller;
 using ActiveCamp.BL.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using ActiveCamp;
 using System.ComponentModel;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Data;
+using ActiveCamp.BL.Controller;
 
 
 
@@ -105,13 +101,13 @@ namespace ActiveCampWPF
 
             RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["food_records"];
 
-            _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", "Сахар", "Пробное описание", 30, 150));
-            _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(0, "Обед", "День 1", "Гречка", "Пробное описание", 30, 300));
-            _records.Add( new RecordOfFoodTable(1, "Завтрак", "День 2", "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(1, "Ужин", "День 2", "Перловка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(2, "Завтрак", "День 3", "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(2, "Обед", "День 3", "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", 1, "Сахар", "Пробное описание", 30, 150));
+            _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", 2, "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(0, "Обед", "День 1", 1, "Гречка", "Пробное описание", 30, 300));
+            _records.Add( new RecordOfFoodTable(1, "Завтрак", "День 2", 1, "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(1, "Ужин", "День 2", 1, "Перловка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(2, "Завтрак", "День 3", 2, "Гречка", "Пробное описание", 40, 200));
+            _records.Add( new RecordOfFoodTable(2, "Обед", "День 3", 1, "Гречка", "Пробное описание", 40, 200));
 
             ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
             if(cvRecords != null && cvRecords.CanGroup == true)
@@ -162,6 +158,10 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
             TabControlOfEquipmentInfo.IsEnabled = true;
 
+            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["equipment_cvsRecords"];
+            equipments.Add(new UserEquipment());
+            equipments.Add(new UserEquipment());
+
         }
         
         private void Equipment_Unchecked(object sender, RoutedEventArgs e)
@@ -182,6 +182,8 @@ namespace ActiveCampWPF
 
             MainInfoAboutHiking.Visibility = Visibility.Visible;
             MainInfoAboutHiking.IsEnabled = true;
+
+
         }
 
         private void HikingInfo_Unchecked(object sender, RoutedEventArgs e)
@@ -258,6 +260,7 @@ namespace ActiveCampWPF
             }
             return false;
         }
+
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             SessionManager.ClearSession();
@@ -282,6 +285,7 @@ namespace ActiveCampWPF
             else { MessageBox.Show("ОШИБКА, такой Username уже существует, пожалуйста, выберите другой."); }
         }
 
+        //-- Добавление параметра сессии
         public void ShowMainContent(Session session)
         {
             Person_Validate.Visibility = Visibility.Collapsed;
@@ -289,6 +293,7 @@ namespace ActiveCampWPF
             Main_controls.Visibility = Visibility.Visible;
 
         }
+        //--
 
         public void ShowLoginContent()
         {
@@ -298,6 +303,7 @@ namespace ActiveCampWPF
         }
         private void Window_Initialized(object sender, EventArgs e)
         {
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

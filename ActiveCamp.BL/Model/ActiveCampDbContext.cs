@@ -334,6 +334,7 @@ namespace ActiveCamp.BL.Model
         }
         #endregion
         #region UserEquipment 3/4
+        
         public bool AddUserEquipment(UserEquipment userEquipment)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -343,8 +344,8 @@ namespace ActiveCamp.BL.Model
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
-                command.Parameters.AddWithValue("@UserID", userEquipment.UserID);
+                command.Parameters.AddWithValue("@UserEquipmentID", userEquipment.UserEquipmentID);
+                command.Parameters.AddWithValue("@OwnerID", userEquipment.OwnerID);
                 connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -370,8 +371,8 @@ namespace ActiveCamp.BL.Model
                     if (reader.Read())
                     {
                         // Чтение данных маршрута из результата запроса
-                        userEquipment.EquipmentID = Convert.ToInt32(reader["EquipmentID"]);
-                        userEquipment.UserID = Convert.ToInt32(reader["UserID"]);
+                        userEquipment.UserEquipmentID = Convert.ToInt32(reader["UserEquipmentID "]);
+                        userEquipment.OwnerID = Convert.ToInt32(reader["OwnerID"]);
                     }
                     reader.Close();
                 }
