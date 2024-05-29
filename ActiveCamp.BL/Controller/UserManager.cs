@@ -94,22 +94,6 @@ namespace ActiveCamp.BL.Controller
 
             return null;
         }
-
-        public void UpdatePassword(int userId, string newPassword)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand("UpdateUserPassword", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@UserID", userId);
-                command.Parameters.AddWithValue("@NewPassword", newPassword);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
     }
 
 }

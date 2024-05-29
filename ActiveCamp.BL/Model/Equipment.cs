@@ -1,5 +1,4 @@
-﻿using ActiveCamp.BL;
-using System;
+﻿using System;
 
 namespace ActiveCamp
 {
