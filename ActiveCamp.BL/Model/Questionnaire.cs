@@ -35,7 +35,7 @@ namespace ActiveCamp.BL.Model
             ActiveCampDbContext db = new ActiveCampDbContext();
             foreach (var answer in userAnswers)
             {
-                var questionnaire = new Questionnaire
+                Questionnaire questionnaire = new Questionnaire
                 {
                     QuestionId = this.QuestionId,
                     QuestionText = this.QuestionText,

@@ -65,16 +65,16 @@ namespace ActiveCamp.BL.Controller
 
         public User GetUserById(int userId)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("GetUserById", connection)
+                SqlCommand command = new SqlCommand("GetUserById", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@UserID", userId);
 
                 connection.Open();
-                using (var reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {

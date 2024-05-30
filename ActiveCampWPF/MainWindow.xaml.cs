@@ -249,7 +249,7 @@ namespace ActiveCampWPF
         }
         private bool Login(User user)
         {
-            var userManager = new UserManager(_connectionString);
+            UserManager userManager = new UserManager(_connectionString);
             if (userManager.VerifyUserByLogin(user.Username, user.Password))
             {
                 Session session = new Session(user.Username);

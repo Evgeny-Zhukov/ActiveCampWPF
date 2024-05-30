@@ -673,16 +673,16 @@ namespace ActiveCamp.BL.Model
         #region Group
         public Group CreateGroup(int routeId, string invitationLink)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("CreateGroup", connection)
+                SqlCommand command = new SqlCommand("CreateGroup", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@RouteID", routeId);
                 command.Parameters.AddWithValue("@InvitationLink", invitationLink);
 
-                var groupIdParam = new SqlParameter("@GroupID", SqlDbType.Int)
+                SqlParameter groupIdParam = new SqlParameter("@GroupID", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
@@ -698,9 +698,9 @@ namespace ActiveCamp.BL.Model
 
         public void AddUserToGroup(int groupId, int userId)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("AddUserToGroup", connection)
+                SqlCommand command = new SqlCommand("AddUserToGroup", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -714,18 +714,18 @@ namespace ActiveCamp.BL.Model
 
         public List<User> GetUsersInGroup(int groupId)
         {
-            var users = new List<User>();
+            List<User> users = new List<User>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = new SqlCommand("GetUsersInGroup", connection)
+                SqlCommand command = new SqlCommand("GetUsersInGroup", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@GroupId", groupId);
 
                 connection.Open();
-                using (var reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {

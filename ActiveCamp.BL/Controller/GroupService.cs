@@ -14,7 +14,7 @@ namespace ActiveCamp.BL.Model
 
         public Group CreateGroup(int routeId, string invitationLink)
         {
-            var newGroup = new Group
+            Group newGroup = new Group
             {
                 RouteId = routeId,
                 InvitationLink = invitationLink
@@ -26,8 +26,8 @@ namespace ActiveCamp.BL.Model
 
         public void AddUserToGroup(int groupId, int userId)
         {
-            var group = groups.FirstOrDefault(g => g.GroupId == groupId);
-            var user = users.FirstOrDefault(u => u.UserID == userId);
+            Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
+            User user = users.FirstOrDefault(u => u.UserID == userId);
 
             if (group == null)
             {
@@ -51,7 +51,7 @@ namespace ActiveCamp.BL.Model
 
         public List<User> GetUsersInGroup(int groupId)
         {
-            var group = groups.FirstOrDefault(g => g.GroupId == groupId);
+            Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
 
             if (group == null)
             {
