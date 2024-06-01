@@ -99,6 +99,7 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
+
             RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["food_records"];
 
             _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", 1, "Сахар", "Пробное описание", 30, 150));
@@ -137,6 +138,7 @@ namespace ActiveCampWPF
 
             FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
 
+
         }
 
         private void Food_ToggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -158,9 +160,20 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
             TabControlOfEquipmentInfo.IsEnabled = true;
 
-            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["equipment_cvsRecords"];
-            equipments.Add(new UserEquipment());
-            equipments.Add(new UserEquipment());
+
+            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["equipment_records"];
+            
+            equipments.Add(new UserEquipment(1, "отверкта", 1, 1.0, 1, ""));
+            equipments.Add(new UserEquipment(1, "Зажишалка", 1, 0.4, 1, ""));
+
+            ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
+            if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
+            {
+                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerID"));
+            }
+
+            EquipmentTable.ItemsSource = cvRecordOfEquipment;
+
 
         }
         
@@ -182,8 +195,6 @@ namespace ActiveCampWPF
 
             MainInfoAboutHiking.Visibility = Visibility.Visible;
             MainInfoAboutHiking.IsEnabled = true;
-
-
         }
 
         private void HikingInfo_Unchecked(object sender, RoutedEventArgs e)
@@ -206,6 +217,7 @@ namespace ActiveCampWPF
                 To = 0,
                 Duration = new Duration(TimeSpan.Parse("0:0:0.5"))
             };
+
             MainMenuPanel.BeginAnimation(Grid.WidthProperty, MenuCloseAnimation);
             MainMenuPanel.Focusable = false;
             MainMenuPanel.Visibility = Visibility.Hidden;

@@ -8,6 +8,7 @@ namespace ActiveCamp.BL.Model
         private int _userEquipmentID;
         private string _equipmentName;
         private int _countOfEquipment;
+        private double _wightOfEquipment;
         private string _equipmentDescription;
         private int _ownerID;
 
@@ -53,6 +54,16 @@ namespace ActiveCamp.BL.Model
             }
         }
 
+        public double WightOfEquipment
+        {
+            get { return this._wightOfEquipment;}
+            set
+            {
+                this._wightOfEquipment = value;
+                NotifyPropertyChanged("WightOfEquipment");
+            }
+        }
+
         public int OwnerID 
         { 
             get { return _ownerID; } 
@@ -80,6 +91,16 @@ namespace ActiveCamp.BL.Model
         }
         
         public UserEquipment() { }
+
+        public UserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string equipmentDescription) 
+        { 
+            this._userEquipmentID = userEquipmentID;
+            this._equipmentName = equipmentName;
+            this._countOfEquipment = countOfEquipment;
+            this._wightOfEquipment= wightOfEquipment;
+            this._ownerID = ownerID;
+            this._equipmentDescription = equipmentDescription;
+        }
 
         private UserEquipment temp_Record = null;
         private bool m_Editing = false;
@@ -111,6 +132,9 @@ namespace ActiveCamp.BL.Model
                 _equipmentName = temp_Record.EquipmentName;
                 _equipmentDescription = temp_Record.EquipmentDescription;
                 _userEquipmentID = temp_Record.UserEquipmentID;
+                _wightOfEquipment = temp_Record.WightOfEquipment;
+                _countOfEquipment = temp_Record.CountOfEquipment;
+
                 m_Editing = false;
             }
         }

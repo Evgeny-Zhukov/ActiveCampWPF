@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ActiveCampWPF"
-        xmlns:EFT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:FT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:ET="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Active Camp" 
@@ -16,7 +17,7 @@
     <Window.Resources>
 
         <!--<FT:RecordsOfFoodTablePerPerson x:Key="records"/>-->
-        <EFT:RecordsOfFoodTable x:Key="food_records"/>
+        <FT:RecordsOfFoodTable x:Key="food_records"/>
 
         <CollectionViewSource x:Key="food_cvsRecords" Source="{StaticResource food_records}">
             <CollectionViewSource.GroupDescriptions>
@@ -28,7 +29,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <EFT:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"/>
+        <FT:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"/>
         
         <CollectionViewSource x:Key="cvsRecordsOfFoodTablePerPerson" Source="{StaticResource recordsOfFoodTablePerPerson}">
             <CollectionViewSource.GroupDescriptions>
@@ -36,15 +37,14 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
 
-        <EFT:RecordsOfFoodTable x:Key="equipment_records"/>
-
+        <ET:RecordsOfFoodTable x:Key="equipment_records"/>
+        
         <CollectionViewSource x:Key="equipment_cvsRecords" Source="{StaticResource equipment_records}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Day"/>
-                <PropertyGroupDescription PropertyName="FoodTime"/>
+                <PropertyGroupDescription PropertyName="OwnerID"/>
             </CollectionViewSource.GroupDescriptions>
             <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="FoodName"/>
+                <scm:SortDescription PropertyName="OwnerID"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
@@ -913,10 +913,11 @@
                                               CanUserAddRows="False">
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Наименование вещей" Binding="{Binding Path=FoodName}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Кол-во на человека" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Кол-во на группу" Binding="{Binding Path=AmountPerGroup}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path=Description}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Владелец" Binding="{Binding Path=OwnerID}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Наименование вещи" Binding="{Binding Path=EquipmentName}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Количество" Binding="{Binding Path=CountOfEquipment}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Вес" Binding="{Binding Path=WightOfEquipment}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Описание" Binding="{Binding Path=EquipmentDescription}"></DataGridTextColumn>
                                         </DataGrid.Columns>
 
                                         <DataGrid.GroupStyle>
