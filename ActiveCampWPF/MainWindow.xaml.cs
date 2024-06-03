@@ -100,7 +100,7 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
 
-            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["food_records"];
+            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
 
             _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", 1, "Сахар", "Пробное описание", 30, 150));
             _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", 2, "Гречка", "Пробное описание", 40, 200));
@@ -154,27 +154,26 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.Visibility = Visibility.Hidden;
 
             HikingInfo.IsChecked = false;
-            MainInfoAboutHiking.Visibility = Visibility.Hidden;
             MainInfoAboutHiking.IsEnabled = false;
+            MainInfoAboutHiking.Visibility = Visibility.Hidden;
 
-            TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
             TabControlOfEquipmentInfo.IsEnabled = true;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
 
-            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["equipment_records"];
+            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
             
-            equipments.Add(new UserEquipment(1, "отверкта", 1, 1.0, 1, ""));
-            equipments.Add(new UserEquipment(1, "Зажишалка", 1, 0.4, 1, ""));
+            equipments.Add(new RecordOfUserEquipment(1, "отверетка", 1, 1.0, 1, ""));
+            equipments.Add(new RecordOfUserEquipment(1, "Зажишалка", 1, 0.4, 1, ""));
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
             {
+                cvRecordOfEquipment.GroupDescriptions.Clear();
                 cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerID"));
             }
 
             EquipmentTable.ItemsSource = cvRecordOfEquipment;
-
-
         }
         
         private void Equipment_Unchecked(object sender, RoutedEventArgs e)
@@ -313,6 +312,7 @@ namespace ActiveCampWPF
 
             Main_controls.Visibility = Visibility.Collapsed;
         }
+
         private void Window_Initialized(object sender, EventArgs e)
         {
 
@@ -389,6 +389,10 @@ namespace ActiveCampWPF
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+        private void AI_agent_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
     }

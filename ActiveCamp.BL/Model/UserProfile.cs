@@ -10,7 +10,7 @@ namespace ActiveCamp.BL.Model
         public float height { get; set; }
         public string gender { get; set; }
         public List<UserIllness> userIllnesses { get; set; }
-        public List<UserEquipment> UserEquipment { get; set; }
+        public List<RecordOfUserEquipment> UserEquipment { get; set; }
         public List<UserDish> userFoodConsumptions { get; set; }
         public string experience { get; set; }
         public UserProfile() { }

@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ActiveCampWPF"
-        xmlns:FT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
-        xmlns:ET="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
+        xmlns:EFT="clr-namespace:ActiveCamp.BL.Model;assembly=ActiveCamp.BL"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="Active Camp" 
@@ -16,36 +15,41 @@
 
     <Window.Resources>
 
-        <!--<FT:RecordsOfFoodTablePerPerson x:Key="records"/>-->
-        <FT:RecordsOfFoodTable x:Key="food_records"/>
+        <EFT:RecordsOfEqipmentsTable x:Key="recordsOfEqipmentsTable"/>
+        <EFT:RecordsOfFoodTable x:Key="foodRecords"/>
+        <EFT:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"/>
 
-        <CollectionViewSource x:Key="food_cvsRecords" Source="{StaticResource food_records}">
+        <CollectionViewSource x:Key="recordsOfEqipmentsTable_cvs" Source="{StaticResource recordsOfEqipmentsTable}">
+
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="OwnerID"/>
+            </CollectionViewSource.GroupDescriptions>
+
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="OwnerID"/>
+            </CollectionViewSource.SortDescriptions>
+
+        </CollectionViewSource>
+
+        <CollectionViewSource x:Key="food_cvsRecords" Source="{StaticResource foodRecords}">
+
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Day"/>
                 <PropertyGroupDescription PropertyName="FoodTime"/>
             </CollectionViewSource.GroupDescriptions>
+
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="FoodName"/>
             </CollectionViewSource.SortDescriptions>
+
         </CollectionViewSource>
 
-        <FT:RecordsOfFoodTablePerPerson x:Key="recordsOfFoodTablePerPerson"/>
-        
         <CollectionViewSource x:Key="cvsRecordsOfFoodTablePerPerson" Source="{StaticResource recordsOfFoodTablePerPerson}">
+
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Person"></PropertyGroupDescription>
             </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
 
-        <ET:RecordsOfFoodTable x:Key="equipment_records"/>
-        
-        <CollectionViewSource x:Key="equipment_cvsRecords" Source="{StaticResource equipment_records}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="OwnerID"/>
-            </CollectionViewSource.GroupDescriptions>
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="OwnerID"/>
-            </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
     </Window.Resources>
@@ -75,29 +79,40 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <!--#region AI Agent -->
-                <TextBox x:Name="Chat_Bot" Grid.Column="2" Margin="10" TextWrapping="Wrap">
-                    <TextBox.Template>
-                        <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border BorderThickness="0" CornerRadius="10"
-                                    ForceCursor="True" x:Name="Chat_Bot_border">
+                <!--#region AI Agent control element -->
+
+                <Button x:Name="AI_agent" Grid.Column="2" Click="AI_agent_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="AI_agent_border" CornerRadius="10" Margin="5">
                                 <Border.Background>
-                                    <SolidColorBrush Color="White" Opacity="0.55"></SolidColorBrush>
+                                    <SolidColorBrush Color="White" Opacity="0.65"></SolidColorBrush>
                                 </Border.Background>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition Width="60"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <ScrollViewer Margin="3" x:Name="PART_ContentHost"/>
+                                <Grid Margin="7">
+                                    <TextBlock x:Name="AI_agent_NotyficationTextblock"></TextBlock>
                                 </Grid>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="AI_agent_border" Property="BorderBrush" Value="Gray"></Setter>
+                                        <Setter TargetName="AI_agent_border" Property="Cursor" Value="Hand"/>
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="AI_agent_border" Property="Opacity" Value="0.75"></Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
-                    </TextBox.Template>
-                </TextBox>
+                    </Button.Template>
+                </Button>
+
                 <!--#endregion-->
 
                 <!--#region News Section -->
+                
                 <Grid x:Name="News_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                       IsEnabled="False" Visibility="Hidden">
 
@@ -163,97 +178,100 @@
                         <ColumnDefinition Width="300"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+  
+                    <!--#region Main form of hiking list-->
+                        <ListBox x:Name="HikkingList" Grid.Column="0" Grid.Row="1" Margin="0,0,0,55"
+                             IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
+                            <ListBox.Background>
+                                <SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>
+                            </ListBox.Background>
+                            <ListBox.Template>
+                                <ControlTemplate TargetType="{x:Type ListBox}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="10,0,0,0">
+                                        <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
+                                            <ItemsControl>
+                                                <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                        </ListBox>
 
-                    <!-- Hikking List -->
-                    <ListBox x:Name="HikkingList" Grid.Column="0" Grid.Row="1" Margin="0,0,0,55"
-                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
-                        <ListBox.Background>
-                            <SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>
-                        </ListBox.Background>
-                        <ListBox.Template>
-                            <ControlTemplate TargetType="{x:Type ListBox}">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="10,0,0,0">
-                                    <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
-                                        <ItemsControl>
-                                            <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
-                                        </ItemsControl>
-                                    </ScrollViewer>
-                                </Border>
-                            </ControlTemplate>
-                        </ListBox.Template>
-                    </ListBox>
-
-                    <!-- "add new hikking" button -->
-                    <Button x:Name="AddNewHikking"
-                            Grid.Column="0" Grid.Row="0" Margin="0,0,0,5" 
-                            Height="50" VerticalAlignment="Bottom" Click="AddNewHikking_Click">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border x:Name="BorderOfAddNewHiikingButton" BorderBrush="Black" BorderThickness="0" CornerRadius="0,0,0,10">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
-                                    </Border.Background>
-                                    <Grid>
-                                        <Grid Width="35" Height="35" Margin="0,0,25,0"
-                                          HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <Path Stroke="Black" StrokeThickness="4">
-                                                <Path.Data>
-                                                    <PathGeometry>
-                                                        <PathFigure StartPoint="18,7" IsClosed="False">
-                                                            <LineSegment Point="18,29"></LineSegment>
-                                                        </PathFigure>
-                                                        <PathFigure StartPoint="7,17">
-                                                            <LineSegment Point="29,17"></LineSegment>
-                                                        </PathFigure>
-                                                    </PathGeometry>
-                                                </Path.Data>
-                                            </Path>
+                        <!-- "Add new hikking" button -->
+                        
+                        <Button x:Name="AddNewHikking"
+                                Grid.Column="0" Grid.Row="0" Margin="0,0,0,5" 
+                                Height="50" VerticalAlignment="Bottom" Click="AddNewHikking_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="BorderOfAddNewHiikingButton" BorderBrush="Black" BorderThickness="0" CornerRadius="0,0,0,10">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="AliceBlue" Opacity="0.55"></SolidColorBrush>
+                                        </Border.Background>
+                                        <Grid>
+                                            <Grid Width="35" Height="35" Margin="0,0,25,0"
+                                              HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <Path Stroke="Black" StrokeThickness="4">
+                                                    <Path.Data>
+                                                        <PathGeometry>
+                                                            <PathFigure StartPoint="18,7" IsClosed="False">
+                                                                <LineSegment Point="18,29"></LineSegment>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="7,17">
+                                                                <LineSegment Point="29,17"></LineSegment>
+                                                            </PathFigure>
+                                                        </PathGeometry>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Grid>
+                                            <Label Content="Добавить запись" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   FontFamily="TimesNewRoman" FontSize="22" FontWeight="Bold" 
+                                                   Width="200"></Label>
                                         </Grid>
-                                        <Label Content="Добавить запись" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               FontFamily="TimesNewRoman" FontSize="22" FontWeight="Bold" 
-                                               Width="200"></Label>
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Trigger.Setters>
-                                            <Setter TargetName="BorderOfAddNewHiikingButton" Property="BorderBrush" Value="Gray"></Setter>
-                                            <Setter TargetName="BorderOfAddNewHiikingButton" Property="Cursor" Value="Hand"/>
-                                        </Trigger.Setters>
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="true">
-                                        <Trigger.Setters>
-                                            <Setter TargetName="BorderOfAddNewHiikingButton" Property="Opacity" Value="0.75"></Setter>
-                                        </Trigger.Setters>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.Setters>
+                                                <Setter TargetName="BorderOfAddNewHiikingButton" Property="BorderBrush" Value="Gray"></Setter>
+                                                <Setter TargetName="BorderOfAddNewHiikingButton" Property="Cursor" Value="Hand"/>
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Trigger.Setters>
+                                                <Setter TargetName="BorderOfAddNewHiikingButton" Property="Opacity" Value="0.75"></Setter>
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
-                    <!-- Hikking description -->
-                    <RichTextBox x:Name="Discription_of_Hikking" Grid.Column="1" Grid.Row="0" Margin="0,0,5,5"
-                        FontSize="14" FontWeight="Bold"
-                        IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
-                        <RichTextBox.Background>
-                            <SolidColorBrush Color="Azure" Opacity="0.85"></SolidColorBrush>
-                        </RichTextBox.Background>
-                        <RichTextBox.Template>
-                            <ControlTemplate TargetType="{x:Type RichTextBox}">
-                                <Border Background="{TemplateBinding Background}" BorderThickness="0" BorderBrush="Black" CornerRadius="0,20,20,0">
-                                    <ScrollViewer Margin="10" x:Name="PART_ContentHost"/>
-                                </Border>
-                            </ControlTemplate>
-                        </RichTextBox.Template>
-                        <FlowDocument>
-                            <Paragraph>
-                                <Run Text=""/>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
+                        <!-- Hikking description -->
+                        <RichTextBox x:Name="Discription_of_Hikking" Grid.Column="1" Grid.Row="0" Margin="0,0,5,5"
+                            FontSize="14" FontWeight="Bold"
+                            IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
+                            <RichTextBox.Background>
+                                <SolidColorBrush Color="Azure" Opacity="0.85"></SolidColorBrush>
+                            </RichTextBox.Background>
+                            <RichTextBox.Template>
+                                <ControlTemplate TargetType="{x:Type RichTextBox}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="0" BorderBrush="Black" CornerRadius="0,20,20,0">
+                                        <ScrollViewer Margin="10" x:Name="PART_ContentHost"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </RichTextBox.Template>
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Run Text=""/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
 
-
-                    <!-- form of new trip request -->
+                    <!--#endregion-->
+                    
+                    <!--#region Form of new trip request -->
+                    
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
@@ -319,6 +337,7 @@
                                 </Button>
 
                                 <Grid Grid.Row="1" Grid.Column="0">
+                                    
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="250"></RowDefinition>
@@ -438,110 +457,118 @@
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
+                                    
                                 </Grid>
+                            
                             </Grid>
+                        
                         </ScrollViewer>
                     </Border>
+                    
+                    <!--#endregion-->
+                    
+                    <!--#region Quit from creating new hiking process-->
+                        
+                        <Rectangle Grid.Column="0" Grid.ColumnSpan="2"
+                                   Fill="Black" Opacity="0.75" 
+                                   Visibility="{Binding Visibility, ElementName=CancelAprooving}"
+                                   IsEnabled="{Binding IsEnabled, ElementName=CancelAprooving}"></Rectangle>
+                        <Border x:Name="BorderOfCancelAproovingform" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="10"
+                                Width="300" Height="200"
+                                Visibility="Hidden" IsEnabled="False">
+                            <Border.Background>
+                                <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
+                            </Border.Background>
+                            <Grid x:Name="CancelAprooving" Margin="10"
+                                  Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
+                                  IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
 
+                                <Button x:Name="ContinueButton" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Margin="2" Content="Продолжить"
+                                        Width="100" Height="20" Click="ContinueButton_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="ButtonYesBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
+                                                    VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                    Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                                    Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
+                                                    IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
+                                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                                  VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="ButtonYesBorder" Property="BorderBrush" Value="Gray"></Setter>
+                                                        <Setter TargetName="ButtonYesBorder" Property="Cursor" Value="Hand"/>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="ButtonYesBorder" Property="Opacity" Value="0.75"></Setter>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
 
-                    <!-- Question window -->
-                    <Rectangle Grid.Column="0" Grid.ColumnSpan="2"
-                               Fill="Black" Opacity="0.75" 
-                               Visibility="{Binding Visibility, ElementName=CancelAprooving}"
-                               IsEnabled="{Binding IsEnabled, ElementName=CancelAprooving}"></Rectangle>
-                    <Border x:Name="BorderOfCancelAproovingform" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="10"
-                            Width="300" Height="200"
-                            Visibility="Hidden" IsEnabled="False">
-                        <Border.Background>
-                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-                        <Grid x:Name="CancelAprooving" Margin="10"
-                              Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
-                              IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="50"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                            </Grid.RowDefinitions>
+                                <Button x:Name="CancelButton" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
+                                        Margin="2" Content="Отменить" Width="100" Height="20" 
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Click="CancelButton_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="ButtonContinueBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
+                                                    VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                    Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                                    Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
+                                                    IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
+                                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                                  VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="ButtonContinueBorder" Property="BorderBrush" Value="Gray"></Setter>
+                                                        <Setter TargetName="ButtonContinueBorder" Property="Cursor" Value="Hand"/>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Trigger.Setters>
+                                                        <Setter TargetName="ButtonContinueBorder" Property="Opacity" Value="0.75"></Setter>
+                                                    </Trigger.Setters>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
 
-                            <Button x:Name="ContinueButton" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    Margin="2" Content="Продолжить"
-                                    Width="100" Height="20" Click="ContinueButton_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="ButtonYesBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
-                                                VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
-                                                Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
-                                                IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
-                                            <ContentPresenter Content="{TemplateBinding Content}"
-                                                              VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="ButtonYesBorder" Property="BorderBrush" Value="Gray"></Setter>
-                                                    <Setter TargetName="ButtonYesBorder" Property="Cursor" Value="Hand"/>
-                                                </Trigger.Setters>
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="ButtonYesBorder" Property="Opacity" Value="0.75"></Setter>
-                                                </Trigger.Setters>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <Button x:Name="CancelButton" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" 
-                                    Margin="2" Content="Отменить" Width="100" Height="20" 
-                                    HorizontalAlignment="Right" VerticalAlignment="Center"
-                                    Click="CancelButton_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="ButtonContinueBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="10"
-                                                VerticalAlignment="{TemplateBinding VerticalAlignment}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
-                                                Visibility="{Binding Visibility, ElementName=BorderOfCancelAproovingform}"
-                                                IsEnabled="{Binding IsEnabled, ElementName=BorderOfCancelAproovingform}">
-                                            <ContentPresenter Content="{TemplateBinding Content}"
-                                                              VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="ButtonContinueBorder" Property="BorderBrush" Value="Gray"></Setter>
-                                                    <Setter TargetName="ButtonContinueBorder" Property="Cursor" Value="Hand"/>
-                                                </Trigger.Setters>
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="ButtonContinueBorder" Property="Opacity" Value="0.75"></Setter>
-                                                </Trigger.Setters>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,15,0,0"
-                                       Height="120" Width="170" Text="Желаете прервать процесс создания заявки? Введенные данные будут утрачены"
-                                       TextWrapping="Wrap"
-                                       VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                       FontSize="14" FontWeight="Bold"></TextBlock>
-                        </Grid>
-                    </Border>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,15,0,0"
+                                           Height="120" Width="170" Text="Желаете прервать процесс создания заявки? Введенные данные будут утрачены"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                                           FontSize="14" FontWeight="Bold"></TextBlock>
+                            </Grid>
+                        </Border>
+                    <!--#endregion-->
+                
                 </Grid>
 
                 <!--#endregion-->
 
                 <!--#region Prepering for Hikking Section-->
+                
                 <Grid x:Name="PreperingForHiking" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                       Visibility="Visible" IsEnabled="True">
@@ -682,8 +709,8 @@
                     </Grid.Resources>
 
                     <!-- Workplaces -->
-                    
-                    <!-- Main info of hiking -->
+
+                    <!-- #region Main info of hiking -->
                     <Grid x:Name="MainInfoAboutHiking" Grid.Column="1" IsEnabled="True" Visibility="Visible">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"></ColumnDefinition>
@@ -729,12 +756,13 @@
                         </RichTextBox>
 
                     </Grid>
+                    <!--#endregion-->
 
-                    <!-- Food info -->
+                    <!-- #region Food info -->
 
                     <TabControl x:Name="TabControlOfFoodInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
                                 IsEnabled="False" Visibility="Hidden">
-                        
+
                         <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
@@ -742,7 +770,7 @@
                                     <Grid.RowDefinitions>
 
                                         <RowDefinition></RowDefinition>
-                                        
+
                                     </Grid.RowDefinitions>
 
                                     <DataGrid Grid.Row="0" x:Name="FoodTable" 
@@ -753,10 +781,12 @@
                                               CanUserAddRows="False">
 
                                         <DataGrid.Columns>
+
                                             <DataGridTextColumn Header="Наименование пищи" Binding="{Binding Path=FoodName}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Гр. на человека" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Гр. на Группу" Binding="{Binding Path=AmountPerGroup}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path=Description}"></DataGridTextColumn>
+
                                         </DataGrid.Columns>
 
                                         <DataGrid.GroupStyle>
@@ -813,7 +843,7 @@
                         </TabItem>
 
                         <TabItem Header="Распределение по участникам" Style="{StaticResource ResourceKey=StyleForTabItem}">
-                            
+
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
 
@@ -866,18 +896,6 @@
                                                 </GroupStyle.ContainerStyle>
                                             </GroupStyle>
 
-                                            <!-- Style for groups under the top level. -->
-                                            <!--<GroupStyle>
-                                                <GroupStyle.HeaderTemplate>
-                                                    <DataTemplate>
-                                                        <DockPanel Background="Wheat">
-                                                            <TextBlock Text="{Binding Path=Name}" Foreground="Black" Margin="30,0,0,0" Width="100"/>
-                                                            <TextBlock Text="{Binding Path=ItemCount}" Foreground="Black"/>
-                                                        </DockPanel>
-                                                    </DataTemplate>
-                                                </GroupStyle.HeaderTemplate>
-                                            </GroupStyle>-->
-                                            
                                         </DataGrid.GroupStyle>
 
                                         <DataGrid.RowStyle>
@@ -888,13 +906,15 @@
 
                                     </DataGrid>
                                 </Grid>
-                            
+
                             </ScrollViewer>
-                            
+
                         </TabItem>
                     </TabControl>
+
+                    <!--#endregion-->
                     
-                    <!-- Equipment info -->
+                    <!-- #region Equipment info -->
 
                     <TabControl x:Name="TabControlOfEquipmentInfo" Grid.Column="1" Style="{StaticResource ResourceKey=StyleForTabControl}" Margin="5"
                                 IsEnabled="False" Visibility="Hidden">
@@ -907,7 +927,7 @@
 
                                     <DataGrid Grid.Row="0" x:Name="EquipmentTable" 
                                               AutoGenerateColumns="False"
-                                              ItemsSource="{Binding Source={StaticResource equipment_cvsRecords}}"
+                                              ItemsSource="{Binding Source={StaticResource recordsOfEqipmentsTable_cvs}}"
                                               Background="Transparent"
                                               CanUserReorderColumns="False"
                                               CanUserAddRows="False">
@@ -955,20 +975,6 @@
 
                                             </GroupStyle>
 
-                                            <!-- Style for groups under the top level. -->
-                                            <GroupStyle>
-
-                                                <GroupStyle.HeaderTemplate>
-                                                    <DataTemplate>
-                                                        <DockPanel Background="Wheat">
-                                                            <TextBlock Text="{Binding Path=Name}" Foreground="Black" Margin="30,0,0,0" Width="100"/>
-                                                            <TextBlock Text="{Binding Path=ItemCount}" Foreground="Black"/>
-                                                        </DockPanel>
-                                                    </DataTemplate>
-                                                </GroupStyle.HeaderTemplate>
-
-                                            </GroupStyle>
-
                                         </DataGrid.GroupStyle>
 
                                         <DataGrid.RowStyle>
@@ -986,8 +992,10 @@
                         </TabItem>
 
                     </TabControl>
-
-                    <!-- Instrumental grid -->
+                    
+                    <!--#endregion-->
+                    
+                    <!-- #region Instrumental grid -->
                     <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"></RowDefinition>
@@ -1118,9 +1126,9 @@
                         </ToggleButton>
                     </Grid>
                 </Grid>
-                <!--</Grid>-->
-
-
+                
+                <!--#endregion-->
+                
                 <!--#endregion-->
 
                 <!--#region Settings Section -->
@@ -1392,6 +1400,101 @@
                             Click="EquipmentButton_Click"></Button>
                     <Button Grid.Column="0" Grid.Row="4" Content="Настройки" Style="{StaticResource ResourceKey=MenuListButtonStyle}"
                             Click="SettingButton_Click"></Button>
+                </Grid>
+
+                <!--#endregion-->
+
+                <!--#region AI Agent menu -->
+
+                <Grid x:Name="AgentMenu_grid" Grid.ColumnSpan="3" Grid.RowSpan="2"
+                      IsEnabled="True" Visibility="Visible">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="720"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle x:Name="BackOfAgentMenu" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Black" Opacity="0.9"></SolidColorBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <Rectangle x:Name="FrontOfAgentMenu" Grid.Column="1" Grid.Row="1"
+                               RadiusX="25" RadiusY="25">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Orange"></SolidColorBrush>
+                        </Rectangle.Fill>    
+                    </Rectangle>
+
+                    <Grid x:Name="FrontOfAgentMenu_grid" Grid.Column="1" Grid.Row="1"
+                          Margin="15">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="60"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- "Back" button -->
+                        <Button x:Name="BackFromAgentMenuButton" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                 Width="40" Height="40" Click="BackFromCreatingWindow_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="BackFromAgentMenuButton_border" 
+                                            Background="Transparent"
+                                            BorderBrush="Black" BorderThickness="1" CornerRadius="20"
+                                            Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                                        <Grid x:Name="FieldOfBackFromAgentMenuButton">
+                                            <Path x:Name="ArrowIcon" Stroke="Black" StrokeThickness="3">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="4,18" IsClosed="False">
+                                                            <LineSegment Point="27,18"></LineSegment>
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="18,10" IsClosed="False">
+                                                            <LineSegment Point="29,18"></LineSegment>
+                                                            <LineSegment Point="18,26"></LineSegment>
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.Setters>
+                                                <Setter TargetName="BackFromAgentMenuButton_border" Property="BorderBrush" Value="Gray"></Setter>
+                                                <Setter TargetName="ArrowIcon" Property="Stroke" Value="DarkGray"></Setter>
+                                                <Setter TargetName="BackFromAgentMenuButton_border" Property="Cursor" Value="Hand"/>
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Trigger.Setters>
+                                                <Setter TargetName="BackFromAgentMenuButton_border" Property="Opacity" Value="0.75"></Setter>
+                                                <Setter TargetName="FieldOfBackFromAgentMenuButton" Property="Opacity" Value="0.75"/>
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                    </Grid>
+
                 </Grid>
 
                 <!--#endregion-->

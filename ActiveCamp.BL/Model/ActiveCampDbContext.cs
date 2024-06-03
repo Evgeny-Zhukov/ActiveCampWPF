@@ -336,7 +336,7 @@ namespace ActiveCamp.BL.Model
         #endregion
         #region UserEquipment 3/4
         
-        public bool AddUserEquipment(UserEquipment userEquipment)
+        public bool AddUserEquipment(RecordOfUserEquipment userEquipment)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -353,9 +353,9 @@ namespace ActiveCamp.BL.Model
                 return success;
             }
         }
-        public UserEquipment GetUserEquipment(int EquipmentID, int UserID)
+        public RecordOfUserEquipment GetUserEquipment(int EquipmentID, int UserID)
         {
-            UserEquipment userEquipment = new UserEquipment();
+            RecordOfUserEquipment userEquipment = new RecordOfUserEquipment();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

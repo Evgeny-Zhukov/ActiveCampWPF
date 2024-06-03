@@ -65,7 +65,7 @@
     <Compile Include="Model\GroupMembership.cs" />
     <Compile Include="Controller\GroupService.cs" />
     <Compile Include="Model\Questionnaire.cs" />
-    <Compile Include="Model\FoodTables.cs" />
+    <Compile Include="Model\FoodAndEquipmentTables.cs" />
     <Compile Include="Model\FoodConsumption.cs" />
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\Group.cs" />
@@ -75,7 +75,6 @@
     <Compile Include="Controller\SessionManager.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Illness.cs" />
-    <Compile Include="Model\UserEquipment.cs" />
     <Compile Include="Model\UserDish.cs" />
     <Compile Include="Model\UserIllness.cs" />
     <Compile Include="Model\UserProfile.cs" />
