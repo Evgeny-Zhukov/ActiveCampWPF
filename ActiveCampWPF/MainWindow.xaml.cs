@@ -93,8 +93,8 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = false;
 
             HikingInfo.IsChecked = false;
-            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
-            TabControlOfFoodInfo.IsEnabled = false;
+            MainInfoAboutHiking.Visibility = Visibility.Hidden;
+            MainInfoAboutHiking.IsEnabled = false;
 
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;

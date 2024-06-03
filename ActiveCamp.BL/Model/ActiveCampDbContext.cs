@@ -21,6 +21,7 @@ namespace ActiveCamp.BL.Model
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
+
         #region User 2/4
         
         #endregion
