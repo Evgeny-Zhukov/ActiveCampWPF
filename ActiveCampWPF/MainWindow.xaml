@@ -1407,7 +1407,7 @@
                 <!--#region AI Agent menu -->
 
                 <Grid x:Name="AgentMenu_grid" Grid.ColumnSpan="3" Grid.RowSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
