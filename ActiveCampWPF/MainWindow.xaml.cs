@@ -8,6 +8,7 @@ using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Windows.Data;
 using ActiveCamp.BL.Controller;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 
 
@@ -87,7 +88,8 @@ namespace ActiveCampWPF
         
         #region  Prepering_for_Hiking
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
+        { 
+
             Equipment.IsChecked = false;
             TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
             TabControlOfEquipmentInfo.IsEnabled = false;
@@ -99,6 +101,10 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
+            AddNewRecordInFoodTable.IsEnabled = true;
+            AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+
+            ////////////////////////////////////////////////////////////////////////////////////
 
             RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
 
@@ -145,6 +151,9 @@ namespace ActiveCampWPF
         {
             TabControlOfFoodInfo.IsEnabled = false;
             TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+
+            AddNewRecordInFoodTable.IsEnabled = false;
+            AddNewRecordInFoodTable.Visibility = Visibility.Hidden;
         }
 
         private void Equipment_Checked(object sender, RoutedEventArgs e)
@@ -160,6 +169,10 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = true;
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
+            AddNewRecordInEquipmentTable.IsEnabled = true;
+            AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
+
+            ////////////////////////////////////////////////////////////////////////////////////
 
             RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
             
@@ -180,6 +193,9 @@ namespace ActiveCampWPF
         {
             TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
             TabControlOfEquipmentInfo.IsEnabled = false;
+
+            AddNewRecordInEquipmentTable.IsEnabled = true;
+            AddNewRecordInEquipmentTable.Visibility = Visibility.Hidden;
         }
         
         private void HikingInfo_Checked(object sender, RoutedEventArgs e)
@@ -200,6 +216,42 @@ namespace ActiveCampWPF
         {
             MainInfoAboutHiking.Visibility = Visibility.Hidden;
             MainInfoAboutHiking.IsEnabled = false;
+        }
+
+        private void AddNewRecordInEquipmentTable_Click(object sender, RoutedEventArgs e)
+        {
+            MenuButton.IsEnabled = false;
+            MenuButton.Visibility = Visibility.Hidden;
+
+            HeaderOfSection.IsEnabled = false;
+            HeaderOfSection.Visibility = Visibility.Hidden;
+
+            CreateNewRecord_grid.IsEnabled = true;
+            CreateNewRecord_grid.Visibility = Visibility.Visible;
+
+            EquipmentOwnersList.IsEnabled = true;
+            EquipmentOwnersList.Visibility = Visibility.Visible;
+
+            EquipmentDataFillingForm.IsEnabled = true;
+            EquipmentDataFillingForm.Visibility = Visibility.Visible;
+        }
+
+        private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
+        {
+            MenuButton.IsEnabled = false;
+            MenuButton.Visibility = Visibility.Hidden;
+            
+            HeaderOfSection.IsEnabled = false; 
+            HeaderOfSection.Visibility = Visibility.Hidden;
+
+            CreateNewRecord_grid.IsEnabled = true;
+            CreateNewRecord_grid.Visibility = Visibility.Visible;
+
+            DaysList.IsEnabled = true;
+            DaysList.Visibility = Visibility.Visible;
+
+            FoodDataFillingForm.IsEnabled = true;
+            FoodDataFillingForm.Visibility = Visibility.Visible;
         }
 
         #endregion
@@ -390,10 +442,34 @@ namespace ActiveCampWPF
         {
 
         }
+
+        #region AI Agent 
+        
         private void AI_agent_Click(object sender, RoutedEventArgs e)
         {
             
+            Main_controls.IsEnabled = false;
+            
+            AgentMenu_grid.IsEnabled = true;
+            AgentMenu_grid.Visibility = Visibility.Visible;
+        
+        }
+        
+        private void BackFromAgentMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            AgentMenu_grid.IsEnabled = false;
+            AgentMenu_grid.Visibility= Visibility.Hidden;
+
+            Main_controls.IsEnabled= true;
+
         }
 
+        #endregion
+
+        private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
