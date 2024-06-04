@@ -2,24 +2,25 @@
 using System.Data;
 using System.Security.Cryptography;
 using System;
+using ActiveCamp.BL.Model;
 
 namespace ActiveCamp.BL.Controller
 {
     public class UserManager
     {
-        private readonly string _connectionString;
-
-        public UserManager(string connectionString)
+        private ActiveCampDbContext dbContext;
+        private SqlConnection _connection;
+        public UserManager()
         {
-            _connectionString = connectionString;
+            dbContext = new ActiveCampDbContext();
+            _connection = dbContext.GetSqlConnection();
         }
-
         public bool RegisterUser(User user)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
 
-                SqlCommand command = new SqlCommand("CreateUser", connection)
+                SqlCommand command = new SqlCommand("CreateUser", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -32,7 +33,7 @@ namespace ActiveCamp.BL.Controller
                 };
                 command.Parameters.Add(successParameter);
 
-                connection.Open();
+                _connection.Open();
                 command.ExecuteNonQuery();
                 
                 return (bool)successParameter.Value;
@@ -40,9 +41,9 @@ namespace ActiveCamp.BL.Controller
         }
         public bool VerifyUserByLogin(string username, string password)
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (_connection)
             {
-                using (SqlCommand cmd = new SqlCommand("VerifyUserByLogin", conn))
+                using (SqlCommand cmd = new SqlCommand("VerifyUserByLogin", _connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -55,25 +56,24 @@ namespace ActiveCamp.BL.Controller
                     };
                     cmd.Parameters.Add(isLoginSuccessfulParam);
 
-                    conn.Open();
+                    _connection.Open();
                     cmd.ExecuteNonQuery();
 
                     return (bool)isLoginSuccessfulParam.Value;
                 }
             }
         }
-
         public User GetUserById(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
-                SqlCommand command = new SqlCommand("GetUserById", connection)
+                SqlCommand command = new SqlCommand("GetUserById", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@UserID", userId);
 
-                connection.Open();
+                _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -84,6 +84,22 @@ namespace ActiveCamp.BL.Controller
             }
 
             return null;
+        }
+        public bool DeleteUser(int id)
+        {
+            using (_connection)
+            {
+                SqlCommand command = new SqlCommand("DeleteUserById", _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@userID", id);
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                _connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
         }
     }
 

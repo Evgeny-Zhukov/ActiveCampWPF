@@ -163,8 +163,8 @@ namespace ActiveCampWPF
 
             RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
             
-            equipments.Add(new RecordOfUserEquipment(1, "отверетка", 1, 1.0, 1, ""));
-            equipments.Add(new RecordOfUserEquipment(1, "Зажишалка", 1, 0.4, 1, ""));
+            equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, ""));
+            equipments.Add(new RecordOfUserEquipment(1, "Зажигалка", 1, 0.4, 1, ""));
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
@@ -262,7 +262,7 @@ namespace ActiveCampWPF
         }
         private bool Login(User user)
         {
-            UserManager userManager = new UserManager(_connectionString);
+            UserManager userManager = new UserManager();
             if (userManager.VerifyUserByLogin(user.Username, user.Password))
             {
                 Session session = new Session(user.Username);
@@ -285,7 +285,7 @@ namespace ActiveCampWPF
             string password = PasswordBox_UserPassword.Password;
 
             User user = new User(username, password);
-            UserManager userManager = new UserManager(_connectionString);
+            UserManager userManager = new UserManager();
 
             if (userManager.RegisterUser(user))
             {
@@ -381,9 +381,9 @@ namespace ActiveCampWPF
 
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
-            ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
+            RouteManager routeManager = new RouteManager();
             Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, false);
-            activeCampDbContext.AddRoute(NewRoute);
+            routeManager.AddRoute(NewRoute);
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

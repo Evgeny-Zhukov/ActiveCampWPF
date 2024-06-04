@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActiveCamp.BL.Controller;
+using System;
 using System.Collections.Generic;
 
 namespace ActiveCamp.BL.Model
@@ -32,7 +33,7 @@ namespace ActiveCamp.BL.Model
         }
         private void SaveAnswersToDatabase(List<Tuple<int, int>> userAnswers)
         {
-            ActiveCampDbContext db = new ActiveCampDbContext();
+            SyrveyManager sm = new SyrveyManager();
             foreach (var answer in userAnswers)
             {
                 Questionnaire questionnaire = new Questionnaire
@@ -42,7 +43,7 @@ namespace ActiveCamp.BL.Model
                     UserId = answer.Item1,
                     Rating = answer.Item2
                 };
-                db.AddSurveyResults(questionnaire);
+                sm.AddSurveyResults(questionnaire);
             }
         }
     }
