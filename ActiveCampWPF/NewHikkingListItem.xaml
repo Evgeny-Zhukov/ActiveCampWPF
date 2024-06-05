@@ -7,22 +7,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="45" d:DesignWidth="280">
     <Grid>
+        
         <Grid.RowDefinitions>
+            <RowDefinition Height="15"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="60"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button x:Name="NewsButton" Grid.Column="0" Grid.ColumnSpan="2">
+        
+        <Button x:Name="NewsButton" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            
             <Button.Template>
+                
                 <ControlTemplate TargetType="Button">
+                    
                     <Border x:Name="NewsButtonBorder" BorderBrush="Black" BorderThickness="0" CornerRadius="10">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
                         <ContentPresenter Content="{TemplateBinding Content}"></ContentPresenter>
                     </Border>
+                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
@@ -36,13 +45,19 @@
                             </Trigger.Setters>
                         </Trigger>
                     </ControlTemplate.Triggers>
+                
                 </ControlTemplate>
+            
             </Button.Template>
+        
         </Button>
         
-        <ToggleButton x:Name="FavouriteFlag" Grid.Column="1" IsChecked="False">
+        <ToggleButton x:Name="FavouriteFlag" Grid.Column="2" Grid.RowSpan="2" IsChecked="False">
+            
             <ToggleButton.Template>
+                
                 <ControlTemplate TargetType="ToggleButton">
+                    
                     <Border x:Name="FavouriteFlagBorder" HorizontalAlignment="Center" VerticalAlignment="Top"
                             Width="40" Height="40">
                         <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
@@ -60,6 +75,7 @@
                             </Path>
                         </Grid>
                     </Border>
+                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
@@ -86,8 +102,32 @@
                             </Trigger.Setters>
                         </Trigger>
                     </ControlTemplate.Triggers>
+                
                 </ControlTemplate>
+           
             </ToggleButton.Template>
+        
         </ToggleButton>
+
+        <Path x:Name="MarkOfAdminMassage" Stroke="Black" Fill="Black" StrokeThickness="0.5" Width="13" Height="13"
+              VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="Hidden">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="6,2" IsClosed="True" IsFilled="True">
+                        <LineSegment Point="5,5"></LineSegment>
+                        <LineSegment Point="2,5"></LineSegment>
+                        <LineSegment Point="4,7"></LineSegment>
+                        <LineSegment Point="3,10"></LineSegment>
+                        <LineSegment Point="6,8"></LineSegment>
+                        <LineSegment Point="9,10"></LineSegment>
+                        <LineSegment Point="8,7"></LineSegment>
+                        <LineSegment Point="10,5"></LineSegment>
+                        <LineSegment Point="7,5"></LineSegment>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+
     </Grid>
+    
 </UserControl>
