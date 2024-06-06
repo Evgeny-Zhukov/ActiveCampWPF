@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
     public class RecordOfUserEquipment : INotifyPropertyChanged, IEditableObject
     {
         private int _userEquipmentID;
-        private int _equipmentID;
         private string _equipmentName;
         private int _countOfEquipment;
         private double _wightOfEquipment;
@@ -23,18 +23,7 @@ namespace ActiveCamp.BL.Model
                 {
                     this._userEquipmentID = value;
                     NotifyPropertyChanged("UserEquipmentID");
-                }
-            }
-        }
-        public int EquipmentID
-        {
-            get { return this._equipmentID; }
-            set
-            {
-                if (value != this._equipmentID)
-                {
-                    this._equipmentID = value;
-                    NotifyPropertyChanged("EquipmentID");
+                    
                 }
             }
         }
@@ -120,7 +109,6 @@ namespace ActiveCamp.BL.Model
 
         public RecordOfUserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string ownerName,string equipmentDescription)
         {
-            this._equipmentID = equipmentID;
             this._userEquipmentID = userEquipmentID;
             this._equipmentName = equipmentName;
             this._countOfEquipment = countOfEquipment;
@@ -135,12 +123,9 @@ namespace ActiveCamp.BL.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged(string propertyName)
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void BeginEdit()
@@ -310,12 +295,9 @@ namespace ActiveCamp.BL.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged(string propertyName)
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void BeginEdit()

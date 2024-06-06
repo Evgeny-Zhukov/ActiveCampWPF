@@ -176,7 +176,7 @@ namespace ActiveCampWPF
             RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
             
             equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, "Zurav", ""));
-            equipments.Add(new RecordOfUserEquipment(1, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
+            equipments.Add(new RecordOfUserEquipment(2, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)

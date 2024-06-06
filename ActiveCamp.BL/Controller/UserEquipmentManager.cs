@@ -1,5 +1,6 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -23,7 +24,6 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
                 command.Parameters.AddWithValue("@EquipmentName", userEquipment.EquipmentName);
                 command.Parameters.AddWithValue("@CountOfEquipment", userEquipment.CountOfEquipment);
                 command.Parameters.AddWithValue("@WightOfEquipment", userEquipment.WightOfEquipment);
@@ -35,6 +35,41 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
+        public bool AddUserEquipment(List<RecordOfUserEquipment> userEquipment)
+        {
+            bool allSuccess = true;
+            using (_connection)
+            {
+                _connection.Open();
+                foreach (RecordOfUserEquipment item in userEquipment)
+                {
+                    using (SqlCommand command = new SqlCommand("AddUserEquipment", _connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                        successParameter.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(successParameter);
+
+                        command.Parameters.AddWithValue("@EquipmentName", item.EquipmentName);
+                        command.Parameters.AddWithValue("@CountOfEquipment", item.CountOfEquipment);
+                        command.Parameters.AddWithValue("@WightOfEquipment", item.WightOfEquipment);
+                        command.Parameters.AddWithValue("@OwnerID", item.OwnerID);
+                        command.Parameters.AddWithValue("@EquipmentDescription", item.EquipmentDescription);
+
+                        command.ExecuteNonQuery();
+
+                        bool success = (bool)successParameter.Value;
+                        if (!success)
+                        {
+                            allSuccess = false;
+                        }
+                    }
+                }
+            }
+            return allSuccess;
+        }
+
         public RecordOfUserEquipment GetUserEquipment(int EquipmentID, int UserID)
         {
             RecordOfUserEquipment userEquipment = new RecordOfUserEquipment();
@@ -81,16 +116,16 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public int GetUserEquipmentID(UserEquipment userEquipment)
+        public int GetUserEquipmentID(RecordOfUserEquipment userEquipment)
         {
             int userEquipmentID = -1;
             using (_connection)
             {
-                string query = "SELECT * FROM UserEquipment WHERE EquipmentID = @EquipmentID AND UserID = @UserID";
+                string query = "SELECT * FROM UserEquipment WHERE UserEquipmentID = @UserEquipmentID AND UserID = @UserID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
-                command.Parameters.AddWithValue("@UserID", userEquipment.UserID); 
+                command.Parameters.AddWithValue("@UserEquipmentID", userEquipment.UserEquipmentID);
+                command.Parameters.AddWithValue("@UserID", userEquipment.OwnerID); 
                 try
                 {
                     _connection.Open();
@@ -114,5 +149,11 @@ namespace ActiveCamp.BL.Controller
             }
             return userEquipmentID;
         }
+        public List<RecordOfUserEquipment> CreateList()
+        {
+            List<RecordOfUserEquipment> list = new List<RecordOfUserEquipment>();
+            return list;
+        }
+        
     }
 }

@@ -58,11 +58,11 @@ namespace ActiveCamp.BL.Model
         /// Устанавливает идентификатор снаряжения пользователя.
         /// </summary>
         /// <param name="equipmentID">Идентификатор снаряжения</param>
-        public void SetIllnessId(UserEquipment userEquipment)
+        /*public void SetIllnessId(UserEquipment userEquipment)
         {
             UserEquipmentManager userEquipmentManager = new UserEquipmentManager();
             int userEquipmentID = userEquipmentManager.GetUserEquipmentID(userEquipment);
             UserEquipmentId = userEquipmentID;
-        }
+        }*/
     }
 }

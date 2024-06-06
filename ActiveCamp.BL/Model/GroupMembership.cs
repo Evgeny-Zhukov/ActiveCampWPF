@@ -6,11 +6,6 @@ namespace ActiveCamp.BL.Model
     {
         #region Свойства
         /// <summary>
-        /// ИД членства в группе.
-        /// </summary>
-        public int GroupMembershipId { get; private set; }
-
-        /// <summary>
         /// ИД группы.
         /// </summary>
         public int GroupId { get; private set; }
@@ -90,14 +85,6 @@ namespace ActiveCamp.BL.Model
         /// </summary>
         /// <param name="groupMembershipId">ИД членства в группе</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        internal void SetGroupMembershipId(int groupMembershipId)
-        {
-            if (groupMembershipId <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(groupMembershipId), "ID членства в группе должен быть положительным числом.");
-            }
-            GroupMembershipId = groupMembershipId;
-        }
     }
 
 }
