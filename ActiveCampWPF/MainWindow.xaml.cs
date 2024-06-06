@@ -18,7 +18,9 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        
         public MainWindow()
         {
             InitializeComponent();
