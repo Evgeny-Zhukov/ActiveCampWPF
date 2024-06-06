@@ -55,14 +55,14 @@ namespace ActiveCamp.BL.Controller
                     if (reader.Read())
                     {
                         // Чтение данных маршрута из результата запроса
-                        route.RouteId = Convert.ToInt32(reader["RouteId"]);
-                        route.RouteName = reader["RouteName"].ToString();
-                        route.Description = reader["Description"].ToString();
-                        route.StartDate = Convert.ToDateTime(reader["StartDate"]);
-                        route.EndDate = Convert.ToDateTime(reader["EndDate"]);
-                        route.StartPoint = reader["StartPoint"].ToString();
-                        route.EndPoint = reader["EndPoint"].ToString();
-                        route.Difficulty = reader["Difficulty"].ToString();
+                        route.SetRouteId(route);
+                        route.SetRouteName(reader["RouteName"].ToString());
+                        route.SetDescription(reader["Description"].ToString());
+                        route.SetStartDate(Convert.ToDateTime(reader["StartDate"]));
+                        route.SetEndDate(Convert.ToDateTime(reader["EndDate"]));
+                        route.SetStartPoint(reader["StartPoint"].ToString());
+                        route.SetEndPoint(reader["EndPoint"].ToString());
+                        route.SetDifficulty(reader["Difficulty"].ToString());
                     }
                     reader.Close();
                 }
@@ -109,6 +109,38 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
+        }
+        public int GetRouteID(Route route)
+        {
+            int routeID = -1;
+            using (_connection)
+            {
+                string query = "SELECT * FROM HikingRoutes WHERE RouteName = @RouteName";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@RouteName", route.RouteName);
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        routeID = Convert.ToInt32(reader["RouteID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+
+            }
+            if (routeID <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(routeID), "ID маршрута должен быть положительным числом.");
+            }
+            return routeID;
         }
     }
 }

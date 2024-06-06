@@ -23,8 +23,11 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@UserEquipmentID", userEquipment.UserEquipmentID);
+                command.Parameters.AddWithValue("@EquipmentName", userEquipment.EquipmentName);
+                command.Parameters.AddWithValue("@CountOfEquipment", userEquipment.CountOfEquipment);
+                command.Parameters.AddWithValue("@WightOfEquipment", userEquipment.WightOfEquipment);
                 command.Parameters.AddWithValue("@OwnerID", userEquipment.OwnerID);
+                command.Parameters.AddWithValue("@EquipmentDescription", userEquipment.EquipmentDescription);
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -76,6 +79,39 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
+        }
+        public int GetUserEquipmentID(UserEquipment userEquipment)
+        {
+            int userEquipmentID = -1;
+            using (_connection)
+            {
+                string query = "SELECT * FROM UserEquipment WHERE EquipmentID = @EquipmentID AND UserID = @UserID";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
+                command.Parameters.AddWithValue("@UserID", userEquipment.UserID); 
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userEquipmentID = Convert.ToInt32(reader["UserEquipmentID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+
+            }
+            if (userEquipmentID <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(userEquipmentID), "ID снаряжения пользователя должен быть положительным числом.");
+            }
+            return userEquipmentID;
         }
     }
 }

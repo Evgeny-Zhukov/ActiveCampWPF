@@ -5,15 +5,15 @@ using System.Data.SqlClient;
 
 namespace ActiveCamp.BL.Controller
 {
-    public class EquipmentManager
+    internal class GenderManager
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
 
         /// <summary>
-        /// Создает экземпляр EquipmentManager и устанавливает соединение с базой данных.
+        /// Создает экземпляр GenderManager и устанавливает соединение с базой данных.
         /// </summary>
-        public EquipmentManager()
+        public GenderManager()
         {
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
@@ -167,5 +167,4 @@ namespace ActiveCamp.BL.Controller
             return equipmentID;
         }
     }
-
 }

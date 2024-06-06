@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ActiveCamp.BL.Controller;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace ActiveCamp.BL.Model
 {
@@ -12,32 +15,39 @@ namespace ActiveCamp.BL.Model
         /// <summary>
         /// ИД блюда.
         /// </summary>
-        public int DishID { get; set; }
+        public int DishID {  get; private set; }
+
         /// <summary>
         /// Название блюда.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// Белки.
         /// </summary>
-        public double Proteins { get; set; }
+        public double Proteins { get; private set; }
         /// <summary>
         /// Жиры.
         /// </summary>
-        public double Fats { get; set; }
+        public double Fats { get; private set; }
         /// <summary>
         /// Углеводы.
         /// </summary>
-        public double Carbohydrates { get; set; }
+        public double Carbohydrates { get; private set; }
         /// <summary>
         /// Калории.
         /// </summary>
-        public double Calories { get; set; }
+        public double Calories { get; private set; }
 
         public virtual ICollection<Dish> DishList { get; set; }
 
         #endregion
-        public Dish() { }
+        private ActiveCampDbContext dbContext;
+        private SqlConnection _connection;
+        public Dish() 
+        {
+            dbContext = new ActiveCampDbContext();
+            _connection = dbContext.GetSqlConnection();
+        }
         public Dish(string name) : this(name, 0, 0, 0, 0) { }
         /// <summary>
         /// Создает блюдо
@@ -51,6 +61,8 @@ namespace ActiveCamp.BL.Model
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public Dish(string name, double proteins, double fats, double carbohydrates, double calories)
         {
+            dbContext = new ActiveCampDbContext();
+            _connection = dbContext.GetSqlConnection();
             Name = name ?? throw new ArgumentNullException("Название блюда не может быть пустым или NULL", nameof(name));
             if (proteins <= 0)
             {
@@ -68,6 +80,57 @@ namespace ActiveCamp.BL.Model
             {
                 throw new ArgumentOutOfRangeException("Количество калорий должно быть положительным числом и не равен нулю.", nameof(calories));
             }
+        }
+
+        public void SetName(string name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name), "Название блюда не может быть пустым или NULL");
+        }
+
+        public void SetProteins(double proteins)
+        {
+            if (proteins < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(proteins), "Количество белков должно быть неотрицательным числом.");
+            }
+            Proteins = proteins;
+        }
+
+        public void SetFats(double fats)
+        {
+            if (fats < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(fats), "Количество жиров должно быть неотрицательным числом.");
+            }
+            Fats = fats;
+        }
+
+        public void SetCarbohydrates(double carbohydrates)
+        {
+            if (carbohydrates < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(carbohydrates), "Количество углеводов должно быть неотрицательным числом.");
+            }
+            Carbohydrates = carbohydrates;
+        }
+
+        public void SetCalories(double calories)
+        {
+            if (calories < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(calories), "Количество калорий должно быть неотрицательным числом.");
+            }
+            Calories = calories;
+        }
+        public void SetDishID(Dish dish)
+        {
+            DishManager dishManager = new DishManager();
+            int dishID = dishManager.GetDishID(dish);
+            DishID = dishID;
+        }
+        public override string ToString()
+        {
+            return $"DishID: {DishID}, Name: {Name}, Proteins: {Proteins}g, Fats: {Fats}g, Carbohydrates: {Carbohydrates}g, Calories: {Calories}kcal";
         }
     }
 }

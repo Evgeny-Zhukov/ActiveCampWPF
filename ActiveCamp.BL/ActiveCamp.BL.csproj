@@ -60,6 +60,7 @@
     <Compile Include="Controller\DishManager.cs" />
     <Compile Include="Controller\EquipmentManager.cs" />
     <Compile Include="Controller\FoodConsumptionManager.cs" />
+    <Compile Include="Controller\GenderManager.cs" />
     <Compile Include="Controller\IllnessManager.cs" />
     <Compile Include="Controller\RouteManager.cs" />
     <Compile Include="Controller\SyrveyManager.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Controller\UserEquipmentManager.cs" />
     <Compile Include="Controller\UserIllnessManager.cs" />
     <Compile Include="Controller\UserManager.cs" />
-    <Compile Include="Model\ActiveCampDbContext.cs" />
+    <Compile Include="Controller\ActiveCampDbContext.cs" />
     <Compile Include="Model\Dish.cs" />
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\GroupMembership.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Illness.cs" />
     <Compile Include="Model\UserDish.cs" />
+    <Compile Include="Model\UserEquipment.cs" />
     <Compile Include="Model\UserIllness.cs" />
     <Compile Include="Model\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

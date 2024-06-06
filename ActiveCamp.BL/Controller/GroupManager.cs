@@ -13,17 +13,27 @@ namespace ActiveCamp.BL.Model
         private List<GroupMembership> groupMemberships = new List<GroupMembership>();
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
+
+        /// <summary>
+        /// Создает экземпляр GroupManager и устанавливает соединение с базой данных.
+        /// </summary>
         public GroupManager()
         {
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
+
+        /// <summary>
+        /// Создает новую группу.
+        /// </summary>
+        /// <param name="routeId">Идентификатор маршрута</param>
+        /// <param name="invitationLink">Ссылка для приглашения</param>
+        /// <returns>Возвращает экземпляр новой группы</returns>
         public Group CreateGroup(int routeId, string invitationLink)
         {
             Group newGroup = new Group
             {
-                RouteId = routeId,
-                InvitationLink = invitationLink
+                
             };
 
             groups.Add(newGroup);
@@ -47,10 +57,17 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
                 int groupId = (int)groupIdParam.Value;
 
+                newGroup.SetGroupId(groupId); // Устанавливаем GroupId
+
                 return newGroup;
             }
         }
 
+        /// <summary>
+        /// Добавляет пользователя в группу.
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <param name="userId">Идентификатор пользователя</param>
         public void AddUserToGroup(int groupId, int userId)
         {
             Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
@@ -69,10 +86,7 @@ namespace ActiveCamp.BL.Model
             group.UserIds.Add(userId);
             groupMemberships.Add(new GroupMembership
             {
-                GroupMembershipId = groupMemberships.Count + 1,
-                GroupId = groupId,
-                UserId = userId,
-                JoinedDate = DateTime.Now
+                
             });
 
             using (_connection)
@@ -89,13 +103,18 @@ namespace ActiveCamp.BL.Model
             }
         }
 
+        /// <summary>
+        /// Получает список пользователей в группе.
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Возвращает список пользователей в группе</returns>
         public List<User> GetUsersInGroup(int groupId)
         {
             Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
 
             if (group == null)
             {
-                throw new Exception("Group not found");
+                throw new Exception("Группа не обнаружена");
             }
 
             List<User> users = new List<User>();
@@ -121,4 +140,5 @@ namespace ActiveCamp.BL.Model
             return users;
         }
     }
+
 }

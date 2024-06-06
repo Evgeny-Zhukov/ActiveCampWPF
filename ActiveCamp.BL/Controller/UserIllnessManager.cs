@@ -33,7 +33,7 @@ namespace ActiveCamp.BL.Controller
         }
         public Illness GetUserIllness(int IllnessID, int UserID)
         {
-            Illness userIllness = new Illness();
+            Illness Illness = new Illness();
 
             using (_connection)
             {
@@ -49,8 +49,8 @@ namespace ActiveCamp.BL.Controller
 
                     if (reader.Read())
                     {
-                        userIllness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
-                        userIllness.IllnessName = reader["Name"].ToString();
+                        Illness.SetIllnessID(Illness);
+                        Illness.SetIllnessName(reader["Name"].ToString());
                     }
                     reader.Close();
                 }
@@ -59,7 +59,7 @@ namespace ActiveCamp.BL.Controller
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return userIllness;
+            return Illness;
         }
         public bool DeleteUserIllness(int id)
         {
@@ -76,6 +76,39 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
+        }
+        public int GetUserIllnessID(UserIllness userIllness)
+        {
+            int userIllnessID = -1;
+            using (_connection)
+            {
+                string query = "SELECT * FROM UserIllness WHERE IllnessID = @IllnessID AND UserID = @UserID";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@IllnessID", userIllness.IllnessID);
+                command.Parameters.AddWithValue("@UserID", userIllness.UserID);
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userIllnessID = Convert.ToInt32(reader["UserIllnessID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+
+            }
+            if (userIllnessID <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(userIllnessID), "ID снаряжения должен быть положительным числом.");
+            }
+            return userIllnessID;
         }
     }
 }

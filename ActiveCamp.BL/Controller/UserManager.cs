@@ -101,6 +101,38 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
+        public int GetUserID(User user)
+        {
+            int userID = -1;
+            using (_connection)
+            {
+                string query = "SELECT * FROM Users WHERE Username = @Username";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@Username", user.Username);
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userID = Convert.ToInt32(reader["UserID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+
+            }
+            if (userID <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(userID), "ID пользователя должен быть положительным числом.");
+            }
+            return userID;
+        }
     }
 
 }

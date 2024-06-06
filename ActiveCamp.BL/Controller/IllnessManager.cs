@@ -27,7 +27,6 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@IllnessID", illness.IllnessID);
                 command.Parameters.AddWithValue("@IllnessName", illness.IllnessName);
                 command.Parameters.AddWithValue("@IllnessDescription", illness.IllnessDescription);
                 _connection.Open();
@@ -53,9 +52,9 @@ namespace ActiveCamp.BL.Controller
 
                     if (reader.Read())
                     {
-                        illness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
-                        illness.IllnessName = reader["IllnessName"].ToString();
-                        illness.IllnessDescription = reader["IllnessDescription"].ToString();
+                        illness.SetIllnessID(illness);
+                        illness.SetIllnessName(reader["IllnessName"].ToString());
+                        illness.SetIllnessDescription(reader["IllnessDescription"].ToString());
                     }
                     reader.Close();
                 }
@@ -81,6 +80,38 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
+        }
+        public int GetIllnessID(Illness illness)
+        {
+            int illnessID = -1;
+            using (_connection)
+            {
+                string query = "SELECT * FROM Illness WHERE IllnessName = @IllnessName";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@IllnessName", illness.IllnessName);
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        illnessID = Convert.ToInt32(reader["IllnessID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+
+            }
+            if (illnessID <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(illnessID), "ID недуга должен быть положительным числом.");
+            }
+            return illnessID;
         }
     }
 }

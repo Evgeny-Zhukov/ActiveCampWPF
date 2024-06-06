@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ActiveCamp.BL.Controller;
+using ActiveCamp.BL.Model;
+using System;
 
 namespace ActiveCamp
 {
@@ -11,15 +13,15 @@ namespace ActiveCamp
         /// <summary>
         /// ИД снаряжения.
         /// </summary>
-        public int equipmentID { get; set; }
+        public int equipmentID { get; private set; }
         /// <summary>
         /// Название снаряжения.
         /// </summary>
-        public string equipmentName { get; set; }
+        public string equipmentName { get; private set; }
         /// <summary>
         /// Вес снаряжения.
         /// </summary>
-        public double equipmentWeight { get; set; }
+        public double equipmentWeight { get; private set; }
         #endregion
 
         public Equipment() { }
@@ -49,7 +51,26 @@ namespace ActiveCamp
         {
             this.equipmentName = equipmentName ?? throw new ArgumentNullException("Название снаряжение не может быть пустым или NULL", nameof(equipmentName));
         }
+        public void SetEquipmentName(string equipmentName)
+        {
+            this.equipmentName = equipmentName ?? throw new ArgumentNullException(nameof(equipmentName), "Название снаряжения не может быть пустым или NULL");
+        }
 
+        public void SetEquipmentWeight(double equipmentWeight)
+        {
+            if (equipmentWeight <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(equipmentWeight), "Вес снаряжения должен быть положительным числом и не равен нулю.");
+            }
+            this.equipmentWeight = equipmentWeight;
+        }
+
+        public void SetEquipmentID(Equipment equipment)
+        {
+            EquipmentManager equipmentManager = new EquipmentManager();
+            int equipmentID = equipmentManager.GetEquipmentID(equipment);
+            this.equipmentID = equipmentID;
+        }
         public override string ToString()
         {
             return equipmentID + " " + equipmentName + " " + equipmentWeight;
