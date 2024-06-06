@@ -12,6 +12,7 @@ namespace ActiveCamp.BL.Model
         private double _wightOfEquipment;
         private string _equipmentDescription;
         private int _ownerID;
+        private string _ownerName;
 
         public int UserEquipmentID
         {
@@ -89,6 +90,19 @@ namespace ActiveCamp.BL.Model
             }
         }
 
+        public string OwnerName
+        {
+            get { return this._ownerName; }
+            set
+            {
+                if(value != this._ownerName)
+                {
+                    this._ownerName = value;
+                    NotifyPropertyChanged("OwnerName");
+                }
+            }
+        }
+
         public string EquipmentDescription
         {
             get { return _equipmentDescription; }
@@ -104,7 +118,7 @@ namespace ActiveCamp.BL.Model
 
         public RecordOfUserEquipment() { }
 
-        public RecordOfUserEquipment(int equipmentID, int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string equipmentDescription)
+        public RecordOfUserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string ownerName,string equipmentDescription)
         {
             this._equipmentID = equipmentID;
             this._userEquipmentID = userEquipmentID;
@@ -112,6 +126,7 @@ namespace ActiveCamp.BL.Model
             this._countOfEquipment = countOfEquipment;
             this._wightOfEquipment = wightOfEquipment;
             this._ownerID = ownerID;
+            this._ownerName = ownerName;
             this._equipmentDescription = equipmentDescription;
         }
 
@@ -142,6 +157,7 @@ namespace ActiveCamp.BL.Model
             if (m_Editing == true)
             {
                 _ownerID = temp_Record.OwnerID;
+                _ownerName = temp_Record.OwnerName;
                 _equipmentName = temp_Record.EquipmentName;
                 _equipmentDescription = temp_Record.EquipmentDescription;
                 _userEquipmentID = temp_Record.UserEquipmentID;

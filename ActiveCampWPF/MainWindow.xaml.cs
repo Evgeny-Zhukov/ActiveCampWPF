@@ -175,8 +175,8 @@ namespace ActiveCampWPF
 
             RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
             
-            equipments.Add(new RecordOfUserEquipment(1, 1, "Отверетка", 1, 1.0, 1, ""));
-            equipments.Add(new RecordOfUserEquipment(2, 1, "Зажигалка", 1, 0.4, 1, ""));
+            equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, "Zurav", ""));
+            equipments.Add(new RecordOfUserEquipment(1, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
@@ -280,14 +280,15 @@ namespace ActiveCampWPF
             CreateNewRecord_grid.IsEnabled = false;
             CreateNewRecord_grid.Visibility = Visibility.Hidden;
 
+            MenuButton.IsEnabled = true;
+            MenuButton.Visibility = Visibility.Visible;
+
+            HeaderOfSection.IsEnabled = true;
+            HeaderOfSection.Visibility = Visibility.Visible;
+
         }
 
         private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -297,9 +298,26 @@ namespace ActiveCampWPF
 
         }
 
+        private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
+        {
+
+            MenuButton.IsEnabled = true;
+            MenuButton.Visibility = Visibility.Visible;
+
+            HeaderOfSection.IsEnabled = true;
+            HeaderOfSection.Visibility = Visibility.Visible;
+        
+        }
+
         private void SaveChangesOfFoodData_Click(object sender, RoutedEventArgs e)
         {
 
+            MenuButton.IsEnabled = true;
+            MenuButton.Visibility = Visibility.Visible;
+
+            HeaderOfSection.IsEnabled = true;
+            HeaderOfSection.Visibility = Visibility.Visible;
+        
         }
         #endregion
 
@@ -507,10 +525,10 @@ namespace ActiveCampWPF
         private void BackFromAgentMenuButton_Click(object sender, RoutedEventArgs e)
         {
             
+            Main_controls.IsEnabled= true;
+            
             AgentMenu_grid.IsEnabled = false;
             AgentMenu_grid.Visibility= Visibility.Hidden;
-
-            Main_controls.IsEnabled= true;
 
         }
 
