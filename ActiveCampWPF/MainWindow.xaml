@@ -916,6 +916,7 @@
                             </ScrollViewer>
 
                         </TabItem>
+                        
                     </TabControl>
 
                     <!--#endregion-->
@@ -1233,7 +1234,7 @@
                 
                 <!--#region "Add new record" forms -->
 
-                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" IsEnabled="True" Visibility="Hidden">
+                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         
@@ -1243,6 +1244,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.Resources>
+                        
                         <Style x:Key="StyleForBackButton" TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -1296,6 +1298,115 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
+                        
+                        <Style x:Key="StyleForListInFillingForms" TargetType="ListBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBox}">
+
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="10,0,0,0">
+
+                                            <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
+
+                                                <ItemsControl>
+
+                                                    <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
+
+                                                </ItemsControl>
+
+                                            </ScrollViewer>
+
+                                        </Border>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Orange" Opacity="0.75"/>
+                                </Setter.Value>
+                            </Setter>
+                            
+                        </Style>
+
+                        <Style x:Key="StyleForAddNewRecordInListButton" TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+
+                                        <Border x:Name="AddNewOwner_border" CornerRadius="0,0,0,10">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="White" Opacity="0.95"></SolidColorBrush>
+                                            </Border.Background>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                          Content="{TemplateBinding Content}"></ContentPresenter>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="AddNewOwner_border" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="White" Opacity="0.75"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter TargetName="AddNewOwner_border" Property="Cursor" Value="Hand"></Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter TargetName="AddNewOwner_border" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="DarkGray" Opacity="0.5"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="ButtonOnFillingFormStyle" TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+
+                                        <Border x:Name="AddRowButton_border" Margin="10,0,10,0" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Width="250" Height="30"
+                                                        HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
+                                            </Border.Background>
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                      Content="{TemplateBinding Content}">
+                                            </ContentPresenter>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="AddRowButton_border" Property="BorderBrush" Value="Gray"></Setter>
+                                                    <!--<Setter TargetName="AddRowButton_border" Property="Foreground" Value="DarkGray"></Setter>-->
+                                                    <Setter TargetName="AddRowButton_border" Property="Cursor" Value="Hand"/>
+                                                </Trigger.Setters>
+                                            </Trigger>
+
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="AddRowButton_border" Property="Opacity" Value="0.75"></Setter>
+                                                    <Setter TargetName="AddRowButton_border" Property="Opacity" Value="0.75"/>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="FontSize" Value="16"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+
                     </Grid.Resources>
                     
                     <Rectangle Grid.ColumnSpan="2">
@@ -1309,39 +1420,24 @@
                     </Rectangle>
                     
                     <!--#region FormForFoodTableFilling-->
-                    
-                    <ListBox x:Name="DaysList" Margin="15,15,0,15" IsEnabled="False" Visibility="Hidden">
-                        
-                        <ListBox.Background>
-                            <SolidColorBrush Color="Orange" Opacity="0.45"></SolidColorBrush>
-                        </ListBox.Background>
-                        
-                        <ListBox.Template>
-                            
-                            <ControlTemplate TargetType="{x:Type ListBox}">
-                                
-                                <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="10,0,0,10">
-                                    
-                                    <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
-                                        
-                                        <ItemsControl>
 
-                                            <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
-                                        
-                                        </ItemsControl>
-                                    
-                                    </ScrollViewer>
-                                
-                                </Border>
-                            
-                            </ControlTemplate>
+                    <Grid x:Name="DaysInfo_grid" Margin="15,15,0,15" Visibility="Hidden" IsEnabled="False">
                         
-                        </ListBox.Template>
-                    
-                    </ListBox>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="60"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <ListBox x:Name="DaysList" Grid.Row="0"
+                                 Style="{StaticResource StyleForListInFillingForms}"/>
+
+                        <Button x:Name="AddNewDay" Grid.Row="1" Content="Добавить информацию по дням"
+                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>
+
+                    </Grid>
 
                     <Border x:Name="FoodDataFillingForm" Grid.Column="1" CornerRadius="0,10,10,0" 
-                            BorderThickness="0" Margin="0,15,15,15" IsEnabled="True" Visibility="Visible">
+                            BorderThickness="0" Margin="0,15,15,15" IsEnabled="False" Visibility="Hidden">
                         
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
@@ -1364,8 +1460,33 @@
 
                             <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1"
                                           HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <Grid>
-                                    
+                                <Grid x:Name="FillingPlace_Food">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <DataGrid x:Name="DataGridForFillingFoodData" 
+                                              AutoGenerateColumns="False"
+                                              Background="White"
+                                              CanUserReorderColumns="False"
+                                              CanUserAddRows="True" Margin="5">
+                                        
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Col 1" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 2" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 3" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 4" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 5" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                        
+                                    </DataGrid>
+
+                                    <Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                            Content="Добавить запись" Click="AddNewRowForFillingFoodData_DataGrid_Click"/>
+
+                                    <Button x:Name="SaveChangesOfFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
+                                            HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfFoodData_Click"/>
                                 </Grid>
                             </ScrollViewer>
                         
@@ -1376,36 +1497,20 @@
                     <!--#endregion-->
 
                     <!--#region FormForEquipmentTableFilling -->
+                    <Grid x:Name="OwnersInfo_grid" Margin="15,15,0,15" Visibility="Hidden" IsEnabled="False">
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="60"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <ListBox x:Name="EquipmentOwnersList" Grid.Row="0"
+                                 Style="{StaticResource StyleForListInFillingForms}"/>
 
-                    <ListBox x:Name="EquipmentOwnersList" Margin="15,15,0,15" IsEnabled="False" Visibility="Hidden">
-
-                        <ListBox.Background>
-                            <SolidColorBrush Color="Orange" Opacity="0.45"></SolidColorBrush>
-                        </ListBox.Background>
-
-                        <ListBox.Template>
-
-                            <ControlTemplate TargetType="{x:Type ListBox}">
-
-                                <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="10,0,0,10">
-
-                                    <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
-
-                                        <ItemsControl>
-
-                                            <StackPanel Margin="4" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
-
-                                        </ItemsControl>
-
-                                    </ScrollViewer>
-
-                                </Border>
-
-                            </ControlTemplate>
-
-                        </ListBox.Template>
-
-                    </ListBox>
+                        <Button x:Name="AddNewOwner" Grid.Row="1" Content="Добавить информацию по участникам"
+                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>
+                    
+                    </Grid>
 
                     <Border x:Name="EquipmentDataFillingForm" Grid.Column="1" CornerRadius="0,10,10,0" 
                             BorderThickness="0" Margin="0,15,15,15" IsEnabled="False" Visibility="Hidden">
@@ -1413,18 +1518,53 @@
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
-                        
+
                         <Grid>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="60"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
-                                        Click="BackFromFiilingButton_Click"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="60"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
+                            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
+                                    Click="BackFromFiilingButton_Click"/>
+                            
+                            <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+                                <Grid x:Name="FillingPlace_Equipment">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <DataGrid x:Name="DataGridForFillingEquipmentData" 
+                                              AutoGenerateColumns="False"
+                                              Background="White"
+                                              CanUserReorderColumns="False"
+                                              CanUserAddRows="True" Margin="5">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Col 1" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 2" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 3" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 4" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Col 5" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <Button x:Name="AddNewRowForFillingEquipmentData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                            Content="Добавить запись" Click="AddNewRowForFillingEquipmentData_DataGrid_Click"/>
+                                    
+                                    <Button x:Name="SaveChangesOfEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
+                                            HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfEquipmentData_Click"/>
+                                    
+                                </Grid>
+                            </ScrollViewer>
+                            
                         </Grid>
                     
                     </Border>
@@ -1716,7 +1856,7 @@
             </Grid>
         </Grid>
         
-        <!--#region AI Agent menu -->
+        <!--#region AI_Agent_Menu-->
 
         <Grid x:Name="AgentMenu_grid" Grid.ColumnSpan="3" Grid.RowSpan="2"
                       IsEnabled="False" Visibility="Hidden">

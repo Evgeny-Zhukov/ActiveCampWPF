@@ -8,7 +8,6 @@ using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Windows.Data;
 using ActiveCamp.BL.Controller;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 
 
@@ -191,25 +190,33 @@ namespace ActiveCampWPF
         
         private void Equipment_Unchecked(object sender, RoutedEventArgs e)
         {
-            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
             TabControlOfEquipmentInfo.IsEnabled = false;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
 
-            AddNewRecordInEquipmentTable.IsEnabled = true;
+            AddNewRecordInEquipmentTable.IsEnabled = false;
             AddNewRecordInEquipmentTable.Visibility = Visibility.Hidden;
         }
         
         private void HikingInfo_Checked(object sender, RoutedEventArgs e)
         {
+
             Food_ToggleButton.IsChecked = false;
             TabControlOfFoodInfo.IsEnabled = false;
             TabControlOfFoodInfo.Visibility = Visibility.Hidden;
 
             Equipment.IsChecked = false;
-            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
             TabControlOfEquipmentInfo.IsEnabled = false;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
 
-            MainInfoAboutHiking.Visibility = Visibility.Visible;
             MainInfoAboutHiking.IsEnabled = true;
+            MainInfoAboutHiking.Visibility = Visibility.Visible;
+
+            AddNewRecordInEquipmentTable.IsEnabled = false;
+            AddNewRecordInEquipmentTable.Visibility = Visibility.Hidden;
+
+            AddNewRecordInFoodTable.IsEnabled = false;
+            AddNewRecordInFoodTable.Visibility = Visibility.Hidden;
+
         }
 
         private void HikingInfo_Unchecked(object sender, RoutedEventArgs e)
@@ -229,8 +236,8 @@ namespace ActiveCampWPF
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
 
-            EquipmentOwnersList.IsEnabled = true;
-            EquipmentOwnersList.Visibility = Visibility.Visible;
+            OwnersInfo_grid.IsEnabled = true;
+            OwnersInfo_grid.Visibility = Visibility.Visible;
 
             EquipmentDataFillingForm.IsEnabled = true;
             EquipmentDataFillingForm.Visibility = Visibility.Visible;
@@ -247,12 +254,54 @@ namespace ActiveCampWPF
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
 
-            DaysList.IsEnabled = true;
-            DaysList.Visibility = Visibility.Visible;
+            DaysInfo_grid.IsEnabled = true;
+            DaysInfo_grid.Visibility = Visibility.Visible;
 
             FoodDataFillingForm.IsEnabled = true;
             FoodDataFillingForm.Visibility = Visibility.Visible;
         }
+
+        #region Filling_Events
+        private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            DataGridForFillingEquipmentData.Items.Clear();
+            DataGridForFillingFoodData.Items.Clear();
+
+            EquipmentOwnersList.Items.Clear();
+            DaysList.Items.Clear();
+
+            OwnersInfo_grid.IsEnabled = false;
+            OwnersInfo_grid.Visibility = Visibility.Hidden;
+
+            DaysInfo_grid.IsEnabled = false;
+            DaysInfo_grid.Visibility = Visibility.Hidden;
+
+            CreateNewRecord_grid.IsEnabled = false;
+            CreateNewRecord_grid.Visibility = Visibility.Hidden;
+
+        }
+
+        private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddNewRowForFillingFoodData_DataGrid_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveChangesOfFoodData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
 
         #endregion
 
@@ -467,9 +516,5 @@ namespace ActiveCampWPF
 
         #endregion
 
-        private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
