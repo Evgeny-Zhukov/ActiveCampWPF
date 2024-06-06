@@ -120,7 +120,6 @@ namespace ActiveCamp.BL.Model
 
         public RecordOfUserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string ownerName,string equipmentDescription)
         {
-            this._equipmentID = equipmentID;
             this._userEquipmentID = userEquipmentID;
             this._equipmentName = equipmentName;
             this._countOfEquipment = countOfEquipment;

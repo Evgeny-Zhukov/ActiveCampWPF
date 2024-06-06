@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
     <Compile Include="Controller\DishManager.cs" />
     <Compile Include="Controller\EquipmentManager.cs" />
     <Compile Include="Controller\FoodConsumptionManager.cs" />
