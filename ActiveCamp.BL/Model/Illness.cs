@@ -34,12 +34,12 @@ namespace ActiveCamp.BL.Model
         /// <exception cref="ArgumentNullException"></exception>
         public Illness(string name)
         {
-            IllnessName = name;
+            IllnessName = name ?? throw new ArgumentNullException("Название недуга не может быть пустым или NULL", nameof(name));
         }
         public Illness(string name, string description)
         {
-            IllnessName=name;
-            IllnessDescription = description;
+            IllnessName = name ?? throw new ArgumentNullException("Название недуга не может быть пустым или NULL", nameof(name));
+            IllnessDescription = description ?? throw new ArgumentNullException("Описание недуга не может быть пустым или NULL", nameof(description));
         }
         /// <summary>
         /// Устанавливает название недуга.

@@ -23,6 +23,7 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
                 command.Parameters.AddWithValue("@EquipmentName", userEquipment.EquipmentName);
                 command.Parameters.AddWithValue("@CountOfEquipment", userEquipment.CountOfEquipment);
                 command.Parameters.AddWithValue("@WightOfEquipment", userEquipment.WightOfEquipment);

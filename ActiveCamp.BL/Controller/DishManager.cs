@@ -74,10 +74,10 @@ namespace ActiveCamp.BL.Controller
                         // Чтение данных блюда из результата запроса
                         dish.SetDishID(dish);
                         dish.SetName(reader["Name"].ToString());
-                        dish.SetProteins(Convert.ToDouble(reader["Proteins"]));
-                        dish.SetFats(Convert.ToDouble(reader["Fats"]));
-                        dish.SetCarbohydrates(Convert.ToDouble(reader["Carbohydrates"]));
-                        dish.SetCalories(Convert.ToDouble(reader["Calories"]));
+                        dish.SetProteins(Convert.ToInt32(reader["Proteins"]));
+                        dish.SetFats(Convert.ToInt32(reader["Fats"]));
+                        dish.SetCarbohydrates(Convert.ToInt32(reader["Carbohydrates"]));
+                        dish.SetCalories(Convert.ToInt32(reader["Calories"]));
                     }
                     reader.Close();
                 }

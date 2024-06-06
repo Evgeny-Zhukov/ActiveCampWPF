@@ -6,6 +6,7 @@ namespace ActiveCamp.BL.Model
     public class RecordOfUserEquipment : INotifyPropertyChanged, IEditableObject
     {
         private int _userEquipmentID;
+        private int _equipmentID;
         private string _equipmentName;
         private int _countOfEquipment;
         private double _wightOfEquipment;
@@ -24,7 +25,18 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-
+        public int EquipmentID
+        {
+            get { return this._equipmentID; }
+            set
+            {
+                if (value != this._equipmentID)
+                {
+                    this._equipmentID = value;
+                    NotifyPropertyChanged("EquipmentID");
+                }
+            }
+        }
         public string EquipmentName
         {
             get { return this._equipmentName; }
@@ -92,8 +104,9 @@ namespace ActiveCamp.BL.Model
 
         public RecordOfUserEquipment() { }
 
-        public RecordOfUserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string equipmentDescription)
+        public RecordOfUserEquipment(int equipmentID, int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string equipmentDescription)
         {
+            this._equipmentID = equipmentID;
             this._userEquipmentID = userEquipmentID;
             this._equipmentName = equipmentName;
             this._countOfEquipment = countOfEquipment;

@@ -24,19 +24,19 @@ namespace ActiveCamp.BL.Model
         /// <summary>
         /// Белки.
         /// </summary>
-        public double Proteins { get; private set; }
+        public int Proteins { get; private set; }
         /// <summary>
         /// Жиры.
         /// </summary>
-        public double Fats { get; private set; }
+        public int Fats { get; private set; }
         /// <summary>
         /// Углеводы.
         /// </summary>
-        public double Carbohydrates { get; private set; }
+        public int Carbohydrates { get; private set; }
         /// <summary>
         /// Калории.
         /// </summary>
-        public double Calories { get; private set; }
+        public int Calories { get; private set; }
 
         public virtual ICollection<Dish> DishList { get; set; }
 
@@ -48,7 +48,10 @@ namespace ActiveCamp.BL.Model
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
-        public Dish(string name) : this(name, 0, 0, 0, 0) { }
+        public Dish(string name)
+        { 
+            Name = name;
+        }
         /// <summary>
         /// Создает блюдо
         /// </summary>
@@ -59,10 +62,8 @@ namespace ActiveCamp.BL.Model
         /// <param name="calories">Калории</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public Dish(string name, double proteins, double fats, double carbohydrates, double calories)
+        public Dish(string name, int proteins, int fats, int carbohydrates, int calories)
         {
-            dbContext = new ActiveCampDbContext();
-            _connection = dbContext.GetSqlConnection();
             Name = name ?? throw new ArgumentNullException("Название блюда не может быть пустым или NULL", nameof(name));
             if (proteins <= 0)
             {
@@ -80,6 +81,10 @@ namespace ActiveCamp.BL.Model
             {
                 throw new ArgumentOutOfRangeException("Количество калорий должно быть положительным числом и не равен нулю.", nameof(calories));
             }
+            Proteins = proteins;
+            Fats = fats;
+            Carbohydrates = carbohydrates;
+            Calories = calories;
         }
 
         public void SetName(string name)
@@ -87,7 +92,7 @@ namespace ActiveCamp.BL.Model
             Name = name ?? throw new ArgumentNullException(nameof(name), "Название блюда не может быть пустым или NULL");
         }
 
-        public void SetProteins(double proteins)
+        public void SetProteins(int proteins)
         {
             if (proteins < 0)
             {
@@ -96,7 +101,7 @@ namespace ActiveCamp.BL.Model
             Proteins = proteins;
         }
 
-        public void SetFats(double fats)
+        public void SetFats(int fats)
         {
             if (fats < 0)
             {
@@ -105,7 +110,7 @@ namespace ActiveCamp.BL.Model
             Fats = fats;
         }
 
-        public void SetCarbohydrates(double carbohydrates)
+        public void SetCarbohydrates(int carbohydrates)
         {
             if (carbohydrates < 0)
             {
@@ -114,7 +119,7 @@ namespace ActiveCamp.BL.Model
             Carbohydrates = carbohydrates;
         }
 
-        public void SetCalories(double calories)
+        public void SetCalories(int calories)
         {
             if (calories < 0)
             {

@@ -16,23 +16,23 @@ namespace ActiveCamp.CMD
             EquipmentManager equipmentManager = new EquipmentManager();
             equipmentManager.AddEquipment(equipment);
 
-            Dish dish = new Dish("Neme", 1,1,1,1);
+            Dish dish = new Dish("Neme2", 112,12,13,14);
             DishManager dishManager = new DishManager();
             dishManager.AddDish(dish); // TODO: не добавляется еда
 
-            Illness illness = new Illness("Name", "Description");
+            Illness illness = new Illness("Name1", "Description");
             IllnessManager illnessManager = new IllnessManager();
             illnessManager.AddIllness(illness);// TODO: не добавляется недуг
 
-            User user = new User("Name","sdfs");
+            User user = new User("Name1","sdfs");
             UserManager userManager = new UserManager();
             userManager.RegisterUser(user);
 
-            UserDish userDish = new UserDish(1,2);
+            UserDish userDish = new UserDish(4,1);
             UserDishManager userDishManager = new UserDishManager();
-            userDishManager.AddUserDish(userDish);// TODO: не добавляется DISH
+            userDishManager.AddUserDish(userDish);
 
-            RecordOfUserEquipment userEquipment = new RecordOfUserEquipment(12, "eds",2, 42,1,"sdj");
+            RecordOfUserEquipment userEquipment = new RecordOfUserEquipment(1,1, "eds",1, 42,1,"sdj");
             UserEquipmentManager userEquipmentManager = new UserEquipmentManager();
             userEquipmentManager.AddUserEquipment(userEquipment);
 
