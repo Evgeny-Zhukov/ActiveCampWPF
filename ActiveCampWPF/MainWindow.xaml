@@ -118,7 +118,7 @@
                 <!--#region News Section -->
                 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -708,7 +708,7 @@
 
                 <Grid x:Name="PreperingForHiking" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                      Visibility="Hidden" IsEnabled="False">
+                      Visibility="Visible" IsEnabled="True">
                     
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
