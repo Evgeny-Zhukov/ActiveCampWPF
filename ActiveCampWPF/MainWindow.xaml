@@ -1998,7 +1998,7 @@
             </Grid>
         </Grid>
         
-        <!--#region AI_Agent_Menu-->
+        <!--#region Agent menu-->
 
         <Grid x:Name="AgentMenu_grid" Grid.ColumnSpan="3" Grid.RowSpan="2"
                       IsEnabled="False" Visibility="Hidden">
