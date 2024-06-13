@@ -55,9 +55,6 @@ namespace ActiveCamp.BL.Model
 
                 _connection.Open();
                 command.ExecuteNonQuery();
-                int groupId = (int)groupIdParam.Value;
-
-                newGroup.SetGroupId(groupId); // Устанавливаем GroupId
 
                 return newGroup;
             }

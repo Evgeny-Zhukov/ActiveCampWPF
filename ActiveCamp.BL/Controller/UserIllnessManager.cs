@@ -49,8 +49,8 @@ namespace ActiveCamp.BL.Controller
 
                     if (reader.Read())
                     {
-                        Illness.SetIllnessID(Illness);
-                        Illness.SetIllnessName(reader["Name"].ToString());
+                        Illness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
+                        Illness.IllnessName = (reader["Name"].ToString());
                     }
                     reader.Close();
                 }

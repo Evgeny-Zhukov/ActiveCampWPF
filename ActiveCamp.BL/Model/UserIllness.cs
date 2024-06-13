@@ -1,25 +1,64 @@
 ﻿
 using ActiveCamp.BL.Controller;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
-    public class UserIllness
+    public class UserIllness : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _userIllnessID;
+        private int _userID;
+        private int _illnessID;
         /// <summary>
         /// Получает идентификатор заболевания пользователя.
         /// </summary>
-        public int UserIllnessId { get; private set; }
+        public int UserIllnessId
+        {
+            get { return this._userIllnessID; }
+            set
+            {
+                if (value != this._userIllnessID)
+                {
+                    this._userIllnessID = value;
+                    NotifyPropertyChanged("UserIllnessId");
+
+                }
+            }
+        }
 
         /// <summary>
         /// Получает идентификатор пользователя.
         /// </summary>
-        public int UserID { get; private set; }
+        public int UserID
+        {
+            get { return this._userID; }
+            set
+            {
+                if (value != this._userID)
+                {
+                    this._userID = value;
+                    NotifyPropertyChanged("UserID");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает идентификатор заболевания.
         /// </summary>
-        public int IllnessID { get; private set; }
+        public int IllnessID
+        {
+            get { return this._illnessID; }
+            set
+            {
+                if (value != this._illnessID)
+                {
+                    this._illnessID = value;
+                    NotifyPropertyChanged("IllnessID");
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -33,40 +72,49 @@ namespace ActiveCamp.BL.Model
         /// <param name="userIllnessId">Идентификатор заболевания пользователя</param>
         /// <param name="userId">Идентификатор пользователя</param>
         /// <param name="illnessId">Идентификатор заболевания</param>
-        public UserIllness(int userIllnessId, int userId, int illnessId)
+        public UserIllness( int userId, int illnessId)
         {
-            UserIllnessId = userIllnessId;
-            UserID = userId;
-            IllnessID = illnessId;
+            this._userID = userId;
+            this._illnessID = illnessId;
         }
 
-        /// <summary>
-        /// Устанавливает идентификатор заболевания пользователя.
-        /// </summary>
-        /// <param name="userIllnessId">Идентификатор заболевания пользователя</param>
-        public void SetUserIllnessId(int userIllnessId)
+        private UserIllness temp_Record = null;
+        private bool m_Editing = false;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            UserIllnessId = userIllnessId;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /// <summary>
-        /// Устанавливает идентификатор пользователя.
-        /// </summary>
-        /// <param name="userId">Идентификатор пользователя</param>
-        public void SetUserId(int userId)
+        public void BeginEdit()
         {
-            UserID = userId;
+            if (m_Editing == false)
+            {
+                temp_Record = this.MemberwiseClone() as UserIllness;
+                m_Editing = true;
+            }
         }
 
-        /// <summary>
-        /// Устанавливает идентификатор заболевания.
-        /// </summary>
-        /// <param name="illnessId">Идентификатор заболевания</param>
-        public void SetIllnessId(Illness illness)
+        public void CancelEdit()
         {
-            IllnessManager illnessManager = new IllnessManager();
-            int userIllnessID = illnessManager.GetIllnessID(illness);
-            UserIllnessId = userIllnessID;
+            if (m_Editing == true)
+            {
+                _userIllnessID = temp_Record.UserIllnessId;
+                _userID = temp_Record.UserID;
+                _illnessID = temp_Record._illnessID;
+
+                m_Editing = false;
+            }
+        }
+        public void EndEdit()
+        {
+            if (m_Editing == true)
+            {
+                temp_Record = null;
+                m_Editing = false;
+            }
         }
     }
 

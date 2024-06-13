@@ -1,35 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
-    public class Group
+    public class Group : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _groupID;
+        private int _routeID;
+        private string _invitationLink;
+        private List<int> _userIDs;
+        private int _groupSupervisor;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// ИД группы.
         /// </summary>
-        public int GroupId { get; private set; }
+        public int GroupId
+        {
+            get { return this._groupID; }
+            set
+            {
+                if (value != this._groupID)
+                {
+                    this._groupID = value;
+                    NotifyPropertyChanged("UserEquipmentID");
 
+                }
+            }
+        }
         /// <summary>
         /// ИД маршрута.
         /// </summary>
-        public int RouteId { get; private set; }
+        public int RouteId
+        {
+            get { return this._routeID; }
+            set
+            {
+                if (value != this._routeID)
+                {
+                    this._routeID = value;
+                    NotifyPropertyChanged("RouteID");
+
+                }
+            }
+        }
 
         /// <summary>
         /// Ссылка-приглашение.
         /// </summary>
-        public string InvitationLink { get; private set; }
+        public string InvitationLink
+        {
+            get { return this._invitationLink; }
+            set
+            {
+                if (value != this._invitationLink)
+                {
+                    this._invitationLink = value;
+                    NotifyPropertyChanged("InvitationLink");
+
+                }
+            }
+        }
 
         /// <summary>
         /// Идентификаторы пользователей.
         /// </summary>
-        public List<int> UserIds { get; private set; } = new List<int>();
+        public List<int> UserIds
+        {
+            get { return this._userIDs; }
+            set
+            {
+                if (value != this._userIDs)
+                {
+                    this._userIDs = value;
+                    NotifyPropertyChanged("UserIDs");
+
+                }
+            }
+        }
 
         /// <summary>
         /// Руководитель группы.
         /// </summary>
-        public User GroupSupervisor { get; private set; }
+        public int GroupSupervisor
+        {
+            get { return this._groupSupervisor; }
+            set
+            {
+                if (value != this._groupSupervisor)
+                {
+                    this._groupSupervisor = value;
+                    NotifyPropertyChanged("GroupSupervisor");
+
+                }
+            }
+        }
         #endregion
 
         public Group() { }
@@ -42,84 +111,46 @@ namespace ActiveCamp.BL.Model
         /// <param name="groupSupervisor">Руководитель группы</param>
         /// <param name="userIds">Идентификаторы пользователей</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Group(int routeId, string invitationLink, User groupSupervisor, List<int> userIds)
+        public Group(int routeId, string invitationLink, int groupSupervisor, List<int> userIds)
         {
-            SetRouteId(routeId);
-            SetInvitationLink(invitationLink);
-            SetGroupSupervisor(groupSupervisor);
-            SetUserIds(userIds);
+            this._routeID = routeId;
+            this._invitationLink = invitationLink;
+            this._groupID = groupSupervisor;
+            this._userIDs = userIds;
         }
-
-        /// <summary>
-        /// Устанавливает ИД маршрута.
-        /// </summary>
-        /// <param name="routeId">ИД маршрута</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void SetRouteId(int routeId)
+        private Group temp_Record = null;
+        private bool m_Editing = false;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (routeId <= 0)
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void BeginEdit()
+        {
+            if(m_Editing == false)
             {
-                throw new ArgumentOutOfRangeException(nameof(routeId), "ID маршрута должен быть положительным числом.");
+                temp_Record = this.MemberwiseClone() as Group;
+                m_Editing = true;
             }
-            RouteId = routeId;
         }
 
-        /// <summary>
-        /// Устанавливает ссылку-приглашение.
-        /// </summary>
-        /// <param name="invitationLink">Ссылка-приглашение</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public void SetInvitationLink(string invitationLink)
+        public void EndEdit()
         {
-            InvitationLink = invitationLink ?? throw new ArgumentNullException(nameof(invitationLink), "Ссылка-приглашение не может быть пустой или null.");
-        }
-
-        /// <summary>
-        /// Устанавливает руководителя группы.
-        /// </summary>
-        /// <param name="groupSupervisor">Руководитель группы</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public void SetGroupSupervisor(User groupSupervisor)
-        {
-            GroupSupervisor = groupSupervisor ?? throw new ArgumentNullException(nameof(groupSupervisor), "Руководитель группы не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Устанавливает идентификаторы пользователей.
-        /// </summary>
-        /// <param name="userIds">Идентификаторы пользователей</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public void SetUserIds(List<int> userIds)
-        {
-            UserIds = userIds ?? throw new ArgumentNullException(nameof(userIds), "Список идентификаторов пользователей не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Добавляет идентификатор пользователя в группу.
-        /// </summary>
-        /// <param name="userId">Идентификатор пользователя</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void AddUserId(int userId)
-        {
-            if (userId <= 0)
+            if (!m_Editing == true)
             {
-                throw new ArgumentOutOfRangeException(nameof(userId), "ID пользователя должен быть положительным числом.");
+                _groupID = temp_Record._groupID;
+                _invitationLink = temp_Record._invitationLink;
+                _groupID = temp_Record._groupID;
+                _userIDs = temp_Record._userIDs;
             }
-            UserIds.Add(userId);
         }
 
-        /// <summary>
-        /// Внутренний метод для установки ИД группы, доступен только внутри сборки.
-        /// </summary>
-        /// <param name="groupId">ИД группы</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        internal void SetGroupId(int groupId)
+        public void CancelEdit()
         {
-            if (groupId <= 0)
+            if(m_Editing == true)
             {
-                throw new ArgumentOutOfRangeException(nameof(groupId), "ID группы должен быть положительным числом.");
+                temp_Record = null;
+                m_Editing = false;
             }
-            GroupId = groupId;
         }
     }
 

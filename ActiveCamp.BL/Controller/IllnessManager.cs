@@ -52,9 +52,9 @@ namespace ActiveCamp.BL.Controller
 
                     if (reader.Read())
                     {
-                        illness.SetIllnessID(illness);
-                        illness.SetIllnessName(reader["IllnessName"].ToString());
-                        illness.SetIllnessDescription(reader["IllnessDescription"].ToString());
+                        illness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
+                        illness.IllnessName = (reader["IllnessName"].ToString());
+                        illness.IllnessDescription = (reader["IllnessDescription"].ToString());
                     }
                     reader.Close();
                 }

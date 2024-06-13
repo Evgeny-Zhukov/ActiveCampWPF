@@ -1,24 +1,61 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
-    public class GroupMembership
+    public class GroupMembership : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _groupID;
+        private int _userID;
+        private DateTime _joinedDate;
         /// <summary>
         /// ИД группы.
         /// </summary>
-        public int GroupId { get; private set; }
-
+        public int GroupId
+        {
+            get { return this._groupID; }
+            set
+            {
+                if (value != this._groupID)
+                {
+                    this._groupID = value;
+                    NotifyPropertyChanged("GroupId");
+                }
+            }
+        }
         /// <summary>
         /// ИД пользователя.
         /// </summary>
-        public int UserId { get; private set; }
+        public int UserId
+        {
+            get { return this._userID; }
+            set
+            {
+                if (value != this._userID)
+                {
+                    this._userID = value;
+                    NotifyPropertyChanged("UserId");
+                }
+            }
+        }
 
         /// <summary>
         /// Дата присоединения.
         /// </summary>
-        public DateTime JoinedDate { get; private set; }
+        public DateTime JoinedDate
+        {
+            get { return this._joinedDate; }
+            set
+            {
+                if (value != this._joinedDate)
+                {
+                    this._joinedDate = value;
+                    NotifyPropertyChanged("JoinedDate");
+                }
+            }
+        }
         #endregion
 
         public GroupMembership() { }
@@ -33,51 +70,40 @@ namespace ActiveCamp.BL.Model
         /// <exception cref="ArgumentNullException"></exception>
         public GroupMembership(int groupId, int userId, DateTime joinedDate)
         {
-            SetGroupId(groupId);
-            SetUserId(userId);
-            SetJoinedDate(joinedDate);
+            this._groupID = groupId;
+            this._userID = userId;
+            this._joinedDate = joinedDate;
         }
 
-        /// <summary>
-        /// Устанавливает ИД группы.
-        /// </summary>
-        /// <param name="groupId">ИД группы</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void SetGroupId(int groupId)
+        public event PropertyChangedEventHandler PropertyChanged;
+        private GroupMembership temp_Record = null;
+        private bool m_Editing = false;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (groupId <= 0)
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void BeginEdit()
+        {
+            if(m_Editing == false)
             {
-                throw new ArgumentOutOfRangeException(nameof(groupId), "ID группы должен быть положительным числом.");
+                temp_Record = this.MemberwiseClone() as GroupMembership;
+                m_Editing = true;
             }
-            GroupId = groupId;
         }
 
-        /// <summary>
-        /// Устанавливает ИД пользователя.
-        /// </summary>
-        /// <param name="userId">ИД пользователя</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public void SetUserId(int userId)
+        public void EndEdit()
         {
-            if (userId <= 0)
+            if(m_Editing == true)
             {
-                throw new ArgumentOutOfRangeException(nameof(userId), "ID пользователя должен быть положительным числом.");
+                temp_Record = null;
+                m_Editing = false;
             }
-            UserId = userId;
         }
 
-        /// <summary>
-        /// Устанавливает дату присоединения.
-        /// </summary>
-        /// <param name="joinedDate">Дата присоединения</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public void SetJoinedDate(DateTime joinedDate)
+        public void CancelEdit()
         {
-            if (joinedDate == default(DateTime))
-            {
-                throw new ArgumentNullException(nameof(joinedDate), "Дата присоединения не может быть пустой.");
-            }
-            JoinedDate = joinedDate;
+            throw new NotImplementedException();
         }
 
         /// <summary>

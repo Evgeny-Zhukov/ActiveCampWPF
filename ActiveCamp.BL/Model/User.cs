@@ -1,28 +1,67 @@
 ﻿using ActiveCamp.BL.Controller;
+using ActiveCamp.BL.Model;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL
 {
     /// <summary>
     /// Пользователь.
     /// </summary>
-    public class User
+    public class User : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _userID;
+        private string _userName;
+        private string _password;
         /// <summary>
         /// Id пользователя.
         /// </summary>
-        public int UserID { get; private set; }
+        public int UserID
+        {
+            get { return this._userID; }
+            set
+            {
+                if (value != this._userID)
+                {
+                    this._userID = value;
+                    NotifyPropertyChanged("UserID");
+                }
+            }
+        }
 
         /// <summary>
         /// Псевдоним пользователя.
         /// </summary>
-        public string Username { get; private set; }
+        public string Username
+        {
+            get { return this._userName; }
+            set
+            {
+                if (value != this._userName)
+                {
+                    this._userName = value;
+                    NotifyPropertyChanged("Username");
+                }
+            }
+        }
 
         /// <summary>
         /// Пароль пользователя.
         /// </summary>
-        public string Password { get; private set; }
+        public string Password
+        {
+            get { return this._password; }
+            set
+            {
+                if (value != this._password)
+                {
+                    this._password = value;
+                    NotifyPropertyChanged("Password");
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -33,8 +72,8 @@ namespace ActiveCamp.BL
         /// <exception cref="ArgumentNullException"></exception>
         public User(string username, string password)
         {
-            Username = username ?? throw new ArgumentNullException(nameof(username), "Псевдоним пользователя не может быть пустым или null.");
-            Password = password ?? throw new ArgumentNullException(nameof(password), "Пароль не может быть пустым или null.");
+            this._userName = username ?? throw new ArgumentNullException(nameof(username), "Псевдоним пользователя не может быть пустым или null.");
+            this._password = password ?? throw new ArgumentNullException(nameof(password), "Пароль не может быть пустым или null.");
         }
 
         /// <summary>
@@ -55,37 +94,41 @@ namespace ActiveCamp.BL
         /// </summary>
         public User() { }
 
-        /// <summary>
-        /// Устанавливает ID пользователя.
-        /// </summary>
-        /// <param name="userID">ID пользователя</param>
-        public void SetUserID(User user)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private User temp_Record = null;
+        private bool m_Editing = false;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            UserManager userManager = new UserManager();
-            int userID = userManager.GetUserID(user);
-            UserID = userID;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void BeginEdit()
+        {
+            if (m_Editing == false)
+            {
+                temp_Record = this.MemberwiseClone() as User;
+                m_Editing = true;
+            }
         }
 
-        /// <summary>
-        /// Устанавливает псевдоним пользователя.
-        /// </summary>
-        /// <param name="username">Псевдоним</param>
-        public void SetUsername(string username)
+        public void CancelEdit()
         {
-            Username = username ?? throw new ArgumentNullException(nameof(username), "Псевдоним пользователя не может быть пустым или null.");
-        }
+            if (m_Editing == true)
+            {
+                _userID = temp_Record.UserID;
+                _userName = temp_Record.Username;
+                _password = temp_Record.Password;
 
-        /// <summary>
-        /// Устанавливает пароль пользователя.
-        /// </summary>
-        /// <param name="password">Пароль</param>
-        public void SetPassword(string password)
-        {
-            Password = password ?? throw new ArgumentNullException(nameof(password), "Пароль не может быть пустым или null.");
+                m_Editing = false;
+            }
         }
-        public override string ToString()
+        public void EndEdit()
         {
-            return Username;
+            if (m_Editing == true)
+            {
+                temp_Record = null;
+                m_Editing = false;
+            }
         }
     }
 }

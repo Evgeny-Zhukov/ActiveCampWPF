@@ -1,55 +1,163 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
-    public class UserProfile
+    public class UserProfile : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _userID;
+        private string _firstName;
+        private string _secondName;
+        private float _weight;
+        private float _height;
+        private List<UserIllness> _userIllness;
+        private List<UserEquipment> _userEquipment;
+        private List<UserDish> _userDish;
+        private List<Route> _experience;
         /// <summary>
         /// Получает идентификатор пользователя.
         /// </summary>
-        public int UserID { get; private set; }
-
+        public int UserID
+        {
+            get { return this._userID; }
+            set
+            {
+                if (value != this._userID)
+                {
+                    this._userID = value;
+                    NotifyPropertyChanged("UserID");
+                }
+            }
+        }
         /// <summary>
         /// Получает имя пользователя.
         /// </summary>
-        public string Name { get; private set; }
+        public string FirstName
+        {
+            get { return this._firstName; }
+            set
+            {
+                if (value != this._firstName)
+                {
+                    this._firstName = value;
+                    NotifyPropertyChanged("FirstName");
+                }
+            }
+        }
+        /// <summary>
+        /// Фамилия пользователя
+        /// </summary>
+        public string SecondName
+        {
+            get { return this._secondName; }
+            set
+            {
+                if (value != this._secondName)
+                {
+                    this._secondName = value;
+                    NotifyPropertyChanged("SecondName");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает вес пользователя.
         /// </summary>
-        public float Weight { get; private set; }
+        public float Weight
+        {
+            get { return this._weight; }
+            set
+            {
+                if (value != this._weight)
+                {
+                    this._weight = value;
+                    NotifyPropertyChanged("Weight");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает рост пользователя.
         /// </summary>
-        public float Height { get; private set; }
-
-        /// <summary>
-        /// Получает пол пользователя.
-        /// </summary>
-        public string Gender { get; private set; }
+        public float Height
+        {
+            get { return this._height; }
+            set
+            {
+                if (value != this._height)
+                {
+                    this._height = value;
+                    NotifyPropertyChanged("Height");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает список заболеваний пользователя.
         /// </summary>
-        public List<UserIllness> UserIllnesses { get; private set; } = new List<UserIllness>();
+        public List<UserIllness> UserIllnesses
+        {
+            get { return this._userIllness; }
+            set
+            {
+                if (value != this._userIllness)
+                {
+                    this._userIllness = value;
+                    NotifyPropertyChanged("UserIllness");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает список оборудования пользователя.
         /// </summary>
-        public List<RecordOfUserEquipment> UserEquipment { get; private set; } = new List<RecordOfUserEquipment>();
+        public List<UserEquipment> UserEquipment
+        {
+            get { return this._userEquipment; }
+            set
+            {
+                if (value != this._userEquipment)
+                {
+                    this._userEquipment = value;
+                    NotifyPropertyChanged("UserEquipment");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает список потребленной еды пользователя.
         /// </summary>
-        public List<UserDish> UserFoodConsumptions { get; private set; } = new List<UserDish>();
+        public List<UserDish> UserDish
+        {
+            get { return this._userDish; }
+            set
+            {
+                if (value != this._userDish)
+                {
+                    this._userDish = value;
+                    NotifyPropertyChanged("UserDish");
+                }
+            }
+        }
 
         /// <summary>
         /// Получает опыт пользователя.
         /// </summary>
-        public string Experience { get; private set; }
+        public List<Route> Experience
+        {
+            get { return this._experience; }
+            set
+            {
+                if (value != this._experience)
+                {
+                    this._experience = value;
+                    NotifyPropertyChanged("Experience");
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -66,134 +174,58 @@ namespace ActiveCamp.BL.Model
         /// <param name="height">Рост пользователя</param>
         /// <param name="gender">Пол пользователя</param>
         /// <param name="experience">Опыт пользователя</param>
-        public UserProfile(int userId, string name, float weight, float height, string gender, string experience)
+        public UserProfile(int userId, string firstName, string secondName, float weight, float height)
         {
-            UserID = userId;
-            Name = name;
-            Weight = weight;
-            Height = height;
-            Gender = gender;
-            Experience = experience;
+            this._userID = userId;
+            this._firstName = firstName;
+            this._secondName = secondName;
+            this._weight = weight;
+            this._height = height;
         }
 
-        /// <summary>
-        /// Устанавливает идентификатор пользователя.
-        /// </summary>
-        /// <param name="userId">Идентификатор пользователя</param>
-        public void SetUserId(int userId)
+        private UserProfile temp_Record = null;
+        private bool m_Editing = false;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            UserID = userId;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /// <summary>
-        /// Устанавливает имя пользователя.
-        /// </summary>
-        /// <param name="name">Имя пользователя</param>
-        public void SetName(string name)
+        public void BeginEdit()
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name), "Имя пользователя не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Устанавливает вес пользователя.
-        /// </summary>
-        /// <param name="weight">Вес пользователя</param>
-        public void SetWeight(float weight)
-        {
-            Weight = weight;
-        }
-
-        /// <summary>
-        /// Устанавливает рост пользователя.
-        /// </summary>
-        /// <param name="height">Рост пользователя</param>
-        public void SetHeight(float height)
-        {
-            Height = height;
-        }
-
-        /// <summary>
-        /// Устанавливает пол пользователя.
-        /// </summary>
-        /// <param name="gender">Пол пользователя</param>
-        public void SetGender(string gender)
-        {
-            Gender = gender ?? throw new ArgumentNullException(nameof(gender), "Пол пользователя не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Устанавливает список заболеваний пользователя.
-        /// </summary>
-        /// <param name="userIllnesses">Список заболеваний пользователя</param>
-        public void SetUserIllnesses(List<UserIllness> userIllnesses)
-        {
-            UserIllnesses = userIllnesses ?? throw new ArgumentNullException(nameof(userIllnesses), "Список заболеваний пользователя не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Добавляет заболевание пользователя.
-        /// </summary>
-        /// <param name="userIllness">Заболевание пользователя</param>
-        public void AddUserIllness(UserIllness userIllness)
-        {
-            if (userIllness == null)
+            if (m_Editing == false)
             {
-                throw new ArgumentNullException(nameof(userIllness), "Заболевание пользователя не может быть null.");
+                temp_Record = this.MemberwiseClone() as UserProfile;
+                m_Editing = true;
             }
-            UserIllnesses.Add(userIllness);
         }
 
-        /// <summary>
-        /// Устанавливает список оборудования пользователя.
-        /// </summary>
-        /// <param name="userEquipment">Список оборудования пользователя</param>
-        public void SetUserEquipment(List<RecordOfUserEquipment> userEquipment)
+        public void CancelEdit()
         {
-            UserEquipment = userEquipment ?? throw new ArgumentNullException(nameof(userEquipment), "Список оборудования пользователя не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Добавляет оборудование пользователя.
-        /// </summary>
-        /// <param name="equipment">Оборудование пользователя</param>
-        public void AddUserEquipment(RecordOfUserEquipment equipment)
-        {
-            if (equipment == null)
+            if (m_Editing == true)
             {
-                throw new ArgumentNullException(nameof(equipment), "Оборудование пользователя не может быть null.");
+                _userID = temp_Record.UserID;
+                _firstName = temp_Record.FirstName;
+                _secondName = temp_Record.SecondName;
+                _weight = temp_Record.Weight;
+                _height = temp_Record.Height;
+                _userIllness = temp_Record._userIllness;
+                _userEquipment = temp_Record._userEquipment;
+                _userDish = temp_Record._userDish;
+                _experience = temp_Record._experience;
+
+                m_Editing = false;
             }
-            UserEquipment.Add(equipment);
         }
-
-        /// <summary>
-        /// Устанавливает список потребленной еды пользователя.
-        /// </summary>
-        /// <param name="userFoodConsumptions">Список потребленной еды пользователя</param>
-        public void SetUserFoodConsumptions(List<UserDish> userFoodConsumptions)
+        public void EndEdit()
         {
-            UserFoodConsumptions = userFoodConsumptions ?? throw new ArgumentNullException(nameof(userFoodConsumptions), "Список потребленной еды пользователя не может быть пустым или null.");
-        }
-
-        /// <summary>
-        /// Добавляет потребленную еду пользователя.
-        /// </summary>
-        /// <param name="userDish">Потребленная еда пользователя</param>
-        public void AddUserFoodConsumption(UserDish userDish)
-        {
-            if (userDish == null)
+            if (m_Editing == true)
             {
-                throw new ArgumentNullException(nameof(userDish), "Потребленная еда пользователя не может быть null.");
+                temp_Record = null;
+                m_Editing = false;
             }
-            UserFoodConsumptions.Add(userDish);
-        }
-
-        /// <summary>
-        /// Устанавливает опыт пользователя.
-        /// </summary>
-        /// <param name="experience">Опыт пользователя</param>
-        public void SetExperience(string experience)
-        {
-            Experience = experience ?? throw new ArgumentNullException(nameof(experience), "Опыт пользователя не может быть пустым или null.");
         }
     }
 }

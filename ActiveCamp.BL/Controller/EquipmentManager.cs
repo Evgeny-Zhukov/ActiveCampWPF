@@ -69,9 +69,9 @@ namespace ActiveCamp.BL.Controller
                     if (reader.Read())
                     {
                         // Чтение данных оборудования из результата запроса
-                        equipment.SetEquipmentID(equipment);
-                        equipment.SetEquipmentName(reader["equipmentName"].ToString());
-                        equipment.SetEquipmentWeight(Convert.ToDouble(reader["equipmentWeight"]));
+                        equipment.equipmentID = Convert.ToInt32(reader["equipmentID"]);
+                        equipment.equipmentName = (reader["equipmentName"].ToString());
+                        equipment.equipmentWeight = (Convert.ToDouble(reader["equipmentWeight"]));
                     }
                     reader.Close();
                 }

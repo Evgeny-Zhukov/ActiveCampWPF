@@ -1,5 +1,7 @@
-﻿using ActiveCamp.BL.Model;
+﻿using ActiveCamp.BL.Controller;
+using ActiveCamp.BL.Model;
 using System;
+using System.Collections.Generic;
 
 namespace ActiveCamp.CMD
 {
@@ -10,18 +12,13 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            RecordOfUserEquipment equipment1 = new RecordOfUserEquipment();
-            equipment1.PropertyChanged += (sender, e) =>
+            RouteManager routeManager = new RouteManager();
+            List<Route> routes = new List<Route>();
+            routes = routeManager.GetRouteById(13);
+            foreach (Route route in routes)
             {
-                if (e.PropertyName == "EquipmentName")
-                {
-                    Console.WriteLine($"{e.PropertyName} has changed");
-                    equipment1.CountOfEquipment += 1;
-                };
-                
-            };
-            equipment1.EquipmentName = "TestName";
-            Console.WriteLine(equipment1.CountOfEquipment);
+                Console.WriteLine(route);
+            }
         }
     }
 }
