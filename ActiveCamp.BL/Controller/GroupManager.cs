@@ -71,7 +71,7 @@ namespace ActiveCamp.BL.Model
         public void AddUserToGroup(int groupId, int userId)
         {
             Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
-            User user = users.FirstOrDefault(u => u.UserID == userId);
+            User user = users.FirstOrDefault(u => ActiveCamp.BL.User.UserID == userId);
 
             if (group == null)
             {

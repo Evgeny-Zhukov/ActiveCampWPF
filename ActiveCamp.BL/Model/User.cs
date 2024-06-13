@@ -8,22 +8,27 @@ namespace ActiveCamp.BL
     /// </summary>
     public class User
     {
-        #region Свойства
-        /// <summary>
-        /// Id пользователя.
-        /// </summary>
-        public int UserID { get; private set; }
 
-        /// <summary>
-        /// Псевдоним пользователя.
-        /// </summary>
+        static private int _userID;
+
+        static public int UserID 
+        { 
+            get
+            {
+                return _userID;
+            }
+            set
+            {
+                if (value != _userID)
+                {
+                    _userID = value;
+                }
+            }
+        }
+
         public string Username { get; private set; }
 
-        /// <summary>
-        /// Пароль пользователя.
-        /// </summary>
         public string Password { get; private set; }
-        #endregion
 
         /// <summary>
         /// Создает пользователя.
@@ -83,6 +88,7 @@ namespace ActiveCamp.BL
         {
             Password = password ?? throw new ArgumentNullException(nameof(password), "Пароль не может быть пустым или null.");
         }
+
         public override string ToString()
         {
             return Username;

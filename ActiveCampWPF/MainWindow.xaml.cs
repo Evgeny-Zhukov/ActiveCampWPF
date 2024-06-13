@@ -8,8 +8,7 @@ using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Windows.Data;
 using ActiveCamp.BL.Controller;
-
-
+using System.Collections.Generic;
 
 namespace ActiveCampWPF
 {
@@ -18,9 +17,6 @@ namespace ActiveCampWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-        private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +34,6 @@ namespace ActiveCampWPF
         private void MenuBackgroundButton_Click(object sender, RoutedEventArgs e)
         {
             CloseMenu();
-            //Treatment of BackGaround button.
         }
         
         private void NewsButton_Click(object sender, RoutedEventArgs e)
@@ -88,6 +83,7 @@ namespace ActiveCampWPF
         }
         
         #region  Prepering_for_Hiking
+
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
         { 
 
@@ -229,6 +225,8 @@ namespace ActiveCampWPF
 
         private void AddNewRecordInEquipmentTable_Click(object sender, RoutedEventArgs e)
         {
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
             MenuButton.IsEnabled = false;
             MenuButton.Visibility = Visibility.Hidden;
 
@@ -238,15 +236,28 @@ namespace ActiveCampWPF
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
 
-            OwnersInfo_grid.IsEnabled = true;
-            OwnersInfo_grid.Visibility = Visibility.Visible;
+            AddNewRecordForEquipmentTable.IsEnabled = true;
+            AddNewRecordForEquipmentTable.Visibility= Visibility.Visible;
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            EquipmentDataFillingForm.IsEnabled = true;
-            EquipmentDataFillingForm.Visibility = Visibility.Visible;
+
+            List<DayElement> hikingsList = new List<DayElement>();
+
+            hikingsList.Add(new DayElement("Disp1"));
+
+            EquipmentOwnersList.BeginInit();
+            EquipmentOwnersList.ItemsSource = hikingsList;
+            EquipmentOwnersList.EndInit();
+
+            DataGridForFillingEquipmentData.ItemsSource = null;
+            //EquipmentOwnersList.ItemsSource = 
+
         }
+
 
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
         {
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
             MenuButton.IsEnabled = false;
             MenuButton.Visibility = Visibility.Hidden;
             
@@ -255,12 +266,20 @@ namespace ActiveCampWPF
 
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
+            
+            AddNewRecordForFoodTable.IsEnabled = true;
+            AddNewRecordForFoodTable.Visibility = Visibility.Visible;
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            DaysInfo_grid.IsEnabled = true;
-            DaysInfo_grid.Visibility = Visibility.Visible;
+            List<DayElement> hikingsList = new List<DayElement>();
 
-            FoodDataFillingForm.IsEnabled = true;
-            FoodDataFillingForm.Visibility = Visibility.Visible;
+            hikingsList.Add(new DayElement("Disp1"));
+
+            DaysList.BeginInit();
+            DaysList.ItemsSource = hikingsList;
+            DaysList.EndInit();
+
+            DataGridForFillingFoodData.ItemsSource = null;
         }
 
         #region Filling_Events
@@ -270,27 +289,26 @@ namespace ActiveCampWPF
             DataGridForFillingEquipmentData.Items.Clear();
             DataGridForFillingFoodData.Items.Clear();
 
-            EquipmentOwnersList.Items.Clear();
-            DaysList.Items.Clear();
-
-            OwnersInfo_grid.IsEnabled = false;
-            OwnersInfo_grid.Visibility = Visibility.Hidden;
-
-            DaysInfo_grid.IsEnabled = false;
-            DaysInfo_grid.Visibility = Visibility.Hidden;
+            EquipmentOwnersList.ItemsSource = null;
+            DaysList.ItemsSource = null;
 
             CreateNewRecord_grid.IsEnabled = false;
             CreateNewRecord_grid.Visibility = Visibility.Hidden;
 
-            MenuButton.IsEnabled = true;
-            MenuButton.Visibility = Visibility.Visible;
+            AddNewRecordForFoodTable.IsEnabled= false;
+            AddNewRecordForFoodTable.Visibility = Visibility.Hidden;
 
-            HeaderOfSection.IsEnabled = true;
-            HeaderOfSection.Visibility = Visibility.Visible;
+            AddNewRecordForEquipmentTable.IsEnabled = false;
+            AddNewRecordForEquipmentTable.Visibility = Visibility.Hidden;
 
         }
 
         private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        private void RemoveRowFromEquipmentData_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -321,7 +339,17 @@ namespace ActiveCampWPF
             HeaderOfSection.Visibility = Visibility.Visible;
         
         }
+        
+        private void DaysList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var SV = DaysList.SelectedValue;
+            if(SV != null)
+            {
+                ((ActiveCampWPF.DayElement)SV).RecordOfFoodTable = new RecordOfFoodTable();
+            }
+        }
         #endregion
+        
 
         #endregion
 
@@ -505,11 +533,19 @@ namespace ActiveCampWPF
             RouteManager routeManager = new RouteManager();
             Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, false);
             routeManager.AddRoute(NewRoute);
-        }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
+            BorderOfCancelAproovingform.IsEnabled = false;
 
+            NewHikkingFormBorder.Visibility = Visibility.Hidden;
+            NewHikkingFormBorder.IsEnabled = false;
+
+            LittleDiscription.Text = "";
+            PointFrom.Text = "";
+            PointTo.Text = "";
+            DateTo.Text = "Выберете дату";
+            DateFrom.Text = "Выберете дату";
+            LevelOfHiking.Text = "";
         }
 
         #region AI Agent 
@@ -536,5 +572,9 @@ namespace ActiveCampWPF
 
         #endregion
 
+        private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

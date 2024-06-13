@@ -80,7 +80,6 @@
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Route.cs" />
-    <Compile Include="Model\RouteType.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="Controller\SessionManager.cs" />
     <Compile Include="Model\User.cs" />
