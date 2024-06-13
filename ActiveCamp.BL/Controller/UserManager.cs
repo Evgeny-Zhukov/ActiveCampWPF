@@ -14,11 +14,10 @@ namespace ActiveCamp.BL.Controller
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
-        public bool RegisterUser(User user)
+        public int RegisterUser(User user)
         {
             using (_connection)
             {
-
                 SqlCommand command = new SqlCommand("CreateUser", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
@@ -26,19 +25,21 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.AddWithValue("@Username", user.Username);
                 command.Parameters.AddWithValue("@Password", user.Password);
 
-                SqlParameter successParameter = new SqlParameter("@Success", SqlDbType.Bit)
+                SqlParameter userIdParameter = new SqlParameter("@UserID", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
-                command.Parameters.Add(successParameter);
+                command.Parameters.Add(userIdParameter);
 
                 _connection.Open();
                 command.ExecuteNonQuery();
-                
-                return (bool)successParameter.Value; // Нужно возвращать ID пользователя;
+                int id = Convert.ToInt32(userIdParameter.Value);
+
+                return id;
             }
         }
-        public bool VerifyUserByLogin(string username, string password)
+
+        public int VerifyUserByLogin(string username, string password)
         {
             using (_connection)
             {
@@ -49,19 +50,23 @@ namespace ActiveCamp.BL.Controller
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Password", password);
 
-                    SqlParameter isLoginSuccessfulParam = new SqlParameter("@IsLoginSuccessful", SqlDbType.Bit)
+
+                    SqlParameter userIdParam = new SqlParameter("@UserID", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
                     };
-                    cmd.Parameters.Add(isLoginSuccessfulParam);
+                    cmd.Parameters.Add(userIdParam);
 
                     _connection.Open();
                     cmd.ExecuteNonQuery();
 
-                    return (bool)isLoginSuccessfulParam.Value; // Также нужно возвращать ID Пользователя
+                    int userId = Convert.ToInt32(userIdParam.Value);
+
+                    return userId;
                 }
             }
         }
+
         public User GetUserById(int userId)
         {
             using (_connection)
