@@ -255,9 +255,11 @@ namespace ActiveCamp.BL.Model
             this._isPrivate = isPrivate;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         private Route temp_Record = null;
         private bool m_Editing = false;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -302,6 +304,5 @@ namespace ActiveCamp.BL.Model
             }
         }
     }
-
 
 }

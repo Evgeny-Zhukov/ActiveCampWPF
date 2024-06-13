@@ -2,6 +2,7 @@
 using ActiveCamp.BL.Model;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL
@@ -12,21 +13,23 @@ namespace ActiveCamp.BL
     public class User : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
-        private int _userID;
+        
+        static private int _userID;
         private string _userName;
         private string _password;
+        
         /// <summary>
         /// Id пользователя.
         /// </summary>
-        public int UserID
+        static public int UserID
         {
-            get { return this._userID; }
+            get { return _userID; }
             set
             {
-                if (value != this._userID)
+                if (value != _userID)
                 {
-                    this._userID = value;
-                    NotifyPropertyChanged("UserID");
+                    _userID = value;
+                    //NotifyPropertyChanged(nameof(ActiveCamp.BL.User.UserID));
                 }
             }
         }
@@ -115,7 +118,7 @@ namespace ActiveCamp.BL
         {
             if (m_Editing == true)
             {
-                _userID = temp_Record.UserID;
+                _userID = ActiveCamp.BL.User.UserID;
                 _userName = temp_Record.Username;
                 _password = temp_Record.Password;
 
