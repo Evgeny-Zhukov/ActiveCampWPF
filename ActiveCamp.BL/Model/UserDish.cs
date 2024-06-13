@@ -6,6 +6,11 @@ namespace ActiveCamp.BL.Model
     public class UserDish : INotifyPropertyChanged, IEditableObject
     {
 
+        private int _userID;
+        private int _dishID;
+        private int _userDishID;
+
+
         public int UserDishID { get; set; }
         public int DishID { get; set; }
         public int UserID { get; set; }
