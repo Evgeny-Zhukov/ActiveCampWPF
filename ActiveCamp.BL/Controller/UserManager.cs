@@ -1,6 +1,5 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
-using System.Security.Cryptography;
 using System;
 using ActiveCamp.BL.Model;
 
@@ -36,7 +35,7 @@ namespace ActiveCamp.BL.Controller
                 _connection.Open();
                 command.ExecuteNonQuery();
                 
-                return (bool)successParameter.Value;
+                return (bool)successParameter.Value; // Нужно возвращать ID пользователя;
             }
         }
         public bool VerifyUserByLogin(string username, string password)
@@ -59,7 +58,7 @@ namespace ActiveCamp.BL.Controller
                     _connection.Open();
                     cmd.ExecuteNonQuery();
 
-                    return (bool)isLoginSuccessfulParam.Value;
+                    return (bool)isLoginSuccessfulParam.Value; // Также нужно возвращать ID Пользователя
                 }
             }
         }

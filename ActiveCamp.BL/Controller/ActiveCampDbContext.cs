@@ -9,7 +9,8 @@ namespace ActiveCamp.BL.Model
     // TODO: Можно выгрузить в xml 
     public class ActiveCampDbContext
     {
-        private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        //private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        private readonly string _connectionString = "Server=DESKTOP-MONLUDU;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
 
         public ActiveCampDbContext()
         {
@@ -20,32 +21,5 @@ namespace ActiveCamp.BL.Model
             SqlConnection connection = new SqlConnection(_connectionString);
             return connection;
         }
-
-        #region User 2/4
-
-        #endregion
-        #region Route 4/4
-        
-        #endregion
-        #region FoodConsumption 3/4
-        
-        #endregion
-        #region SyrveyResult 3/4
-        
-        #endregion
-        #region UserIllness 3/4
-        #endregion
-        #region UserEquipment 3/4
-        #endregion
-        #region UserDish 3/4
-        #endregion
-        #region Equipment 3/4
-        #endregion
-        #region Dish 3/4
-        #endregion 
-        #region Illness 3/4
-        #endregion
-        #region Group
-        #endregion
     }
 }

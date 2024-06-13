@@ -24,8 +24,8 @@
             <Button.Template>
                 
                 <ControlTemplate TargetType="Button">
-                    
-                    <Border x:Name="NewsButtonBorder" BorderBrush="Black" BorderThickness="0" CornerRadius="10">
+
+                    <Border x:Name="NewsButtonBorder" BorderBrush="Black" BorderThickness="0" CornerRadius="10" Width="280">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>

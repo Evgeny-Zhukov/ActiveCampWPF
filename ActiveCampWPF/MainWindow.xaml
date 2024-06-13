@@ -83,6 +83,89 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
+                <!--#region Header Of Sections-->
+                <TextBox x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
+                         FontWeight="Bold" FontSize="34" TextWrapping="Wrap" TextAlignment="Center"
+                         Foreground="AliceBlue" Background="{x:Null}" BorderThickness="0"  
+                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" Focusable="False"
+                         Text="Подготовка" Cursor="Arrow">
+                </TextBox>
+                <!--#endregion-->
+                
+                <!--#region Menu Button -->
+                <Button x:Name="MenuButton" Width="50" Height="50" Click="MenuButton_Click" 
+                        IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}" x:Name="MenuButtonTemplate">
+                            <Border x:Name="MenuButtonBorder"
+                                    CornerRadius="25"
+                                    BorderBrush = "AliceBlue"
+                                    BorderThickness = "0"
+                                    Background = "#0000">
+                                <Grid Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" Margin="0,1,0,1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure IsClosed="False" StartPoint="3,4">
+                                                    <LineSegment Point="28,4" />
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" 
+                                          Margin="0,1,0,1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathFigure IsClosed="False" StartPoint="3,14">
+                                                    <LineSegment Point="28,14" />
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" 
+                                          Margin="0,1,0,1">
+                                        <Path.Data>     
+                                            <PathGeometry>
+                                                <PathFigure IsClosed="False" StartPoint="3,24">
+                                                    <LineSegment Point="28,24" />
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="MenuButtonBorder" Property="Cursor" Value="Hand"/>
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="MenuButtonBorder" Property="Opacity" Value="0.75"></Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="MainMenuPanel" 
+                                                         Storyboard.TargetProperty="(Grid.Width)"
+                                                         Duration="0:0:0:0.28"
+                                                         From="0" To="320"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+                <!--#endregion-->
+                
                 <!--#region AI Agent control element -->
 
                 <Button x:Name="AI_agent" Grid.Column="2" Click="AI_agent_Click">
@@ -590,6 +673,18 @@
                                                             <Setter TargetName="SaveAndContinueButtonBorder" Property="Opacity" Value="0.75"/>
                                                         </Trigger.Setters>
                                                     </Trigger>
+                                                    <!--<EventTrigger>
+                                                        <EventTrigger.Actions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="MainMenuPanel" 
+                                                                                     Storyboard.TargetProperty="(Grid.Width)"
+                                                                                     Duration="0:0:0:0.28"
+                                                                                     From="0" To="320"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger.Actions>
+                                                    </EventTrigger>-->
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Button.Template>
@@ -700,6 +795,23 @@
                         </Border>
                     <!--#endregion-->
                 
+                    <!--#region Massage about sucsessful saving end-->
+
+                    <Grid x:Name="SavingSucssesfulMessage" Grid.ColumnSpan="2" IsEnabled="False" Visibility="Hidden">
+                        
+                        <Rectangle Width="450" Height="100" RadiusX="20" RadiusY="20">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Color="Orange"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Label Content="Запись сохранена!" Width="300" Height="60"
+                               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                               FontFamily="TimesNewRoman" FontSize="28" FontWeight="Bold" Foreground="Black"/>
+                    
+                    </Grid>
+                    
+                    <!--#endregion-->
+                    
                 </Grid>
 
                 <!--#endregion-->
@@ -1281,7 +1393,7 @@
 
                     <!--#region "Add new record" buttons -->
                     
-                    <!-- add new record for food table -->
+                    <!--#region add new record for food table -->
                     <Button x:Name="AddNewRecordInFoodTable" Grid.Column="1" Grid.Row="1"
                             FontFamily="TimesNewRoman" FontSize="18" FontStyle="Normal" FontWeight="Bold"
                             Click="AddNewRecordInFoodTable_Click" IsEnabled="False" Visibility="Hidden">
@@ -1324,9 +1436,9 @@
 
                         </Button.Template>
                     </Button>
+                    <!--#endregion-->
                     
-                    <!-- add new record for equipment table -->
-
+                    <!--#region add new record for equipment table -->
                     <Button x:Name="AddNewRecordInEquipmentTable" Grid.Column="1" Grid.Row="1"
                             FontFamily="TimesNewRoman" FontSize="18" FontStyle="Normal" FontWeight="Bold"
                             Click="AddNewRecordInEquipmentTable_Click" IsEnabled="False" Visibility="Hidden">
@@ -1369,6 +1481,7 @@
 
                         </Button.Template>
                     </Button>
+                    <!--#endregion-->
 
                     <!--#endregion-->
 
@@ -1376,14 +1489,7 @@
                 
                 <!--#region "Add new record" forms -->
 
-                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" IsEnabled="False" Visibility="Hidden">
-
-                    <Grid.ColumnDefinitions>
-                        
-                        <ColumnDefinition Width="360"></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    
-                    </Grid.ColumnDefinitions>
+                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" IsEnabled="True" Visibility="Hidden">
 
                     <Grid.Resources>
                         
@@ -1442,11 +1548,12 @@
                         </Style>
                         
                         <Style x:Key="StyleForListInFillingForms" TargetType="ListBox">
+                            
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListBox}">
 
-                                        <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="10,0,0,0">
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="10,0,0,10">
 
                                             <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
 
@@ -1513,7 +1620,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
 
-                                        <Border x:Name="AddRowButton_border" Margin="10,0,10,0" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Width="250" Height="30"
+                                        <Border x:Name="AddRowButton_border" Margin="10,0,10,0" CornerRadius="10" BorderThickness="1" BorderBrush="Black" Width="160" Height="30"
                                                         HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <Border.Background>
                                                 <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
@@ -1551,7 +1658,8 @@
 
                     </Grid.Resources>
                     
-                    <Rectangle Grid.ColumnSpan="2">
+                    <!--Control Bacground-->
+                    <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2">
                         
                         <Rectangle.Fill>
                             
@@ -1563,153 +1671,172 @@
                     
                     <!--#region FormForFoodTableFilling-->
 
-                    <Grid x:Name="DaysInfo_grid" Margin="15,15,0,15" Visibility="Hidden" IsEnabled="False">
-                        
+                    <Grid x:Name="AddNewRecordForFoodTable" Visibility="Hidden" IsEnabled="False">
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="360"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <ListBox x:Name="DaysList" Grid.Row="0"
-                                 Style="{StaticResource StyleForListInFillingForms}"/>
+                        <ListBox x:Name="DaysList" Grid.RowSpan="2" Margin="15,15,0,15"
+                                 Style="{StaticResource StyleForListInFillingForms}" SelectionMode="Single" SelectionChanged="DaysList_SelectionChanged"/>
 
-                        <Button x:Name="AddNewDay" Grid.Row="1" Content="Добавить информацию по дням"
-                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>
+                        <!--<Button x:Name="AddNewDay" Grid.Row="1" Content="Добавить информацию по дням" Margin="15,0,0,15"
+                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>-->
+                        
+                        <Border x:Name="FoodDataFillingForm" Grid.Column="1" Grid.RowSpan="2" CornerRadius="0,10,10,0" 
+                                BorderThickness="0" Margin="0,15,15,15">
 
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
+                            </Border.Background>
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
+                                        Click="BackFromFiilingButton_Click"/>
+
+                                <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1"
+                                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <Grid x:Name="FillingPlace_Food">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <DataGrid x:Name="DataGridForFillingFoodData" 
+                                                  AutoGenerateColumns="False"
+                                                  Background="White"
+                                                  CanUserReorderColumns="False"
+                                                  CanUserAddRows="True" Margin="5">
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Время периема пищи" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Участник" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Наименование еды" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Грамм" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+
+                                        <Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                                Content="Добавить запись" Click="AddNewRowForFillingFoodData_DataGrid_Click"/>
+
+                                        <Button x:Name="RemoveRowFromFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
+                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromFoodData_Click"/>
+
+                                        <Button x:Name="SaveChangesOfFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
+                                                HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfFoodData_Click"/>
+
+                                    </Grid>
+                                </ScrollViewer>
+
+                            </Grid>
+
+                        </Border>
                     </Grid>
 
-                    <Border x:Name="FoodDataFillingForm" Grid.Column="1" CornerRadius="0,10,10,0" 
-                            BorderThickness="0" Margin="0,15,15,15" IsEnabled="False" Visibility="Hidden">
-                        
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-                        
-                        <Grid>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="60"></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="60"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
-                                    Click="BackFromFiilingButton_Click"/>
-
-                            <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1"
-                                          HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                <Grid x:Name="FillingPlace_Food">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="40"></RowDefinition>
-                                    </Grid.RowDefinitions>
-
-                                    <DataGrid x:Name="DataGridForFillingFoodData" 
-                                              AutoGenerateColumns="False"
-                                              Background="White"
-                                              CanUserReorderColumns="False"
-                                              CanUserAddRows="True" Margin="5">
-                                        
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Col 1" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 2" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 3" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 4" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 5" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                        
-                                    </DataGrid>
-
-                                    <Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
-                                            Content="Добавить запись" Click="AddNewRowForFillingFoodData_DataGrid_Click"/>
-
-                                    <Button x:Name="SaveChangesOfFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
-                                            HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfFoodData_Click"/>
-                                </Grid>
-                            </ScrollViewer>
-                        
-                        </Grid>
-
-                    </Border>        
-                    
                     <!--#endregion-->
 
                     <!--#region FormForEquipmentTableFilling -->
-                    <Grid x:Name="OwnersInfo_grid" Margin="15,15,0,15" Visibility="Hidden" IsEnabled="False">
+                    
+                    <Grid x:Name="AddNewRecordForEquipmentTable" Visibility="Visible" IsEnabled="True">
                         
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                         </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="360"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         
-                        <ListBox x:Name="EquipmentOwnersList" Grid.Row="0"
+                        <ListBox x:Name="EquipmentOwnersList" Grid.RowSpan="2" Margin="15,15,0,15"
                                  Style="{StaticResource StyleForListInFillingForms}"/>
 
-                        <Button x:Name="AddNewOwner" Grid.Row="1" Content="Добавить информацию по участникам"
-                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>
+                        <!--<Button x:Name="AddNewOwner" Grid.Row="1" Content="Добавить информацию по участникам" Margin="15,0,0,15"
+                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>-->
+                    
+                        <Border x:Name="EquipmentDataFillingForm" Grid.Column="1" Grid.RowSpan="2" 
+                                CornerRadius="0,10,10,0" BorderThickness="0" Margin="0,15,15,15">
+                        
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
+                            </Border.Background>
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
+                                        Click="BackFromFiilingButton_Click"/>
+                                
+                                <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+                                    
+                                    <Grid x:Name="FillingPlace_Equipment">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="40"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <DataGrid x:Name="DataGridForFillingEquipmentData" 
+                                                  AutoGenerateColumns="False"
+                                                  Background="White"
+                                                  CanUserReorderColumns="False"
+                                                  CanUserAddRows="True" Margin="5">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Наименование вещи" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Количество" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Вес/шт." Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <Button x:Name="AddNewRowForFillingEquipmentData" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                                Content="Добавить запись" Click="AddNewRowForFillingEquipmentData_DataGrid_Click"/>
+
+                                        <Button x:Name="RemoveRowFromEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
+                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromEquipmentData_Click"/>
+
+                                        <Button x:Name="SaveChangesOfEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
+                                                HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfEquipmentData_Click"/>
+                                        
+                                    </Grid>
+                                    
+                                </ScrollViewer>
+                                
+                            </Grid>
+                        
+                        </Border>
                     
                     </Grid>
 
-                    <Border x:Name="EquipmentDataFillingForm" Grid.Column="1" CornerRadius="0,10,10,0" 
-                            BorderThickness="0" Margin="0,15,15,15" IsEnabled="False" Visibility="Hidden">
-                        
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-
-                        <Grid>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="60"></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="60"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ResourceKey=StyleForBackButton}"
-                                    Click="BackFromFiilingButton_Click"/>
-                            
-                            <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
-                                <Grid x:Name="FillingPlace_Equipment">
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition Height="40"></RowDefinition>
-                                    </Grid.RowDefinitions>
-
-                                    <DataGrid x:Name="DataGridForFillingEquipmentData" 
-                                              AutoGenerateColumns="False"
-                                              Background="White"
-                                              CanUserReorderColumns="False"
-                                              CanUserAddRows="True" Margin="5">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Col 1" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 2" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 3" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 4" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Col 5" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-
-                                    <Button x:Name="AddNewRowForFillingEquipmentData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
-                                            Content="Добавить запись" Click="AddNewRowForFillingEquipmentData_DataGrid_Click"/>
-                                    
-                                    <Button x:Name="SaveChangesOfEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
-                                            HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfEquipmentData_Click"/>
-                                    
-                                </Grid>
-                            </ScrollViewer>
-                            
-                        </Grid>
-                    
-                    </Border>
 
                     <!--#endregion-->
                     
@@ -1721,30 +1848,86 @@
 
                 <!--#region Settings Section -->
 
-                <Grid x:Name="Settings" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                      VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Width="300" Height="480" 
-                      Background="#000080"
+                <Grid x:Name="Settings" Grid.RowSpan="2" Grid.ColumnSpan="3" 
                       Visibility="Hidden" Focusable="False">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="30"></ColumnDefinition>
+                        <ColumnDefinition Width="500"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
                         <RowDefinition></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
                     </Grid.RowDefinitions>
                     
+                    <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="3">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Black" Opacity="0.6"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <Border x:Name="SettingForm" Grid.Column="1" Grid.Row="1" 
+                            BorderThickness="0" CornerRadius="20"> 
+                        <Border.Background>
+                            <SolidColorBrush Color="Orange"></SolidColorBrush>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <ScrollViewer Grid.Row="1" Margin="7">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="110"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Image Grid.Row="0" Grid.Column="0" x:Name="AvavtarImage_Setting"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                           Height="100" Width="100" >
+                                        <Image.Source>
+                                            <DrawingImage>
+                                                <DrawingImage.Drawing>
+                                                    <GeometryDrawing>
+                                                        <GeometryDrawing.Pen>
+                                                            <Pen Brush="AliceBlue" Thickness="1"></Pen>
+                                                        </GeometryDrawing.Pen>
+                                                        <GeometryDrawing.Geometry>
+                                                            <EllipseGeometry RadiusX="100" RadiusY="100"></EllipseGeometry>
+                                                        </GeometryDrawing.Geometry>
+                                                        <GeometryDrawing.Brush>
+                                                            <ImageBrush>
+                                                                <ImageBrush.ImageSource>
+                                                                    <BitmapImage UriSource="Resources/Images/images.jpg">
+                                                                    </BitmapImage>
+                                                                </ImageBrush.ImageSource>
+                                                            </ImageBrush>
+                                                        </GeometryDrawing.Brush>
+                                                    </GeometryDrawing>
+                                                </DrawingImage.Drawing>
+                                            </DrawingImage>
+                                        </Image.Source>
+                                    </Image>
+
+                                </Grid>
+                            </ScrollViewer>
+                            
+                        </Grid>
+                    </Border>
                     
-                    
+
                 </Grid>
 
                 <!--#endregion-->
 
-                <!--#region Main Controls-->
-
-                <!-- Background Plane_Button -->
+                <!--#region Menu Background Button -->
                 <Button x:Name="MenuBackground" 
                         Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"
                         Visibility="Hidden" Focusable="False" Click="MenuBackgroundButton_Click">
@@ -1754,88 +1937,6 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
-                <!-- Menu Button -->
-                <Button x:Name="MenuButton" Width="50" Height="50" Click="MenuButton_Click" 
-                        IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}" x:Name="MenuButtonTemplate">
-                            <Border x:Name="MenuButtonBorder"
-                                    CornerRadius="25"
-                                    BorderBrush = "AliceBlue"
-                                    BorderThickness = "0"
-                                    Background = "#0000">
-                                <Grid Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" Margin="0,1,0,1">
-                                        <Path.Data>
-                                            <PathGeometry>
-                                                <PathFigure IsClosed="False" StartPoint="3,4">
-                                                    <LineSegment Point="28,4" />
-                                                </PathFigure>
-                                            </PathGeometry>
-                                        </Path.Data>
-                                    </Path>
-                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" 
-                                          Margin="0,1,0,1">
-                                        <Path.Data>
-                                            <PathGeometry>
-                                                <PathFigure IsClosed="False" StartPoint="3,14">
-                                                    <LineSegment Point="28,14" />
-                                                </PathFigure>
-                                            </PathGeometry>
-                                        </Path.Data>
-                                    </Path>
-                                    <Path Stroke="{TemplateBinding Background}" StrokeThickness="3" 
-                                          Margin="0,1,0,1">
-                                        <Path.Data>     
-                                            <PathGeometry>
-                                                <PathFigure IsClosed="False" StartPoint="3,24">
-                                                    <LineSegment Point="28,24" />
-                                                </PathFigure>
-                                            </PathGeometry>
-                                        </Path.Data>
-                                    </Path>
-                                </Grid>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Trigger.Setters>
-                                        <Setter TargetName="MenuButtonBorder" Property="Cursor" Value="Hand"/>
-                                    </Trigger.Setters>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="true">
-                                    <Trigger.Setters>
-                                        <Setter TargetName="MenuButtonBorder" Property="Opacity" Value="0.75"></Setter>
-                                    </Trigger.Setters>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="MainMenuPanel" 
-                                                         Storyboard.TargetProperty="(Grid.Width)"
-                                                         Duration="0:0:0:0.28"
-                                                         From="0" To="320"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Button.Triggers>
-                </Button>
-
-                <!-- Header Of Section -->
-                <TextBox x:Name="HeaderOfSection" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" 
-                         FontWeight="Bold" FontSize="34" TextWrapping="Wrap" TextAlignment="Center"
-                         Foreground="AliceBlue" Background="{x:Null}" BorderThickness="0"  
-                         HorizontalAlignment="Center" VerticalAlignment="Center"
-                         IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" Focusable="False"
-                         Text="Подготовка" Cursor="Arrow">
-                </TextBox>
-
                 <!--#endregion-->
 
                 <!--#region Menu -->
@@ -1996,10 +2097,10 @@
                 <!--#endregion-->
 
             </Grid>
+            
         </Grid>
         
-        <!--#region Agent menu-->
-
+        <!--#region Menu of Agent form-->
         <Grid x:Name="AgentMenu_grid" Grid.ColumnSpan="3" Grid.RowSpan="2"
                       IsEnabled="False" Visibility="Hidden">
 
@@ -2043,7 +2144,7 @@
                     <RowDefinition Height="60"></RowDefinition>
                 </Grid.RowDefinitions>
                 
-                <!-- "Back" button -->
+                <!-- Back button -->
                 <Button x:Name="BackFromAgentMenuButton" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                          Width="40" Height="40" Click="BackFromAgentMenuButton_Click">
                     

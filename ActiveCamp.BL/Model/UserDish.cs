@@ -5,45 +5,10 @@ namespace ActiveCamp.BL.Model
 {
     public class UserDish : INotifyPropertyChanged, IEditableObject
     {
-        private int _userDishID;
-        private int _dishID;
-        private int _userID;
-        public int UserDishID
-        {
-            get { return this._userDishID; }
-            set
-            {
-                if (value != this._userDishID)
-                {
-                    this._userDishID = value;
-                    NotifyPropertyChanged("UserDishID");
-                }
-            }
-        }
-        public int DishID
-        {
-            get { return this._dishID; }
-            set
-            {
-                if (value != this._dishID)
-                {
-                    this._dishID = value;
-                    NotifyPropertyChanged("DishID");
-                }
-            }
-        }
-        public int UserID
-        {
-            get { return this._userID; }
-            set
-            {
-                if (value != this._userID)
-                {
-                    this._userID = value;
-                    NotifyPropertyChanged("UserID");
-                }
-            }
-        }
+
+        public int UserDishID { get; set; }
+        public int DishID { get; set; }
+        public int UserID { get; set; }
         public UserDish() { }
         public UserDish(int dishID, int userID)
         {
@@ -88,5 +53,6 @@ namespace ActiveCamp.BL.Model
                 m_Editing = false;
             }
         }
+
     }
 }
