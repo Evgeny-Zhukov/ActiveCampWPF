@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using ActiveCamp.BL.Controller;
 using System.Collections.Generic;
+using ActiveCampWPF.Properties;
 
 namespace ActiveCampWPF
 {
@@ -77,6 +78,10 @@ namespace ActiveCampWPF
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
+
+            this.Settings.Visibility = Visibility.Visible;
+            this.Settings.IsEnabled = true;
+
             HeaderOfSection.Text = "Настройки";
             CloseMenu();
             //Treatment of Setting button.
@@ -492,6 +497,9 @@ namespace ActiveCampWPF
 
             PreperingForHiking.Visibility = Visibility.Hidden;
             PreperingForHiking.IsEnabled = false;    
+        
+            this.Settings.Visibility = Visibility.Hidden;
+            this.Settings.IsEnabled = false;
         }
 
         private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
@@ -574,6 +582,25 @@ namespace ActiveCampWPF
 
         private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void BackFromSettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            MenuBackground.Visibility = Visibility.Visible;
+            MenuBackground.IsEnabled = true;
+            
+            MainMenuPanel.Visibility = Visibility.Visible;
+            MainMenuPanel.IsEnabled = true;
+
+            DoubleAnimation openMenu = new DoubleAnimation();
+
+            openMenu.From = 0;
+            openMenu.To = 320;
+            openMenu.Duration = new Duration(TimeSpan.Parse("0:0:0.28"));
+
+            MainMenuPanel.BeginAnimation(Grid.WidthProperty, openMenu);
+
 
         }
     }

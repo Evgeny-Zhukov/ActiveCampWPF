@@ -1862,12 +1862,20 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="60"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
-                    <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="3">
-                        <Rectangle.Fill>
-                            <SolidColorBrush Color="Black" Opacity="0.6"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
+
+                    <Button x:Name="BackFromSettingButton" Grid.ColumnSpan="3" Grid.RowSpan="3" Click="BackFromSettingButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="BackFromSettingButton_border" BorderThickness="0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="Black" Opacity="0.85"/>
+                                    </Border.Background>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
 
                     <Border x:Name="SettingForm" Grid.Column="1" Grid.Row="1" 
                             BorderThickness="0" CornerRadius="20"> 
