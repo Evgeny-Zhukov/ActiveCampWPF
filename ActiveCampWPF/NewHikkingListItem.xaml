@@ -12,46 +12,31 @@
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="60"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <Button x:Name="NewsButton" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2">
-            
-            <Button.Template>
-                
-                <ControlTemplate TargetType="Button">
 
-                    <Border x:Name="NewsButtonBorder" BorderBrush="Black" BorderThickness="0" CornerRadius="10" Width="280">
-                        <Border.Background>
-                            <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
-                        </Border.Background>
-                        <ContentPresenter Content="{TemplateBinding Content}"></ContentPresenter>
-                    </Border>
-                    
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.Setters>
-                                <Setter TargetName="NewsButtonBorder" Property="BorderBrush" Value="Gray"></Setter>
-                                <Setter TargetName="NewsButtonBorder" Property="Cursor" Value="Hand"/>
-                            </Trigger.Setters>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Trigger.Setters>
-                                <Setter TargetName="NewsButtonBorder" Property="Opacity" Value="0.75"></Setter>
-                            </Trigger.Setters>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                
-                </ControlTemplate>
-            
-            </Button.Template>
-        
-        </Button>
-        
+        <Border x:Name="News" BorderBrush="Black" BorderThickness="0" CornerRadius="15" Width="280"
+                Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <Border.Background>
+                <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
+            </Border.Background>
+            <TextBox x:Name="NewsHeader" Margin="10,5,40,5"
+                     FontFamily="TimesNewRomans" FontSize="16" FontStyle="Normal" FontWeight="Bold">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border>
+                            <ContentPresenter Content="{TemplateBinding Text}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+        </Border>
+
         <ToggleButton x:Name="FavouriteFlag" Grid.Column="2" Grid.RowSpan="2" IsChecked="False">
             
             <ToggleButton.Template>

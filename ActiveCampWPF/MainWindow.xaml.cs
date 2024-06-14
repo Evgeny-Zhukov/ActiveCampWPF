@@ -23,6 +23,8 @@ namespace ActiveCampWPF
             InitializeComponent();
         }
 
+        #region Sections_Button
+        
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             MenuBackground.Visibility = Visibility.Visible;
@@ -31,7 +33,7 @@ namespace ActiveCampWPF
             MainMenuPanel.Visibility = Visibility.Visible;
             MainMenuPanel.Focusable = true;
         }
-
+        
         private void MenuBackgroundButton_Click(object sender, RoutedEventArgs e)
         {
             CloseMenu();
@@ -48,6 +50,7 @@ namespace ActiveCampWPF
             CloseMenu();
             //Treatment of News button.
         }
+        
         private void HikingButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
@@ -59,6 +62,7 @@ namespace ActiveCampWPF
             CloseMenu();
             //Treatment of Hiking button.
         }
+        
         private void EquipmentButton_Click(object sender, RoutedEventArgs e)
         {
             DisableAllControlOfsections();
@@ -84,13 +88,15 @@ namespace ActiveCampWPF
             this.Settings.Visibility = Visibility.Visible;
             this.Settings.IsEnabled = true;
 
-            HeaderOfSection.Text = "Настройки";
+            HeaderOfSection.Text = "";
             CloseMenu();
             
             //Treatment of Setting button.
 
         }
-        
+
+        #endregion
+
         #region  Prepering_for_Hiking
 
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -566,22 +572,13 @@ namespace ActiveCampWPF
 
             DoubleAnimation openAnimation = new DoubleAnimation();
 
+            openAnimation.AutoReverse = true;
+            openAnimation.SpeedRatio = 2;
             openAnimation.From = 0;
             openAnimation.To = 1;
-            openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:2"));
+            openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:5"));
 
             SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
-
-            DoubleAnimation closeAnimation = new DoubleAnimation();
-
-            closeAnimation.From = 1;
-            closeAnimation.To = 0;
-            closeAnimation.Duration = new Duration(TimeSpan.Parse("0:0:3.5"));
-
-            SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
-
-            BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
-            BorderOfCancelAproovingform.IsEnabled = false;
 
             NewHikkingFormBorder.Visibility = Visibility.Hidden;
             NewHikkingFormBorder.IsEnabled = false;
