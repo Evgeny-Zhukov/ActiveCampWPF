@@ -232,19 +232,12 @@ namespace ActiveCampWPF
         {
             
             ////////////////////////////////////////////////////////////////////////////////////////////////////
-            MenuButton.IsEnabled = false;
-            MenuButton.Visibility = Visibility.Hidden;
-
-            HeaderOfSection.IsEnabled = false;
-            HeaderOfSection.Visibility = Visibility.Hidden;
-
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
 
             AddNewRecordForEquipmentTable.IsEnabled = true;
             AddNewRecordForEquipmentTable.Visibility= Visibility.Visible;
             ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
             List<DayElement> hikingsList = new List<DayElement>();
 
@@ -259,16 +252,9 @@ namespace ActiveCampWPF
 
         }
 
-
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
         {
             ////////////////////////////////////////////////////////////////////////////////////////////////////
-            MenuButton.IsEnabled = false;
-            MenuButton.Visibility = Visibility.Hidden;
-            
-            HeaderOfSection.IsEnabled = false; 
-            HeaderOfSection.Visibility = Visibility.Hidden;
-
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
             
@@ -447,7 +433,10 @@ namespace ActiveCampWPF
                 Person_Validate.IsEnabled = false;
                 Person_Validate.Visibility = Visibility.Hidden;
             }
-            else { MessageBox.Show("ОШИБКА, такой Username уже существует, пожалуйста, выберите другой."); }
+            else 
+            { 
+                MessageBox.Show("ОШИБКА, такой Username уже существует, пожалуйста, выберите другой."); 
+            }
         }
 
         //-- Добавление параметра сессии
