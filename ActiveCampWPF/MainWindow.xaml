@@ -585,6 +585,7 @@
                                             <ComboBoxItem Content="Открытой"/>
                                         </ComboBox>
                                     </Grid>
+                                    
                                     <!-- Date of hiking begining -->
                                     <Grid Grid.Row="1">
                                         <Label Content="Пожалуйста, введите даты начала и окончания плвнируемого похода:" 
@@ -605,6 +606,7 @@
                                             Width="200" Height="25"
                                             VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
                                     </Grid>
+                                            
                                     <!-- Discription of your next trip -->
                                     <Grid Grid.Row="2">
                                         <Label Grid.Row="1" Content="Пожалуйста, введите приветсвенное описание вашего мероприятия:" 
@@ -675,11 +677,12 @@
                                                     Height="30" VerticalAlignment="Top"></Label>
                                         <ComboBox Name="LevelOfHiking" Height="30" Width="300" 
                                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
-                                            <TextBlock Text="Very Hard"></TextBlock>
-                                            <TextBlock Text="Hard"></TextBlock>
-                                            <TextBlock Text="Medium"></TextBlock>
-                                            <TextBlock Text="Easy"></TextBlock>
-                                            <TextBlock Text="Very Easy"></TextBlock>
+                                            <TextBlock Text="Уровень 1"></TextBlock>
+                                            <TextBlock Text="Уровень 2"></TextBlock>
+                                            <TextBlock Text="Уровень 3"></TextBlock>
+                                            <TextBlock Text="Уровень 4"></TextBlock>
+                                            <TextBlock Text="Уровень 5"></TextBlock>
+                                            <TextBlock Text="Уровень 6"></TextBlock>
                                         </ComboBox>
                                     </Grid>
 
@@ -708,18 +711,6 @@
                                                             <Setter TargetName="SaveAndContinueButtonBorder" Property="Opacity" Value="0.75"/>
                                                         </Trigger.Setters>
                                                     </Trigger>
-                                                    <!--<EventTrigger>
-                                                        <EventTrigger.Actions>
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="MainMenuPanel" 
-                                                                                     Storyboard.TargetProperty="(Grid.Width)"
-                                                                                     Duration="0:0:0:0.28"
-                                                                                     From="0" To="320"/>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger.Actions>
-                                                    </EventTrigger>-->
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Button.Template>
