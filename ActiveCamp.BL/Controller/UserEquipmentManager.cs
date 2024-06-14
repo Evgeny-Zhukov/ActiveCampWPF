@@ -70,35 +70,41 @@ namespace ActiveCamp.BL.Controller
             return allSuccess;
         }
 
-        public RecordOfUserEquipment GetUserEquipment(int EquipmentID, int UserID)
+        public List<UserEquipment> GetUserEquipment(int UserID)
         {
-            RecordOfUserEquipment userEquipment = new RecordOfUserEquipment();
+            List<UserEquipment> userEquipments = new List<UserEquipment>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM UserEquipment WHERE UserID = @UserID AND EquipmentID = @EquipmentID";
+                string query = "SELECT * FROM UserEquipment WHERE UserID = @UserID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@EquipmentID", EquipmentID);
+
                 command.Parameters.AddWithValue("@UserID", UserID);
                 try
                 {
                     _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        userEquipment.UserEquipmentID = Convert.ToInt32(reader["UserEquipmentID "]);
-                        userEquipment.OwnerID = Convert.ToInt32(reader["OwnerID"]);
+                        while (reader.Read())
+                        {
+                            UserEquipment userEquipment = new UserEquipment();
+                            {
+                                command.Parameters.AddWithValue("@UserEquipmentId", userEquipment.UserEquipmentId);
+                                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
+                                command.Parameters.AddWithValue("@UserID", userEquipment.UserID);
+                            }
+                            userEquipments.Add(userEquipment);
+                        }
                     }
-                    reader.Close();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return userEquipment;
+
+            return userEquipments;
         }
         public bool DeleteUserEquipment(int id)
         {

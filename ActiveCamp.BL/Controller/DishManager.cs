@@ -1,5 +1,6 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -53,9 +54,9 @@ namespace ActiveCamp.BL.Controller
         /// </summary>
         /// <param name="DishID">Идентификатор блюда</param>
         /// <returns>Возвращает экземпляр блюда</returns>
-        public Dish GetDish(int DishID)
+        public List<Dish> GetDish(int DishID)
         {
-            Dish dish = new Dish();
+            List<Dish> dishes = new List<Dish>(); 
 
             using (_connection)
             {
@@ -67,26 +68,31 @@ namespace ActiveCamp.BL.Controller
                 try
                 {
                     _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        // Чтение данных блюда из результата запроса
-                        dish.DishID = Convert.ToInt32(reader["DishID"]);
-                        dish.Name = (reader["Name"].ToString());
-                        dish.Proteins = (Convert.ToInt32(reader["Proteins"]));
-                        dish.Fats = (Convert.ToInt32(reader["Fats"]));
-                        dish.Carbohydrates = (Convert.ToInt32(reader["Carbohydrates"]));
-                        dish.Calories = (Convert.ToInt32(reader["Calories"]));
+                        while (reader.Read()) 
+                        {
+                            Dish dish = new Dish();
+                            {
+                                dish.DishID = Convert.ToInt32(reader["DishID"]);
+                                dish.Name = (reader["Name"].ToString());
+                                dish.Proteins = (Convert.ToInt32(reader["Proteins"]));
+                                dish.Fats = (Convert.ToInt32(reader["Fats"]));
+                                dish.Carbohydrates = (Convert.ToInt32(reader["Carbohydrates"]));
+                                dish.Calories = (Convert.ToInt32(reader["Calories"]));
+                            }
+                            dishes.Add(dish);
+                        }               
                     }
-                    reader.Close();
+                    
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return dish;
+            return dishes;
         }
 
         /// <summary>

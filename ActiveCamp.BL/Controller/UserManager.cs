@@ -16,10 +16,10 @@ namespace ActiveCamp.BL.Controller
         }
         public int RegisterUser(User user)
         {
-            int UserId = -1;
 
             using (_connection)
             {
+
                 SqlCommand command = new SqlCommand("CreateUser", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
@@ -36,9 +36,9 @@ namespace ActiveCamp.BL.Controller
                 _connection.Open();
                 command.ExecuteNonQuery();
 
-                UserId = Convert.ToInt32(userIdParameter.Value);
+                int userId = Convert.ToInt32(userIdParameter.Value);
 
-                return UserId;
+                return userId;
             }
         }
 

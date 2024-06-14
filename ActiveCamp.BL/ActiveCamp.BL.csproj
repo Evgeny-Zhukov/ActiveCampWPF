@@ -60,11 +60,8 @@
     <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
     <Compile Include="Controller\DishManager.cs" />
     <Compile Include="Controller\EquipmentManager.cs" />
-    <Compile Include="Controller\FoodConsumptionManager.cs" />
-    <Compile Include="Controller\GenderManager.cs" />
     <Compile Include="Controller\IllnessManager.cs" />
     <Compile Include="Controller\RouteManager.cs" />
-    <Compile Include="Controller\SyrveyManager.cs" />
     <Compile Include="Controller\UserDishManager.cs" />
     <Compile Include="Controller\UserEquipmentManager.cs" />
     <Compile Include="Controller\UserIllnessManager.cs" />
@@ -74,10 +71,7 @@
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\GroupMembership.cs" />
     <Compile Include="Controller\GroupManager.cs" />
-    <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="Model\FoodAndEquipmentTables.cs" />
-    <Compile Include="Model\FoodConsumption.cs" />
-    <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\Route.cs" />
     <Compile Include="Model\Session.cs" />

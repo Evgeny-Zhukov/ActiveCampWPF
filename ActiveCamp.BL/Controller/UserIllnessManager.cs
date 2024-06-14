@@ -1,5 +1,6 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -31,35 +32,39 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public Illness GetUserIllness(int IllnessID, int UserID)
+        public List<UserIllness> GetUserIllness(int UserID)
         {
-            Illness Illness = new Illness();
+            List<UserIllness> usersIllnesses = new List<UserIllness>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM UserIllness WHERE UserID = @UserID AND IllnessID = @IllnessID";
+                string query = "SELECT * FROM UserIllness WHERE UserID = @UserID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@IllnessID", IllnessID);
                 command.Parameters.AddWithValue("@UserID", UserID);
                 try
                 {
                     _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        Illness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
-                        Illness.IllnessName = (reader["Name"].ToString());
+                        while (reader.Read())
+                        {
+                            UserIllness userIllness = new UserIllness();
+                            {
+                                userIllness.UserIllnessId = Convert.ToInt32(reader["UserIllnessId"]);
+                                userIllness.IllnessID = Convert.ToInt32(reader["IllnessID"]);
+                                userIllness.UserID = Convert.ToInt32(reader["UserID"]);
+                            }
+                            usersIllnesses.Add(userIllness);
+                        }
                     }
-                    reader.Close();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return Illness;
+            return usersIllnesses;
         }
         public bool DeleteUserIllness(int id)
         {

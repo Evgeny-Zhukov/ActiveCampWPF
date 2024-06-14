@@ -13,9 +13,9 @@ namespace ActiveCamp.CMD
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
             UserManager userManager = new UserManager();
-            User user = new User("Name1", "123");
+            User user = new User("1233", "1233");
             int a;
-            a = userManager.RegisterUser(user);
+            a = userManager.VerifyUserByLogin(user.Username, user.Password);
             Console.WriteLine(a);
         }
     }

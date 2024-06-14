@@ -1,5 +1,6 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -50,9 +51,9 @@ namespace ActiveCamp.BL.Controller
         /// </summary>
         /// <param name="equipmentID">Идентификатор оборудования</param>
         /// <returns>Возвращает экземпляр оборудования</returns>
-        public Equipment GetEquipment(int equipmentID)
+        public List<Equipment> GetEquipment(int equipmentID)
         {
-            Equipment equipment = new Equipment();
+            List<Equipment> equipments = new List<Equipment>();
 
             using (_connection)
             {
@@ -64,23 +65,26 @@ namespace ActiveCamp.BL.Controller
                 try
                 {
                     _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        // Чтение данных оборудования из результата запроса
-                        equipment.equipmentID = Convert.ToInt32(reader["equipmentID"]);
-                        equipment.equipmentName = (reader["equipmentName"].ToString());
-                        equipment.equipmentWeight = (Convert.ToDouble(reader["equipmentWeight"]));
-                    }
-                    reader.Close();
+                        while (reader.Read())
+                        {
+                            Equipment equipment = new Equipment();
+                            {
+                                equipment.equipmentID = Convert.ToInt32(reader["equipmentID"]);
+                                equipment.equipmentName = (reader["equipmentName"].ToString());
+                                equipment.equipmentWeight = (Convert.ToDouble(reader["equipmentWeight"]));
+                            }
+                            equipments.Add(equipment);
+                        }
+                    }    
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return equipment;
+            return equipments;
         }
 
         /// <summary>
