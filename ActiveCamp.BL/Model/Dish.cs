@@ -111,7 +111,6 @@ namespace ActiveCamp.BL.Model
                 {
                     this._Calories = value;
                     NotifyPropertyChanged("Calories");
-
                 }
             }
         }
@@ -143,7 +142,7 @@ namespace ActiveCamp.BL.Model
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public Dish(string name, int proteins, int fats, int carbohydrates, int calories)
         {
-            Name = name ?? throw new ArgumentNullException("Название блюда не может быть пустым или NULL", nameof(name));
+            this._Name = name ?? throw new ArgumentNullException("Название блюда не может быть пустым или NULL", nameof(name));
             if (proteins <= 0)
             {
                 throw new ArgumentOutOfRangeException("Количество белков должно быть положительным числом и не равен нулю.", nameof(proteins));
@@ -160,10 +159,10 @@ namespace ActiveCamp.BL.Model
             {
                 throw new ArgumentOutOfRangeException("Количество калорий должно быть положительным числом и не равен нулю.", nameof(calories));
             }
-            Proteins = proteins;
-            Fats = fats;
-            Carbohydrates = carbohydrates;
-            Calories = calories;
+            this._Proteins = proteins;
+            this._Fats = fats;
+            this._Carbohydrates = carbohydrates;
+            this._Calories = calories;
         }
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {

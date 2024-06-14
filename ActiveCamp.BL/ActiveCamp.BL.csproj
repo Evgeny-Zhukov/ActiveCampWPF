@@ -73,6 +73,7 @@
     <Compile Include="Controller\GroupManager.cs" />
     <Compile Include="Model\FoodAndEquipmentTables.cs" />
     <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\News.cs" />
     <Compile Include="Model\Route.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="Controller\SessionManager.cs" />
