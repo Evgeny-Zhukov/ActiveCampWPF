@@ -566,22 +566,21 @@ namespace ActiveCampWPF
 
             DoubleAnimation openAnimation = new DoubleAnimation();
 
+            openAnimation.AutoReverse = true;
+            openAnimation.SpeedRatio = 2;
             openAnimation.From = 0;
             openAnimation.To = 1;
-            openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:2"));
+            openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:5"));
 
             SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
 
-            DoubleAnimation closeAnimation = new DoubleAnimation();
+            //DoubleAnimation closeAnimation = new DoubleAnimation();
 
-            closeAnimation.From = 1;
-            closeAnimation.To = 0;
-            closeAnimation.Duration = new Duration(TimeSpan.Parse("0:0:3.5"));
+            //closeAnimation.From = 1;
+            //closeAnimation.To = 0;
+            //closeAnimation.Duration = new Duration(TimeSpan.Parse("0:0:2"));
 
-            SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
-
-            BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
-            BorderOfCancelAproovingform.IsEnabled = false;
+            //SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
 
             NewHikkingFormBorder.Visibility = Visibility.Hidden;
             NewHikkingFormBorder.IsEnabled = false;

@@ -171,7 +171,7 @@
                 <Button x:Name="AI_agent" Grid.Column="2" Click="AI_agent_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="AI_agent_border" CornerRadius="10" Margin="5">
+                            <Border x:Name="AI_agent_border" CornerRadius="25" Margin="5,5,65,5">
                                 <Border.Background>
                                     <SolidColorBrush Color="White" Opacity="0.65"></SolidColorBrush>
                                 </Border.Background>
@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="False" Visibility="Hidden">
+                      IsEnabled="False" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -368,7 +368,7 @@
 
                                                     <LineSegment Point="10,47"/>
 
-                                                    <LineSegment Point="27.5,35"/>
+                                                    <LineSegment Point="27.5,37"/>
 
                                                     <LineSegment Point="45,47"/>
                                                     <LineSegment Point="38,30"/>
@@ -392,7 +392,7 @@
                 <!-- #region Hikking Section-->
 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -496,13 +496,14 @@
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
                             Visibility="Visible" IsEnabled="True">
+                        
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
-                                      Margin="7">
-                            <Grid x:Name="NewHikkingForm" Margin="10"
+                                      Margin="10,15,10,15">
+                            <Grid x:Name="NewHikkingForm" Margin="0,10,15,10"
                                   ScrollViewer.CanContentScroll="True">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="50"></RowDefinition>
@@ -629,14 +630,14 @@
                                             FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"/>
                                         <TextBox x:Name="PointFrom" Grid.Row="2" 
                                                  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,35,0,0"
-                                                 Width="300" Height="30"/>
+                                                 Width="270" Height="30"/>
                                         <TextBlock Grid.Row="2" Text="Точка окончания маршрута:" TextWrapping="Wrap"
                                             VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                            Margin="420,35,0,0" Height="35" Width="180" 
+                                            Margin="390,35,0,0" Height="35" Width="180" 
                                             FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"/>
                                         <TextBox x:Name="PointTo" Grid.Row="2" 
-                                                 VerticalAlignment="Top" HorizontalAlignment="Left" Margin="540,35,0,0"
-                                                 Width="300" Height="30"/>
+                                                 VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,35,0,0"
+                                                 Width="270" Height="30"/>
                                         <TextBlock Grid.Row="2" Text="Длина маршрута в км.:" TextWrapping="Wrap"
                                                    VerticalAlignment="Center" HorizontalAlignment="Left" 
                                                    Margin="0,95,0,0" Height="30" Width="180" 
@@ -2238,7 +2239,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="False" Visibility="Hidden">
+              IsEnabled="True" Visibility="Visible" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
