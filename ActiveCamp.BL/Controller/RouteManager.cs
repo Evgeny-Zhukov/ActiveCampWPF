@@ -25,6 +25,7 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
+                command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@StartData", route.StartDate);
                 command.Parameters.AddWithValue("@EndData", route.EndDate);

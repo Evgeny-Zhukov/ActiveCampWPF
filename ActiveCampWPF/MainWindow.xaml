@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -392,7 +392,7 @@
                 <!-- #region Hikking Section-->
 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden">
+                      IsEnabled="True" Visibility="Visible">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -495,7 +495,7 @@
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
-                            Visibility="Hidden" IsEnabled="False">
+                            Visibility="Visible" IsEnabled="True">
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
                         </Border.Background>
@@ -560,96 +560,131 @@
 
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="80"></RowDefinition>
-                                        <RowDefinition Height="250"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
+                                        <RowDefinition Height="250"></RowDefinition>
+                                        <RowDefinition Height="150"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
-
+                                    
+                                    <!-- Closed/Open hiking-->
+                                    <Grid>
+                                        <Label Content="Пожалуйста, укажите, является ли данная заявка открытой или закрытой:" 
+                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                           Height="30" VerticalAlignment="Top"/>
+                                        <Label Content="Данная заявка является"
+                                               FontSize="14" FontWeight="Normal" FontFamily="TimesNewFamily"
+                                               Height="25" Width="165" Margin="0,20,0,0"
+                                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <ComboBox x:Name="IsPrivateHiking" 
+                                                  Width="180" Height="25" Margin="165,20,0,0"
+                                                  VerticalAlignment="Center" HorizontalAlignment="Left">
+                                            <ComboBoxItem Content="Закрытой"/>
+                                            <ComboBoxItem Content="Открытой"/>
+                                        </ComboBox>
+                                    </Grid>
                                     <!-- Date of hiking begining -->
-                                    <Label Grid.Row="0" Content="Пожалуйста, введите даты начала и окончания плвнируемого похода:" 
-                                       FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                       Height="30" VerticalAlignment="Top"></Label>
-                                    <Label Grid.Row="0" Content="С:" 
-                                        VerticalContentAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="20,25,0,0" Height="25" Width="25" 
-                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
-                                    <DatePicker x:Name="DateFrom" Grid.Row="0" Margin="50,40,0,0"
-                                        Width="200" Height="25"
-                                        VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
-                                    <Label Grid.Row="0" Content="По:" 
-                                       VerticalContentAlignment="Top" HorizontalAlignment="Left" 
-                                       Margin="260,25,0,0" Height="25" Width="30" 
-                                       FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
-                                    <DatePicker x:Name="DateTo" Grid.Row="0" Margin="300,40,0,0"
-                                        Width="200" Height="25"
-                                        VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
-
+                                    <Grid Grid.Row="1">
+                                        <Label Content="Пожалуйста, введите даты начала и окончания плвнируемого похода:" 
+                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                           Height="30" VerticalAlignment="Top"></Label>
+                                        <Label Content="С:" 
+                                            VerticalContentAlignment="Top" HorizontalAlignment="Left" 
+                                            Margin="20,25,0,0" Height="25" Width="25" 
+                                            FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
+                                        <DatePicker x:Name="DateFrom" Margin="50,40,0,0"
+                                            Width="200" Height="25"
+                                            VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
+                                        <Label Content="По:" 
+                                           VerticalContentAlignment="Top" HorizontalAlignment="Left" 
+                                           Margin="260,25,0,0" Height="25" Width="30" 
+                                           FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></Label>
+                                        <DatePicker x:Name="DateTo" Margin="300,40,0,0"
+                                            Width="200" Height="25"
+                                            VerticalAlignment="Top" HorizontalAlignment="Left"></DatePicker>
+                                    </Grid>
                                     <!-- Discription of your next trip -->
-                                    <Label Grid.Row="1" Content="Пожалуйста, введите приветсвенное описание вашего мероприятия:" 
-                                        FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                        Height="30" VerticalAlignment="Top"></Label>
-                                    <TextBox x:Name="LittleDiscription" Grid.Row="1" Margin="0,35,0,0" 
-                                         SpellCheck.IsEnabled="True" TextWrapping="Wrap" Height="200"
-                                         FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily">
-                                    </TextBox>
+                                    <Grid Grid.Row="2">
+                                        <Label Grid.Row="1" Content="Пожалуйста, введите приветсвенное описание вашего мероприятия:" 
+                                            FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                            Height="30" VerticalAlignment="Top"></Label>
+                                        <TextBox x:Name="LittleDiscription" Grid.Row="1" Margin="0,35,0,0" 
+                                             SpellCheck.IsEnabled="True" TextWrapping="Wrap" Height="200"
+                                             FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily">
+                                        </TextBox>
+                                    </Grid>
 
                                     <!-- Points of your trip -->
-                                    <Label Grid.Row="2" Content="Пожалуйста, опишите маршрут вашего похода для потенциальных участников:" 
-                                        FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                        Height="30" VerticalAlignment="Top"></Label>
-                                    <TextBlock Grid.Row="2" Text="Точка старта маршрута:" TextWrapping="Wrap"
-                                        VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="0,35,0,0" Height="35" Width="150" 
-                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></TextBlock>
-                                    <TextBox x:Name="PointFrom" Grid.Row="2" 
-                                             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,35,0,0"
-                                             Width="300" Height="30"></TextBox>
-                                    <TextBlock Grid.Row="2" Text="Точка окончания маршрута:" TextWrapping="Wrap"
-                                        VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                        Margin="420,35,0,0" Height="35" Width="180" 
-                                        FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"></TextBlock>
-                                    <TextBox x:Name="PointTo" Grid.Row="2" 
-                                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="540,35,0,0"
-                                        Width="300" Height="30"></TextBox>
-
+                                    <Grid Grid.Row="3">
+                                        <Label Grid.Row="2" Content="Пожалуйста, опишите маршрут вашего похода для потенциальных участников:" 
+                                            FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                            Height="30" VerticalAlignment="Top"></Label>
+                                        <TextBlock Grid.Row="2" Text="Точка старта маршрута:" TextWrapping="Wrap"
+                                            VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                            Margin="0,35,0,0" Height="35" Width="150" 
+                                            FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"/>
+                                        <TextBox x:Name="PointFrom" Grid.Row="2" 
+                                                 VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,35,0,0"
+                                                 Width="300" Height="30"/>
+                                        <TextBlock Grid.Row="2" Text="Точка окончания маршрута:" TextWrapping="Wrap"
+                                            VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                            Margin="420,35,0,0" Height="35" Width="180" 
+                                            FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"/>
+                                        <TextBox x:Name="PointTo" Grid.Row="2" 
+                                                 VerticalAlignment="Top" HorizontalAlignment="Left" Margin="540,35,0,0"
+                                                 Width="300" Height="30"/>
+                                        <TextBlock Grid.Row="2" Text="Длина маршрута в км.:" TextWrapping="Wrap"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                                   Margin="0,95,0,0" Height="30" Width="180" 
+                                                   FontSize="14" FontWeight="Normal" FontFamily="TimesnewFamily"/>
+                                        <TextBox x:Name="TripLengthInKM" Grid.Row="2" 
+                                                 VerticalAlignment="Center" HorizontalAlignment="Left" Margin="150,85,0,0"
+                                                 Width="300" Height="30"/>
+                                    </Grid>
+                                            
                                     <!-- Discription of the location -->
-                                    <Label Grid.Row="3" Content="Пожалуйста, опишити характер местности маршрута:"
-                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                           Height="30" VerticalAlignment="Top"></Label>
-                                    <ComboBox Name="LocationMark" Grid.Row="3" Height="30" Width="300" 
-                                              HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
-                                        <TextBlock Text="Лесная"></TextBlock>
-                                        <TextBlock Text="Горная"></TextBlock>
-                                        <TextBlock Text="Равнинная"></TextBlock>
-                                        <TextBlock Text="Водная"></TextBlock>
-                                        <TextBlock Text="Смешанная"></TextBlock>
-                                    </ComboBox>
+                                    <Grid Grid.Row="4">
+                                        <Label Grid.Row="3" Content="Пожалуйста, опишити характер местности маршрута:"
+                                               FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                               Height="30" VerticalAlignment="Top"></Label>
+                                        <ComboBox Name="LocationMark" Grid.Row="3" Height="30" Width="300" 
+                                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
+                                            <TextBlock Text="Лесная"></TextBlock>
+                                            <TextBlock Text="Горная"></TextBlock>
+                                            <TextBlock Text="Равнинная"></TextBlock>
+                                            <TextBlock Text="Водная"></TextBlock>
+                                            <TextBlock Text="Смешанная"></TextBlock>
+                                        </ComboBox>
+                                    </Grid>
 
                                     <!-- Count of members -->
-                                    <Label Grid.Row="4" Content="Введите ориентировочное количество участников группы:"
-                                           FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                           Height="30" VerticalAlignment="Top"></Label>
-                                    <TextBox Grid.Row="4" Height="30" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"></TextBox>
+                                    <Grid Grid.Row="5">
+                                        <Label Grid.Row="4" Content="Введите ориентировочное количество участников группы:"
+                                               FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                               Height="30" VerticalAlignment="Top"></Label>
+                                        <TextBox Grid.Row="4" Height="30" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"></TextBox>
+                                    </Grid>
 
                                     <!-- Level of hiking -->
-                                    <Label Grid.Row="5" Content="Пожалуйста, укажите уровень сложности планируемого похода:" 
-                                                FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
-                                                Height="30" VerticalAlignment="Top"></Label>
-                                    <ComboBox Name="LevelOfHiking" Grid.Row="5" Height="30" Width="300" 
-                                              HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
-                                        <TextBlock Text="Very Hard"></TextBlock>
-                                        <TextBlock Text="Hard"></TextBlock>
-                                        <TextBlock Text="Medium"></TextBlock>
-                                        <TextBlock Text="Easy"></TextBlock>
-                                        <TextBlock Text="Very Easy"></TextBlock>
-                                    </ComboBox>
+                                    <Grid Grid.Row="6">
+                                        <Label Content="Пожалуйста, укажите уровень сложности планируемого похода:" 
+                                                    FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                                    Height="30" VerticalAlignment="Top"></Label>
+                                        <ComboBox Name="LevelOfHiking" Height="30" Width="300" 
+                                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0">
+                                            <TextBlock Text="Very Hard"></TextBlock>
+                                            <TextBlock Text="Hard"></TextBlock>
+                                            <TextBlock Text="Medium"></TextBlock>
+                                            <TextBlock Text="Easy"></TextBlock>
+                                            <TextBlock Text="Very Easy"></TextBlock>
+                                        </ComboBox>
+                                    </Grid>
 
                                     <!-- Save and accept button -->
-                                    <Button x:Name="SaveAndContinue" Grid.Row="6" Content="Сохранить и отправить" 
+                                    <Button x:Name="SaveAndContinue" Grid.Row="7" Content="Сохранить и отправить" 
                                             FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                             Width="300" Height="40"
                                             VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,15,15"
@@ -797,7 +832,7 @@
 
                     <!--#region Massage about sucsessful saving end-->
 
-                    <Grid x:Name="SavingSucssesfulMessage" Grid.ColumnSpan="2" IsEnabled="False" Visibility="Hidden">
+                    <Grid x:Name="SavingSucssesfulMessage" Grid.ColumnSpan="2" IsEnabled="True" Visibility="Visible" Opacity="0">
 
                         <Rectangle Width="450" Height="100" RadiusX="20" RadiusY="20">
                             <Rectangle.Fill>
@@ -1010,7 +1045,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-
+                        
                     </Grid>
                     <!--#endregion-->
 
@@ -2212,7 +2247,7 @@
         <!--#region Registration plane-->
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible" Focusable="True">
+              IsEnabled="False" Visibility="Hidden">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -2259,12 +2294,12 @@
                            RadiusX="25" RadiusY="25"
                            Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="7"/>
 
-                <Label x:Name="login_label" Content="login:" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0"
+                <Label x:Name="login_label" Content="Введите логин:" Grid.Row="2" Grid.Column="1" Margin="15,0,0,0"
                        IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
                        Focusable="{Binding Focusable, ElementName=Person_Validate}"
                        IsManipulationEnabled="False"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"
-                       FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
+                       FontSize="12" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
 
                 <TextBox x:Name="Login_textbox" Grid.Row="2" Grid.Column="1" Margin="15,20,15,0" IsReadOnly="False" 
                          FontFamily="TimesNewRoman" FontSize="14" FontStyle="Italic" FontWeight="Bold" Foreground="Black" 
@@ -2284,12 +2319,12 @@
                     </TextBox.Template>
                 </TextBox>
 
-                <Label x:Name="Signup_label" Content="Password:" Grid.Row="4" Grid.Column="1" Margin="15,0,0,0"  
+                <Label x:Name="Signup_label" Content="Введите пароль:" Grid.Row="4" Grid.Column="1" Margin="15,0,0,0"  
                        HorizontalAlignment="Left" VerticalAlignment="Top" Height="26"
                        IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}"
                        Focusable="{Binding Focusable, ElementName=Person_Validate}"
                        IsManipulationEnabled="False"
-                       FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
+                       FontSize="12" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic"/>
 
                 <PasswordBox x:Name="PasswordBox_UserPassword" Grid.Column="1" Grid.Row="4" Margin="15,20,15,0" 
                              Visibility ="{Binding Visibility, ElementName=Person_Validate}" IsEnabled="{Binding IsEnabled, ElementName=Person_Validate}">
@@ -2303,7 +2338,8 @@
                 </PasswordBox>
 
                 <Button x:Name="Log_In_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Left" Margin="5,0,0,0" 
-                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Log in" Click="Log_In_button_Click">
+                        FontSize="12" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" 
+                        Content="Войти" Click="Log_In_button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Log_In_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
@@ -2326,7 +2362,8 @@
                 </Button>
 
                 <Button x:Name="Sign_up_button" Grid.Column="1" Grid.Row="5" Width="150" Height="26" HorizontalAlignment="Right" Margin="5,0,0,0" 
-                         FontSize="10" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" Content="Sign up" Click="Sign_up_button_Click">
+                        FontSize="12" FontWeight="Bold" FontFamily="TimesNewRoman" FontStyle="Italic" 
+                        Content="Зарегистрироваться" Click="Sign_up_button_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="Sign_up_buttonBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
@@ -2348,8 +2385,27 @@
                     </Button.Template>
                 </Button>
             </Grid>
-        </Grid>
 
+            <TextBox x:Name="SucssesRegistrationNotify" Grid.Column="1" Grid.Row="1" 
+                   IsEnabled="True" Visibility="Hidden" Opacity="0"
+                   FontFamily="TimesNewRoman" FontSize="18" FontWeight="Bold"
+                   TextWrapping="Wrap">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="SucssesRegistrationNotify_border" BorderBrush="Black" BorderThickness="3" CornerRadius="10"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="100">
+                            <Border.Background>
+                                <SolidColorBrush Color="Orange"></SolidColorBrush>
+                            </Border.Background>
+                            <ContentPresenter Content="{TemplateBinding Text}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+        </Grid>
+        
         <!--#endregion-->
 
     </Grid>

@@ -72,7 +72,9 @@ namespace ActiveCampWPF
 
             HeaderOfSection.Text = "Подготовка";
             CloseMenu();
+            
             //Treatment of Equipment button.
+        
         }
         
         private void SettingButton_Click(object sender, RoutedEventArgs e)
@@ -84,7 +86,9 @@ namespace ActiveCampWPF
 
             HeaderOfSection.Text = "Настройки";
             CloseMenu();
+            
             //Treatment of Setting button.
+
         }
         
         #region  Prepering_for_Hiking
@@ -344,7 +348,6 @@ namespace ActiveCampWPF
 
         #endregion
 
-
         private void CloseMenu()
         {
             MenuBackground.Focusable = false;
@@ -403,13 +406,20 @@ namespace ActiveCampWPF
         private bool Login(User user)
         {
             UserManager userManager = new UserManager();
-            if (userManager.VerifyUserByLogin(user.Username, user.Password))
+            int UserId = userManager.VerifyUserByLogin(user.Username, user.Password);
+            if (UserId != -1)
             {
                 Session session = new Session(user.Username);
                 SessionManager.SaveSession(session);
+
+                ActiveCamp.BL.User.UserID = UserId;
+
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -427,11 +437,36 @@ namespace ActiveCampWPF
             User user = new User(username, password);
             UserManager userManager = new UserManager();
 
-            if (userManager.RegisterUser(user))
+            int UserId = userManager.RegisterUser(user);
+
+            if (UserId != -1)
             {
-                Background_of_window.IsEnabled = true;
-                Person_Validate.IsEnabled = false;
-                Person_Validate.Visibility = Visibility.Hidden;
+                //Background_of_window.IsEnabled = true;
+                //Person_Validate.IsEnabled = false;
+                //Person_Validate.Visibility = Visibility.Hidden;
+            
+                ActiveCamp.BL.User.UserID = UserId;
+
+                SucssesRegistrationNotify.Visibility = Visibility.Visible;
+
+                SucssesRegistrationNotify.Text = "Регистрация прошла успешно!\n" +
+                                                 "Вы можете войти, нажав кнопку\n\"Войти\"";
+
+                DoubleAnimation openAnimation = new DoubleAnimation();
+
+                openAnimation.From = 0;
+                openAnimation.To = 1;
+                openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:2"));
+                
+                SucssesRegistrationNotify.BeginAnimation(OpacityProperty, openAnimation);
+
+                DoubleAnimation closeAnimation = new DoubleAnimation();
+
+                closeAnimation.From = 1;
+                closeAnimation.To = 0;
+                closeAnimation.Duration = new Duration(TimeSpan.Parse("0:0:3.5"));
+                
+                SucssesRegistrationNotify.BeginAnimation(OpacityProperty, closeAnimation);
             }
             else 
             { 
@@ -443,9 +478,7 @@ namespace ActiveCampWPF
         public void ShowMainContent(Session session)
         {
             Person_Validate.Visibility = Visibility.Collapsed;
-
             Main_controls.Visibility = Visibility.Visible;
-
         }
         //--
 
@@ -528,8 +561,24 @@ namespace ActiveCampWPF
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             RouteManager routeManager = new RouteManager();
-            Route NewRoute = new Route(DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, 3, false);
+            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, 3, false);
             routeManager.AddRoute(NewRoute);
+
+            DoubleAnimation openAnimation = new DoubleAnimation();
+
+            openAnimation.From = 0;
+            openAnimation.To = 1;
+            openAnimation.Duration = new Duration(TimeSpan.Parse("0:0:2"));
+
+            SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
+
+            DoubleAnimation closeAnimation = new DoubleAnimation();
+
+            closeAnimation.From = 1;
+            closeAnimation.To = 0;
+            closeAnimation.Duration = new Duration(TimeSpan.Parse("0:0:3.5"));
+
+            SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
 
             BorderOfCancelAproovingform.Visibility = Visibility.Hidden;
             BorderOfCancelAproovingform.IsEnabled = false;

@@ -16,6 +16,8 @@ namespace ActiveCamp.BL.Controller
         }
         public int RegisterUser(User user)
         {
+            int UserId = -1;
+
             using (_connection)
             {
                 SqlCommand command = new SqlCommand("CreateUser", _connection)
@@ -33,14 +35,17 @@ namespace ActiveCamp.BL.Controller
 
                 _connection.Open();
                 command.ExecuteNonQuery();
-                int id = Convert.ToInt32(userIdParameter.Value);
 
-                return id;
+                UserId = Convert.ToInt32(userIdParameter.Value);
+
+                return UserId;
             }
         }
 
         public int VerifyUserByLogin(string username, string password)
         {
+            int userId = -1;
+
             using (_connection)
             {
                 using (SqlCommand cmd = new SqlCommand("VerifyUserByLogin", _connection))
@@ -60,7 +65,7 @@ namespace ActiveCamp.BL.Controller
                     _connection.Open();
                     cmd.ExecuteNonQuery();
 
-                    int userId = Convert.ToInt32(userIdParam.Value);
+                    userId = Convert.ToInt32(userIdParam.Value);
 
                     return userId;
                 }
