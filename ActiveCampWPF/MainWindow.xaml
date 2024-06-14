@@ -230,9 +230,9 @@
                     </ListBox>
 
                     <!-- News description-->
-                    <RichTextBox Grid.Column="2" Grid.Row="0" Margin="0,0,5,5" Grid.RowSpan="2"
-                                    FontSize="14" FontWeight="Bold"
-                                    IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
+                    <RichTextBox x:Name="NewsDescription" Grid.Column="2" Grid.Row="0" Margin="0,0,5,5" Grid.RowSpan="2"
+                                 FontSize="14" FontWeight="Bold"
+                                 IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}">
                         <RichTextBox.Background>
                             <SolidColorBrush Color="Azure" Opacity="0.85"></SolidColorBrush>
                         </RichTextBox.Background>

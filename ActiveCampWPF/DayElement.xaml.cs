@@ -95,6 +95,7 @@ namespace ActiveCampWPF
                 m_Editing = false;
             }
         }
+     
         public void EndEdit()
         {
             if (m_Editing == true)
@@ -103,7 +104,6 @@ namespace ActiveCampWPF
                 m_Editing = false;
             }
         }
-
 
     }
 }

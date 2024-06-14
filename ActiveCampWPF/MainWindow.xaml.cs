@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using ActiveCamp.BL.Controller;
 using System.Collections.Generic;
-using ActiveCampWPF.Properties;
+using System.Windows.Documents;
 
 namespace ActiveCampWPF
 {
@@ -23,7 +23,7 @@ namespace ActiveCampWPF
             InitializeComponent();
         }
 
-        #region Sections_Button
+        #region Sections_Button_Events
         
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -47,6 +47,8 @@ namespace ActiveCampWPF
             News_Section.IsEnabled = true;
             
             HeaderOfSection.Text = "Новости";
+
+            UpdateNewsList();
             CloseMenu();
             //Treatment of News button.
         }
@@ -95,6 +97,38 @@ namespace ActiveCampWPF
 
         }
 
+        private void CloseMenu()
+        {
+            MenuBackground.Focusable = false;
+            MenuBackground.Visibility = Visibility.Hidden;
+
+            DoubleAnimation MenuCloseAnimation = new DoubleAnimation
+            {
+                From = 320,
+                To = 0,
+                Duration = new Duration(TimeSpan.Parse("0:0:0.5"))
+            };
+
+            MainMenuPanel.BeginAnimation(Grid.WidthProperty, MenuCloseAnimation);
+            MainMenuPanel.Focusable = false;
+            MainMenuPanel.Visibility = Visibility.Hidden;
+        }
+        
+        private void DisableAllControlOfsections()
+        {
+            News_Section.Visibility = Visibility.Hidden;
+            News_Section.IsEnabled = false;
+
+            Hikking_Section .Visibility = Visibility.Hidden;
+            Hikking_Section.IsEnabled = false;
+
+            PreperingForHiking.Visibility = Visibility.Hidden;
+            PreperingForHiking.IsEnabled = false;    
+        
+            this.Settings.Visibility = Visibility.Hidden;
+            this.Settings.IsEnabled = false;
+        }
+        
         #endregion
 
         #region  Prepering_for_Hiking
@@ -249,17 +283,6 @@ namespace ActiveCampWPF
             AddNewRecordForEquipmentTable.Visibility= Visibility.Visible;
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            List<DayElement> hikingsList = new List<DayElement>();
-
-            hikingsList.Add(new DayElement("Disp1"));
-
-            EquipmentOwnersList.BeginInit();
-            EquipmentOwnersList.ItemsSource = hikingsList;
-            EquipmentOwnersList.EndInit();
-
-            DataGridForFillingEquipmentData.ItemsSource = null;
-            //EquipmentOwnersList.ItemsSource = 
-
         }
 
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
@@ -272,18 +295,10 @@ namespace ActiveCampWPF
             AddNewRecordForFoodTable.Visibility = Visibility.Visible;
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            List<DayElement> hikingsList = new List<DayElement>();
-
-            hikingsList.Add(new DayElement("Disp1"));
-
-            DaysList.BeginInit();
-            DaysList.ItemsSource = hikingsList;
-            DaysList.EndInit();
-
-            DataGridForFillingFoodData.ItemsSource = null;
         }
 
         #region Filling_Events
+        
         private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
         {
             
@@ -318,6 +333,11 @@ namespace ActiveCampWPF
         {
 
         }
+        
+        private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
         {
@@ -349,32 +369,19 @@ namespace ActiveCampWPF
                 ((ActiveCampWPF.DayElement)SV).RecordOfFoodTable = new RecordOfFoodTable();
             }
         }
-        #endregion
         
+        #endregion
+
 
         #endregion
 
-        private void CloseMenu()
-        {
-            MenuBackground.Focusable = false;
-            MenuBackground.Visibility = Visibility.Hidden;
-
-            DoubleAnimation MenuCloseAnimation = new DoubleAnimation
-            {
-                From = 320,
-                To = 0,
-                Duration = new Duration(TimeSpan.Parse("0:0:0.5"))
-            };
-
-            MainMenuPanel.BeginAnimation(Grid.WidthProperty, MenuCloseAnimation);
-            MainMenuPanel.Focusable = false;
-            MainMenuPanel.Visibility = Visibility.Hidden;
-        }
-
+        #region Registration/Login_events
+        
         private void ClientStatus_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
         private void Login_textbox_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBox tb = sender as TextBox;
@@ -389,7 +396,7 @@ namespace ActiveCampWPF
         {
 
         }
-        // TestLogin TestPassword
+        
         private void Log_In_button_Click(object sender, RoutedEventArgs e)
         {
             string username = Login_textbox.Text;
@@ -433,7 +440,6 @@ namespace ActiveCampWPF
             SessionManager.ClearSession();
             this.Close();
         }
-
 
         private void Sign_up_button_Click(object sender, RoutedEventArgs e)
         {
@@ -480,13 +486,14 @@ namespace ActiveCampWPF
             }
         }
 
-        //-- Добавление параметра сессии
+        #endregion
+
+        //++ Хз что это и для чего нужно 
         public void ShowMainContent(Session session)
         {
             Person_Validate.Visibility = Visibility.Collapsed;
             Main_controls.Visibility = Visibility.Visible;
         }
-        //--
 
         public void ShowLoginContent()
         {
@@ -494,6 +501,9 @@ namespace ActiveCampWPF
 
             Main_controls.Visibility = Visibility.Collapsed;
         }
+        //--
+
+        #region Window Events
 
         private void Window_Initialized(object sender, EventArgs e)
         {
@@ -504,32 +514,57 @@ namespace ActiveCampWPF
         {
 
         }
+        
+        #endregion
+
+        #region News 
 
         private void NewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsText;
+            string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsTitle;
+
+            Paragraph title = new Paragraph();
+            Paragraph mainBodyOfNews = new Paragraph();
+            title.Inlines.Add(new Bold(new Run(newsTitle)));            
+            mainBodyOfNews.Inlines.Add(new Run(descriptionOfnews));
+            
+            List newsBodyList = new List();
+            newsBodyList.ListItems.Add(new ListItem(title));
+            newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
+
+            FlowDocument flowDocument = new FlowDocument();
+            flowDocument.Blocks.Add(newsBodyList);
+
+            NewsDescription.Document = flowDocument;
 
         }
 
-        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        private void UpdateNewsList()
+        {
+            NewsList.ItemsSource = null;
+            List<News> newses = new List<News> {};
+            NewsController newsController = new NewsController();
+            newses = newsController.GetNews(ActiveCamp.BL.User.UserID);
+            
+            List<NewHikkingListItem> source = new List<NewHikkingListItem> { };
+
+            foreach(News news in newses)
+            {
+                source.Add(new NewHikkingListItem(news));
+            }
+
+            NewsList.ItemsSource = source;
+        }
+
+        private void NewsSorting()
         {
 
         }
 
-        private void DisableAllControlOfsections()
-        {
-            News_Section.Visibility = Visibility.Hidden;
-            News_Section.IsEnabled = false;
+        #endregion
 
-            Hikking_Section .Visibility = Visibility.Hidden;
-            Hikking_Section.IsEnabled = false;
-
-            PreperingForHiking.Visibility = Visibility.Hidden;
-            PreperingForHiking.IsEnabled = false;    
-        
-            this.Settings.Visibility = Visibility.Hidden;
-            this.Settings.IsEnabled = false;
-        }
-
+        #region Hiking
         private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
         {
             BorderOfCancelAproovingform.Visibility = Visibility.Visible;
@@ -563,7 +598,7 @@ namespace ActiveCampWPF
             NewHikkingFormBorder.Visibility = Visibility.Visible;
             NewHikkingFormBorder.IsEnabled = true;
         }
-
+        
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             RouteManager routeManager = new RouteManager();
@@ -590,6 +625,7 @@ namespace ActiveCampWPF
             DateFrom.Text = "Выберете дату";
             LevelOfHiking.Text = "";
         }
+        #endregion
 
         #region AI Agent 
         
@@ -615,11 +651,7 @@ namespace ActiveCampWPF
 
         #endregion
 
-        private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        #region Settings
         private void BackFromSettingButton_Click(object sender, RoutedEventArgs e)
         {
             MenuBackground.Visibility = Visibility.Visible;
@@ -638,5 +670,6 @@ namespace ActiveCampWPF
 
 
         }
+        #endregion
     }
 }

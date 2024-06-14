@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
@@ -8,6 +10,7 @@ namespace ActiveCamp.BL.Model
     public class News : INotifyPropertyChanged, IEditableObject
     {
         private int _newsID;
+        private string _newsTitle;
         private int _authorID;
         private string _newsText;
         private DateTime _newsDate;
@@ -34,6 +37,21 @@ namespace ActiveCamp.BL.Model
                 {
                     this._authorID = value;
                     NotifyPropertyChanged("AuthorID");
+                }
+            }
+        }
+        public string NewsTitle
+        {
+            get
+            {
+                return this._newsTitle;
+            }
+            set
+            {
+                if(value != this._newsTitle)
+                {
+                    this._newsTitle = value;
+                    NotifyPropertyChanged(nameof(NewsTitle));
                 }
             }
         }
@@ -73,7 +91,9 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+        
         public News() { }
+        
         public News(int authorID, string newsText, DateTime newsDate, bool isAdminNews)
         {
             this._authorID = authorID;
@@ -106,6 +126,7 @@ namespace ActiveCamp.BL.Model
             {
                 _newsID = temp_Record._newsID;
                 _authorID = temp_Record._authorID;
+                _newsTitle = temp_Record._newsTitle;
                 _newsText = temp_Record._newsText;
                 _newsDate = temp_Record._newsDate;
                 _isAdminNews = temp_Record._isAdminNews;
