@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="False" Visibility="Visible" Margin="0,0,55,0">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -392,7 +392,7 @@
                 <!-- #region Hikking Section-->
 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
+                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -503,6 +503,7 @@
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
                                       Margin="10,15,10,15">
+                            
                             <Grid x:Name="NewHikkingForm" Margin="0,10,15,10"
                                   ScrollViewer.CanContentScroll="True">
                                 <Grid.RowDefinitions>
@@ -562,6 +563,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
+                                        <RowDefinition Height="80"></RowDefinition>
                                         <RowDefinition Height="250"></RowDefinition>
                                         <RowDefinition Height="150"></RowDefinition>
                                         <RowDefinition Height="80"></RowDefinition>
@@ -587,8 +589,23 @@
                                         </ComboBox>
                                     </Grid>
                                     
-                                    <!-- Date of hiking begining -->
+                                    <!-- Hiking name -->
                                     <Grid Grid.Row="1">
+                                        <Label Content="Пожалуйста, укажите наименование для вашей заявки:" 
+                                               FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
+                                               Height="30" VerticalAlignment="Top"/>
+                                        <Label Content="Наименование:"
+                                               FontSize="14" FontWeight="Normal" FontFamily="TimesNewFamily"
+                                               Height="25" Width="110" Margin="0,20,0,0"
+                                               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <TextBox x:Name="NameOfHiking" Margin="110,25,0,0"
+                                                 Width="350" Height="30"
+                                                 FontFamily="TimesNewRoman" FontSize="16" FontStyle="Normal"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+                                    <!-- Date of hiking begining -->
+                                    <Grid Grid.Row="2">
                                         <Label Content="Пожалуйста, введите даты начала и окончания плвнируемого похода:" 
                                            FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                            Height="30" VerticalAlignment="Top"></Label>
@@ -609,7 +626,7 @@
                                     </Grid>
                                             
                                     <!-- Discription of your next trip -->
-                                    <Grid Grid.Row="2">
+                                    <Grid Grid.Row="3">
                                         <Label Grid.Row="1" Content="Пожалуйста, введите приветсвенное описание вашего мероприятия:" 
                                             FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                             Height="30" VerticalAlignment="Top"></Label>
@@ -620,7 +637,7 @@
                                     </Grid>
 
                                     <!-- Points of your trip -->
-                                    <Grid Grid.Row="3">
+                                    <Grid Grid.Row="4">
                                         <Label Grid.Row="2" Content="Пожалуйста, опишите маршрут вашего похода для потенциальных участников:" 
                                             FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                             Height="30" VerticalAlignment="Top"></Label>
@@ -648,7 +665,7 @@
                                     </Grid>
                                             
                                     <!-- Discription of the location -->
-                                    <Grid Grid.Row="4">
+                                    <Grid Grid.Row="5">
                                         <Label Grid.Row="3" Content="Пожалуйста, опишити характер местности маршрута:"
                                                FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                                Height="30" VerticalAlignment="Top"></Label>
@@ -663,16 +680,16 @@
                                     </Grid>
 
                                     <!-- Count of members -->
-                                    <Grid Grid.Row="5">
+                                    <Grid Grid.Row="6">
                                         <Label Grid.Row="4" Content="Введите ориентировочное количество участников группы:"
                                                FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                                Height="30" VerticalAlignment="Top"></Label>
-                                        <TextBox Grid.Row="4" Height="30" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                        <TextBox x:Name="CountOfMember" Grid.Row="4" Height="30" Width="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                                  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0"></TextBox>
                                     </Grid>
 
                                     <!-- Level of hiking -->
-                                    <Grid Grid.Row="6">
+                                    <Grid Grid.Row="7">
                                         <Label Content="Пожалуйста, укажите уровень сложности планируемого похода:" 
                                                     FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                                     Height="30" VerticalAlignment="Top"></Label>
@@ -688,7 +705,7 @@
                                     </Grid>
 
                                     <!-- Save and accept button -->
-                                    <Button x:Name="SaveAndContinue" Grid.Row="7" Content="Сохранить и отправить" 
+                                    <Button x:Name="SaveAndContinue" Grid.Row="8" Content="Сохранить и отправить" 
                                             FontSize="16" FontWeight="Bold" FontFamily="TimesnewFamily"
                                             Width="300" Height="40"
                                             VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,15,15"
@@ -824,7 +841,8 @@
 
                     <!--#region Massage about sucsessful saving end-->
 
-                    <Grid x:Name="SavingSucssesfulMessage" Grid.ColumnSpan="2" IsEnabled="True" Visibility="Visible" Opacity="0">
+                    <Grid x:Name="SavingSucssesfulMessage" Grid.ColumnSpan="2" 
+                          IsEnabled="False" Visibility="Visible" Opacity="0">
 
                         <Rectangle Width="450" Height="100" RadiusX="20" RadiusY="20">
                             <Rectangle.Fill>
@@ -847,7 +865,7 @@
 
                 <Grid x:Name="PreperingForHiking" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                      Visibility="Hidden" IsEnabled="False">
+                      Visibility="Hidden" IsEnabled="False" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -1516,7 +1534,8 @@
 
                 <!--#region "Add new record" forms -->
 
-                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" IsEnabled="True" Visibility="Hidden">
+                <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" 
+                      IsEnabled="True" Visibility="Hidden">
 
                     <Grid.Resources>
 
@@ -1911,11 +1930,14 @@
                         </Border.Background>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="60"></RowDefinition>
+                                <RowDefinition Height="40"></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-
-                            <ScrollViewer Grid.Row="1" Margin="7">
+                            <Label x:Name="SettingSectionHeader" Content="Настройки" Grid.Row="0"
+                                   VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                   FontFamily="TimesNewRomans" FontSize="28" FontWeight="Bold"/>
+                            <ScrollViewer Grid.Row="1" Margin="7"
+                                          HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="110"></RowDefinition>
@@ -2239,7 +2261,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible" Focusable="True">
+              IsEnabled="False" Visibility="Hidden" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
