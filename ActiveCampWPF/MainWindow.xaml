@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
+                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -217,7 +217,8 @@
                         </ListBox.Background>
                         <ListBox.Template>
                             <ControlTemplate TargetType="{x:Type ListBox}">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="10,0,0,10">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="10,0,0,10" 
+                                        Width="300" Margin="5,0,0,0">
                                     <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
                                         <ItemsControl>
                                             <StackPanel Margin="2" IsItemsHost="True" />
@@ -226,11 +227,6 @@
                                 </Border>
                             </ControlTemplate>
                         </ListBox.Template>
-                        <ListBox.Items>
-                            <ListBoxItem Background="{x:Null}" Width="290" VerticalAlignment="Center" HorizontalAlignment="Center" Selected="ListBoxItem_Selected">
-                                <local:NewHikkingListItem Width="280" Height="60"></local:NewHikkingListItem>
-                            </ListBoxItem>
-                        </ListBox.Items>
                     </ListBox>
 
                     <!-- News description-->
@@ -392,7 +388,7 @@
                 <!-- #region Hikking Section-->
 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -495,7 +491,7 @@
                     <Border x:Name="NewHikkingFormBorder" CornerRadius="10" 
                             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,5,5"
                             ScrollViewer.CanContentScroll="True"
-                            Visibility="Visible" IsEnabled="True">
+                            Visibility="Hidden" IsEnabled="False">
                         
                         <Border.Background>
                             <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
