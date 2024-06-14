@@ -11,6 +11,7 @@ namespace ActiveCamp.BL.Model
         private int _authorID;
         private string _newsText;
         private DateTime _newsDate;
+        private bool _isAdminNews;
 
         public int NewsID
         {
@@ -60,13 +61,25 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-
+        public bool IsAdminNews
+        {
+            get { return this._isAdminNews; }
+            set
+            {
+                if (value != this._isAdminNews)
+                {
+                    this._isAdminNews = value;
+                    NotifyPropertyChanged("IsAdminNews");
+                }
+            }
+        }
         public News() { }
-        public News(int authorID, string newsText, DateTime newsDate)
+        public News(int authorID, string newsText, DateTime newsDate, bool isAdminNews)
         {
             this._authorID = authorID;
             this._newsText = newsText;
             this._newsDate = newsDate;
+            this._isAdminNews = isAdminNews;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,6 +108,7 @@ namespace ActiveCamp.BL.Model
                 _authorID = temp_Record._authorID;
                 _newsText = temp_Record._newsText;
                 _newsDate = temp_Record._newsDate;
+                _isAdminNews = temp_Record._isAdminNews;
 
                 m_Editing = false;
             }

@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\FavorNewsController.cs" />
+    <Compile Include="Controller\NewsController.cs" />
     <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
     <Compile Include="Controller\DishManager.cs" />
     <Compile Include="Controller\EquipmentManager.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Controller\ActiveCampDbContext.cs" />
     <Compile Include="Model\Dish.cs" />
     <Compile Include="Model\Equipment.cs" />
+    <Compile Include="Model\FavorNews.cs" />
     <Compile Include="Model\GroupMembership.cs" />
     <Compile Include="Controller\GroupManager.cs" />
     <Compile Include="Model\FoodAndEquipmentTables.cs" />
