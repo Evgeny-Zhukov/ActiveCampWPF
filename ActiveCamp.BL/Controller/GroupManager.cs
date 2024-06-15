@@ -23,24 +23,11 @@ namespace ActiveCamp.BL.Model
             _connection = dbContext.GetSqlConnection();
         }
 
-        /// <summary>
-        /// Создает новую группу.
-        /// </summary>
-        /// <param name="routeId">Идентификатор маршрута</param>
-        /// <param name="invitationLink">Ссылка для приглашения</param>
-        /// <returns>Возвращает экземпляр новой группы</returns>
-        public Group CreateGroup(Group group)
+        public int CreateGroup(Group group)
         {
-            Group newGroup = new Group
-            {
-                
-            };
-
-            groups.Add(newGroup);
-
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("CreateGroup", _connection) //TODO: in fdhkj
+                SqlCommand command = new SqlCommand("CreateGroup", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -54,11 +41,11 @@ namespace ActiveCamp.BL.Model
                     Direction = ParameterDirection.Output
                 };
                 command.Parameters.Add(groupIdParam);
-
+                int id = Convert.ToInt32(groupIdParam.Value);
                 _connection.Open();
                 command.ExecuteNonQuery();
 
-                return newGroup;
+                return id;
             }
         }
 
@@ -70,7 +57,7 @@ namespace ActiveCamp.BL.Model
         public void AddUserToGroup(int groupId, int userId)
         {
             Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
-            User user = users.FirstOrDefault(u => ActiveCamp.BL.User.UserID == userId);
+            User user = users.FirstOrDefault(u => ActiveCamp.BL.User.UserID == userId); 
 
             if (group == null)
             {
@@ -85,15 +72,17 @@ namespace ActiveCamp.BL.Model
             group.UserIds.Add(userId);
             groupMemberships.Add(new GroupMembership
             {
-                
+                GroupId = groupId,
+                UserId = userId
             });
 
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("AddUserToGroup", _connection) // TODO: in fdhkj
+                SqlCommand command = new SqlCommand("AddUserToGroup", _connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+
                 command.Parameters.AddWithValue("@GroupId", groupId);
                 command.Parameters.AddWithValue("@UserId", userId);
 
@@ -101,6 +90,7 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
             }
         }
+
         public Group GetGroups(int UserID)
         {
             Group group = new Group();
@@ -189,7 +179,7 @@ namespace ActiveCamp.BL.Model
 
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("GetUsersInGroup", _connection) //TODO: in fdhkj
+                SqlCommand command = new SqlCommand("GetUsersInGroup", _connection) 
                 {
                     CommandType = CommandType.StoredProcedure
                 };
