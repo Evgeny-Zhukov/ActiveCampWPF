@@ -55,8 +55,8 @@ namespace ActiveCamp.BL.Model
         public FavorNews() { }
         public FavorNews(int authorID, int newsID)
         {
-            this.AuthorID = authorID;
-            this.NewsID = newsID;
+            this._authorID= authorID;
+            this._newsID = newsID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

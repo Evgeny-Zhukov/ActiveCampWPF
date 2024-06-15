@@ -1,4 +1,5 @@
 ﻿using ActiveCamp;
+using ActiveCamp.BL.Controller;
 using ActiveCamp.BL.Model;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,22 @@ namespace ActiveCampWPF
             InitializeComponent();
             _newsItem = news;
             NewsHeader.Text = news.NewsTitle;
+            
             if(news.IsAdminNews == true)
             {
                 _itsAdminMessage = true;
                 MarkOfAdminMassage.Visibility = Visibility.Visible;
+            }
+
+            List<FavorNews> favorNews = new List<FavorNews>();
+            FavorNewsController controller = new FavorNewsController();
+            favorNews = controller.GetNews(ActiveCamp.BL.User.UserID);
+            foreach(FavorNews favor in favorNews) 
+            { 
+                if(favor.NewsID == _newsItem.NewsID)
+                {
+                    FavouriteFlag.IsChecked = true;
+                }
             }
         }
 
@@ -100,6 +113,16 @@ namespace ActiveCampWPF
         private void FavouriteFlag_Checked(object sender, RoutedEventArgs e)
         {
             _itsFavorMessage = true;
+            FavorNews favornews = new FavorNews(ActiveCamp.BL.User.UserID, _newsItem.NewsID);
+            FavorNewsController controller = new FavorNewsController();
+            controller.AddNews(favornews);
+        }
+
+        private void FavouriteFlag_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _itsFavorMessage = false;
+            FavorNewsController controller = new FavorNewsController();
+            controller.DeleteNews(_newsItem.NewsID, ActiveCamp.BL.User.UserID);
         }
     }
 }

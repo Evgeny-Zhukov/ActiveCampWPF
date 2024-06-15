@@ -47,7 +47,7 @@ namespace ActiveCamp.BL.Controller
 
             using (_connection)
             {
-                string query = "SELECT * FROM Dish WHERE AuthorId = @AuthorId";
+                string query = "SELECT * FROM News WHERE AuthorId = @AuthorId";
 
                 SqlCommand command = new SqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@AuthorId", AuthorId);

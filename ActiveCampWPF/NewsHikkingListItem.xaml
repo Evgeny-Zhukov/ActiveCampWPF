@@ -37,7 +37,8 @@
             </TextBox>
         </Border>
 
-        <ToggleButton x:Name="FavouriteFlag" Grid.Column="2" Grid.RowSpan="2" IsChecked="False" Checked="FavouriteFlag_Checked">
+        <ToggleButton x:Name="FavouriteFlag" Grid.Column="2" Grid.RowSpan="2" IsChecked="False" 
+                      Checked="FavouriteFlag_Checked" Unchecked="FavouriteFlag_Unchecked">
             
             <ToggleButton.Template>
                 
