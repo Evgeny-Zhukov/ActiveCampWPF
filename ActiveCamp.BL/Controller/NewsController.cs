@@ -63,9 +63,9 @@ namespace ActiveCamp.BL.Controller
                             {
                                 news.NewsID = Convert.ToInt32(reader["NewsID"]);
                                 news.AuthorID = Convert.ToInt32(reader["AuthorID"]);
-                                news.NewsText = (reader["NewsText"].ToString());
+                                news.NewsTitle = reader["Title"].ToString();
+                                news.NewsText = reader["NewsText"].ToString();
                                 news.IsAdminNews = (Convert.ToBoolean(reader["IsAdminNews"]));
-
                             }
                             newses.Add(news);
                         }

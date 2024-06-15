@@ -5,17 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace ActiveCampWPF
 {
@@ -27,6 +20,7 @@ namespace ActiveCampWPF
 
         private News _newsItem;
         private bool _itsAdminMessage;
+        private bool _itsFavorMessage;
 
         public News NewsItem 
         { 
@@ -47,6 +41,11 @@ namespace ActiveCampWPF
         public bool ItsAdminMessage
         {
             get { return _itsAdminMessage; }
+        }
+
+        public bool ItsFavorMessage
+        {
+            get { return _itsFavorMessage; }
         }
 
         public NewHikkingListItem(News news)
@@ -98,6 +97,9 @@ namespace ActiveCampWPF
             }
         }
 
-
+        private void FavouriteFlag_Checked(object sender, RoutedEventArgs e)
+        {
+            _itsFavorMessage = true;
+        }
     }
 }
