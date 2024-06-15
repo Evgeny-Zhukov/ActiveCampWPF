@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,8 +113,8 @@ namespace ActiveCamp.BL.Controller
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
-                command.Parameters.AddWithValue("@AuthorID", id);
-                command.Parameters.AddWithValue("@NewsID", newsID);
+                command.Parameters.AddWithValue("@AuthorID", authorId);
+                command.Parameters.AddWithValue("@NewsID", newsId);
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
