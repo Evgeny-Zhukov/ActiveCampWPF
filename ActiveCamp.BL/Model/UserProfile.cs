@@ -17,6 +17,9 @@ namespace ActiveCamp.BL.Model
         private List<UserEquipment> _userEquipment;
         private List<UserDish> _userDish;
         private int _experienceID;
+        private int _illnessID;
+        private int _dishID;
+        private int _equipmentID;
         /// <summary>
         /// Получает идентификатор пользователя.
         /// </summary>
@@ -158,6 +161,42 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+        public int IllnessID
+        {
+            get { return this._illnessID; }
+            set
+            {
+                if (value != this._illnessID)
+                {
+                    this._illnessID = value;
+                    NotifyPropertyChanged("IllnessID");
+                }
+            }
+        }
+        public int DishID
+        {
+            get { return this._dishID; }
+            set
+            {
+                if (value != this._dishID)
+                {
+                    this._dishID = value;
+                    NotifyPropertyChanged("DishID");
+                }
+            }
+        }
+        public int EquipmentID
+        {
+            get { return this._equipmentID; }
+            set
+            {
+                if (value != this._equipmentID)
+                {
+                    this._equipmentID = value;
+                    NotifyPropertyChanged("EquipmentID");
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -215,6 +254,9 @@ namespace ActiveCamp.BL.Model
                 _userEquipment = temp_Record._userEquipment;
                 _userDish = temp_Record._userDish;
                 _experienceID = temp_Record._experienceID;
+                _illnessID = temp_Record._illnessID;
+                _dishID = temp_Record._dishID;
+                _equipmentID = temp_Record._equipmentID;
 
                 m_Editing = false;
             }
