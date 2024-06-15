@@ -29,7 +29,7 @@ namespace ActiveCamp.BL.Model
         /// <param name="routeId">Идентификатор маршрута</param>
         /// <param name="invitationLink">Ссылка для приглашения</param>
         /// <returns>Возвращает экземпляр новой группы</returns>
-        public Group CreateGroup(int routeId, string invitationLink)
+        public Group CreateGroup(Group group)
         {
             Group newGroup = new Group
             {
@@ -44,8 +44,10 @@ namespace ActiveCamp.BL.Model
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@RouteID", routeId);
-                command.Parameters.AddWithValue("@InvitationLink", invitationLink);
+                command.Parameters.AddWithValue("@RouteID", group.RouteId);
+                command.Parameters.AddWithValue("@GroupName", group.GroupName);
+                command.Parameters.AddWithValue("@InvitationLink", group.InvitationLink);
+                command.Parameters.AddWithValue("@AuthorID", group.AuthorID);
 
                 SqlParameter groupIdParam = new SqlParameter("@GroupID", SqlDbType.Int)
                 {
@@ -99,7 +101,76 @@ namespace ActiveCamp.BL.Model
                 command.ExecuteNonQuery();
             }
         }
+        public Group GetGroups(int UserID)
+        {
+            Group group = new Group();
 
+            using (_connection)
+            {
+                string query = "SELECT * FROM Groups WHERE AuthorID = @AuthorID";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+                command.Parameters.AddWithValue("@AuthorID", UserID);
+                try
+                {
+                    _connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        group.GroupId = Convert.ToInt32(reader["GroupId"]);
+                        group.RouteId = Convert.ToInt32(reader["RouteId"]);
+                        group.GroupName = reader["GroupName"].ToString();
+                        group.InvitationLink = reader["InvitationLink"].ToString();
+                        group.AuthorID = Convert.ToInt32(reader["AuthorID"]);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return group;
+        }
+        public List<Group> GetGroup(int UserID)
+        {
+            List<Group> groups = new List<Group>();
+
+            using (_connection)
+            {
+                string query = "SELECT * FROM Groups WHERE AuthorID = @AuthorID";
+
+                SqlCommand command = new SqlCommand(query, _connection);
+
+                command.Parameters.AddWithValue("@AuthorID", UserID);
+                try
+                {
+                    _connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Group group = new Group();
+                            {
+                                group.GroupId = Convert.ToInt32(reader["GroupId"]);
+                                group.RouteId = Convert.ToInt32(reader["RouteId"]);
+                                group.GroupName = reader["GroupName"].ToString();
+                                group.InvitationLink = reader["InvitationLink"].ToString();
+                                group.AuthorID = Convert.ToInt32(reader["AuthorID"]);
+                            }
+                            groups.Add(group);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+
+            return groups;
+        }
         /// <summary>
         /// Получает список пользователей в группе.
         /// </summary>

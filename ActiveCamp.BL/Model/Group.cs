@@ -10,9 +10,10 @@ namespace ActiveCamp.BL.Model
         #region Свойства
         private int _groupID;
         private int _routeID;
+        private int _authorID;
         private string _invitationLink;
+        private string _groupName;
         private List<int> _userIDs;
-        private int _groupSupervisor;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,7 +28,20 @@ namespace ActiveCamp.BL.Model
                 if (value != this._groupID)
                 {
                     this._groupID = value;
-                    NotifyPropertyChanged("UserEquipmentID");
+                    NotifyPropertyChanged("GroupId");
+
+                }
+            }
+        }
+        public int AuthorID
+        {
+            get { return this._authorID; }
+            set
+            {
+                if (value != this._authorID)
+                {
+                    this._authorID = value;
+                    NotifyPropertyChanged("AuthorID");
 
                 }
             }
@@ -65,7 +79,19 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+        public string GroupName
+        {
+            get { return this._invitationLink; }
+            set
+            {
+                if (value != this._invitationLink)
+                {
+                    this._invitationLink = value;
+                    NotifyPropertyChanged("GroupName");
 
+                }
+            }
+        }
         /// <summary>
         /// Идентификаторы пользователей.
         /// </summary>
@@ -86,19 +112,6 @@ namespace ActiveCamp.BL.Model
         /// <summary>
         /// Руководитель группы.
         /// </summary>
-        public int GroupSupervisor
-        {
-            get { return this._groupSupervisor; }
-            set
-            {
-                if (value != this._groupSupervisor)
-                {
-                    this._groupSupervisor = value;
-                    NotifyPropertyChanged("GroupSupervisor");
-
-                }
-            }
-        }
         #endregion
 
         public Group() { }
@@ -111,12 +124,14 @@ namespace ActiveCamp.BL.Model
         /// <param name="groupSupervisor">Руководитель группы</param>
         /// <param name="userIds">Идентификаторы пользователей</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Group(int routeId, string invitationLink, int groupSupervisor, List<int> userIds)
+        public Group(int routeId, string groupName, string invitationLink, int groupSupervisor, List<int> userIds, int authorID)
         {
             this._routeID = routeId;
+            this._groupName = groupName;
             this._invitationLink = invitationLink;
             this._groupID = groupSupervisor;
             this._userIDs = userIds;
+            this._authorID = authorID;
         }
         private Group temp_Record = null;
         private bool m_Editing = false;
@@ -138,6 +153,8 @@ namespace ActiveCamp.BL.Model
             if (!m_Editing == true)
             {
                 _groupID = temp_Record._groupID;
+                _authorID = temp_Record._authorID;
+                _groupName = temp_Record._groupName;
                 _invitationLink = temp_Record._invitationLink;
                 _groupID = temp_Record._groupID;
                 _userIDs = temp_Record._userIDs;

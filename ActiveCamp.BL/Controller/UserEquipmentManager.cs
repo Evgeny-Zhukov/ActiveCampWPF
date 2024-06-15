@@ -15,7 +15,7 @@ namespace ActiveCamp.BL.Controller
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
-        public bool AddUserEquipment(RecordOfUserEquipment userEquipment)
+        public bool AddUserEquipment(UserEquipment userEquipment)
         {
             using (_connection)
             {
@@ -24,11 +24,11 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
-                command.Parameters.AddWithValue("@EquipmentName", userEquipment.EquipmentName);
+
+                command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
+                command.Parameters.AddWithValue("@UserID", userEquipment.UserID);
                 command.Parameters.AddWithValue("@CountOfEquipment", userEquipment.CountOfEquipment);
-                command.Parameters.AddWithValue("@WightOfEquipment", userEquipment.WightOfEquipment);
-                command.Parameters.AddWithValue("@OwnerID", userEquipment.OwnerID);
-                command.Parameters.AddWithValue("@EquipmentDescription", userEquipment.EquipmentDescription);
+
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -53,6 +53,7 @@ namespace ActiveCamp.BL.Controller
 
                         command.Parameters.AddWithValue("@EquipmentID", item.EquipmentID);
                         command.Parameters.AddWithValue("@UserID", item.UserID);
+                        command.Parameters.AddWithValue("@CountOfEquipment", item.CountOfEquipment);
 
                         command.ExecuteNonQuery();
 
@@ -90,6 +91,7 @@ namespace ActiveCamp.BL.Controller
                                 command.Parameters.AddWithValue("@UserEquipmentId", userEquipment.UserEquipmentId);
                                 command.Parameters.AddWithValue("@EquipmentID", userEquipment.EquipmentID);
                                 command.Parameters.AddWithValue("@UserID", userEquipment.UserID);
+                                command.Parameters.AddWithValue("@CountOfEquipment", userEquipment.CountOfEquipment);
                             }
                             userEquipments.Add(userEquipment);
                         }

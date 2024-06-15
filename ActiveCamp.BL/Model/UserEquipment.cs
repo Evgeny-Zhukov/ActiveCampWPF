@@ -15,6 +15,7 @@ namespace ActiveCamp.BL.Model
         private int _userEquipmentID;
         private int _userID;
         private int _equipmentID;
+        private int _countOfEquipment;
         /// <summary>
         /// Получает идентификатор снаряжения пользователя.
         /// </summary>
@@ -62,6 +63,18 @@ namespace ActiveCamp.BL.Model
                     this._equipmentID = value;
                     NotifyPropertyChanged("EquipmentID");
 
+                }
+            }
+        }
+        public int CountOfEquipment
+        {
+            get { return this._countOfEquipment; }
+            set
+            {
+                if (value != this._countOfEquipment)
+                {
+                    this._countOfEquipment = value;
+                    NotifyPropertyChanged("CountOfEquipment");
                 }
             }
         }
