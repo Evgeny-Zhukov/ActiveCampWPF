@@ -80,7 +80,7 @@ namespace ActiveCamp.BL.Controller
             {
                 SqlCommand command = new SqlCommand("DeleteExperienceById", _connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ExperienceID", id);
+                command.Parameters.AddWithValue("@ExperienceID", ExperienceID);
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
