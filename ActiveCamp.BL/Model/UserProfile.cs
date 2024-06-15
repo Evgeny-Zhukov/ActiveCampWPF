@@ -16,7 +16,7 @@ namespace ActiveCamp.BL.Model
         private List<UserIllness> _userIllness;
         private List<UserEquipment> _userEquipment;
         private List<UserDish> _userDish;
-        private List<Route> _experience;
+        private int _experienceID;
         /// <summary>
         /// Получает идентификатор пользователя.
         /// </summary>
@@ -146,15 +146,15 @@ namespace ActiveCamp.BL.Model
         /// <summary>
         /// Получает опыт пользователя.
         /// </summary>
-        public List<Route> Experience
+        public int ExperienceID
         {
-            get { return this._experience; }
+            get { return this._experienceID; }
             set
             {
-                if (value != this._experience)
+                if (value != this._experienceID)
                 {
-                    this._experience = value;
-                    NotifyPropertyChanged("Experience");
+                    this._experienceID = value;
+                    NotifyPropertyChanged("ExperienceID");
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace ActiveCamp.BL.Model
                 _userIllness = temp_Record._userIllness;
                 _userEquipment = temp_Record._userEquipment;
                 _userDish = temp_Record._userDish;
-                _experience = temp_Record._experience;
+                _experienceID = temp_Record._experienceID;
 
                 m_Editing = false;
             }
