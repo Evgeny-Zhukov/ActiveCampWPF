@@ -1,11 +1,8 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace ActiveCamp.BL.Controller
 {
@@ -20,7 +17,7 @@ namespace ActiveCamp.BL.Controller
             _connection = dbContext.GetSqlConnection();
         }
 
-        public bool AddNews(FavorNews news)
+        public bool AddFavorNews(FavorNews news)
         {
             using (_connection)
             {
@@ -32,7 +29,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@AuthorID", news.AuthorID);
-                command.Parameters.AddWithValue("@NewsText", news.NewsID);
+                command.Parameters.AddWithValue("@NewsID", news.NewsID);
 
                 _connection.Open();
                 command.ExecuteNonQuery();
@@ -41,13 +38,13 @@ namespace ActiveCamp.BL.Controller
             }
         }
 
-        public List<FavorNews> GetNews(int AuthorId)
+        public List<FavorNews> GetFavorNews(int AuthorId)
         {
             List<FavorNews> newses = new List<FavorNews>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM Dish WHERE AuthorId = @AuthorId";
+                string query = "SELECT * FROM FavorNews WHERE AuthorId = @AuthorId";
 
                 SqlCommand command = new SqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@AuthorId", AuthorId);
@@ -100,7 +97,7 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public bool DeleteNews(int id)
+        public bool DeleteFavorNews(int id)
         {
             using (_connection)
             {

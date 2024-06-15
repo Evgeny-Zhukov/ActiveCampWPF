@@ -147,40 +147,7 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
-        }
-        public int GetDishID(Dish dish)
-        {
-            int dishID = -1;
-            using (_connection)
-            {
-                string query = "SELECT * FROM Dish WHERE Name = @Name";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@Name", dish.Name);
-                try
-                {
-                    _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        dishID = Convert.ToInt32(reader["DishID"]);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-            
-            }
-            if (dishID <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(dishID), "ID блюда должен быть положительным числом.");
-            }
-            return dishID;
-        }
-
+        } 
     }
 
 }

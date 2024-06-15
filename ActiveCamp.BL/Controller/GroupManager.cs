@@ -40,7 +40,7 @@ namespace ActiveCamp.BL.Model
 
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("CreateGroup", _connection)
+                SqlCommand command = new SqlCommand("CreateGroup", _connection) //TODO: in fdhkj
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -90,7 +90,7 @@ namespace ActiveCamp.BL.Model
 
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("AddUserToGroup", _connection)
+                SqlCommand command = new SqlCommand("AddUserToGroup", _connection) // TODO: in fdhkj
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -189,7 +189,7 @@ namespace ActiveCamp.BL.Model
 
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("GetUsersInGroup", _connection)
+                SqlCommand command = new SqlCommand("GetUsersInGroup", _connection) //TODO: in fdhkj
                 {
                     CommandType = CommandType.StoredProcedure
                 };

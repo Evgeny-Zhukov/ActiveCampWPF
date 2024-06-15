@@ -138,38 +138,6 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public int GetEquipmentID(Equipment equipment)
-        {
-            int equipmentID = -1;
-            using (_connection)
-            {
-                string query = "SELECT * FROM Dish WHERE equipmentName = @equipmentName";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@Name", equipment.equipmentName);
-                try
-                {
-                    _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        equipmentID = Convert.ToInt32(reader["equipmentID"]);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-
-            }
-            if (equipmentID <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(equipmentID), "ID снаряжения должен быть положительным числом.");
-            }
-            return equipmentID;
-        }
     }
 
 }

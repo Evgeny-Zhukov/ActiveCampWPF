@@ -1,11 +1,7 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace ActiveCamp.BL.Controller
 {
@@ -65,6 +61,27 @@ namespace ActiveCamp.BL.Controller
             }
             return illness;
         }
+        public bool UpdateIllness(Illness illness)
+        {
+            using (_connection)
+            {
+                SqlCommand command = new SqlCommand("UpdateIllness", _connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+
+                command.Parameters.AddWithValue("@IllnessID", illness.IllnessID);
+                command.Parameters.AddWithValue("@IllnessName", illness.IllnessName);
+                command.Parameters.AddWithValue("@IllnessDescription", illness.IllnessDescription);
+
+                _connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
         public bool DeleteIllness(int id)
         {
             using (_connection)
@@ -80,38 +97,6 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
-        }
-        public int GetIllnessID(Illness illness)
-        {
-            int illnessID = -1;
-            using (_connection)
-            {
-                string query = "SELECT * FROM Illness WHERE IllnessName = @IllnessName";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@IllnessName", illness.IllnessName);
-                try
-                {
-                    _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        illnessID = Convert.ToInt32(reader["IllnessID"]);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-
-            }
-            if (illnessID <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(illnessID), "ID недуга должен быть положительным числом.");
-            }
-            return illnessID;
         }
     }
 }

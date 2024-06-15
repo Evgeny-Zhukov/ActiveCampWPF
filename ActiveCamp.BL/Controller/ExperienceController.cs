@@ -42,7 +42,7 @@ namespace ActiveCamp.BL.Controller
 
             using (_connection)
             {
-                string query = "SELECT * FROM UserEquipment WHERE ExperienceID = @ExperienceID";
+                string query = "SELECT * FROM Experience WHERE ExperienceID = @ExperienceID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
 

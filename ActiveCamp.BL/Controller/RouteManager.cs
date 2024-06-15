@@ -69,6 +69,7 @@ namespace ActiveCamp.BL.Controller
                                 route.StartPoint = (reader["StartPoint"].ToString());
                                 route.EndPoint = (reader["EndPoint"].ToString());
                                 route.Difficulty = (reader["Difficulty"].ToString());
+                                route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
                             }
                             routes.Add(route);
@@ -92,11 +93,21 @@ namespace ActiveCamp.BL.Controller
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
+
+                command.Parameters.AddWithValue("@RouteId", route.RouteId);
                 command.Parameters.AddWithValue("@routeName", route.RouteName);
-                command.Parameters.AddWithValue("@DurationInDays", route.Duration);
-                command.Parameters.AddWithValue("@LengthInKm", route.Length);
-                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
+                command.Parameters.AddWithValue("@StartDate", route.StartDate);
+                command.Parameters.AddWithValue("@EndDate", route.EndDate);
+                command.Parameters.AddWithValue("@Description", route.Description);
+                command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
+                command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
+                command.Parameters.AddWithValue("@LengthInKm", route.Length);
+                command.Parameters.AddWithValue("@DurationInDays", route.Duration);
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@MemberCount", route.MemberCount);
+                command.Parameters.AddWithValue("@IsPrivate", route.IsPrivate);
+                
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;

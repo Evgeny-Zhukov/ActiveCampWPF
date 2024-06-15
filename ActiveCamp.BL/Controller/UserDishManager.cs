@@ -98,6 +98,28 @@ namespace ActiveCamp.BL.Controller
             
             return userDishes;
         }
+        public bool UpdateUserDish(UserDish userDish)
+        {
+            using (_connection)
+            {
+
+                SqlCommand command = new SqlCommand("UpdateUserDish", _connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+
+                command.Parameters.AddWithValue("@UserDishID", userDish.UserDishID);
+                command.Parameters.AddWithValue("@UserID", userDish.UserID);
+                command.Parameters.AddWithValue("@DishID", userDish.DishID);
+
+
+                _connection.Open();
+                command.ExecuteNonQuery();
+                bool success = (bool)successParameter.Value;
+                return success;
+            }
+        }
         public bool DeleteUserDish(int id)
         {
             using (_connection)
