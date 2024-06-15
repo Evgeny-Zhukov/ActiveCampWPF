@@ -91,7 +91,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@AuthorID", news.AuthorID);
-                command.Parameters.AddWithValue("@NewsText", news.NewsID);
+                command.Parameters.AddWithValue("@NewsID", news.NewsID);
                 command.Parameters.AddWithValue("@FavorNewsID", news.FavorNewsID);
 
                 _connection.Open();
