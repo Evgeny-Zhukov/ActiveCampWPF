@@ -41,16 +41,16 @@ namespace ActiveCamp.BL.Controller
             }
         }
 
-        public List<News> GetNews(int AuthorId)
+        public List<News> GetNews(int AuthorID)
         {
             List<News> newses = new List<News>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM News WHERE AuthorId = @AuthorId";
+                string query = "SELECT * FROM News";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@AuthorId", AuthorId);
+                //command.Parameters.AddWithValue("@AuthorId", AuthorId);
 
                 try
                 {

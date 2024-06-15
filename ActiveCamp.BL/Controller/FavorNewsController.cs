@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 
 namespace ActiveCamp.BL.Controller
@@ -98,7 +100,8 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public bool DeleteNews(int newsID, int id)
+        
+        public bool DeleteNews(int newsId, int authorId)
         {
             using (_connection)
             {
