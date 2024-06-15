@@ -12,11 +12,9 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            UserManager userManager = new UserManager();
-            User user = new User("1233", "1233");
-            int a;
-            a = userManager.VerifyUserByLogin(user.Username, user.Password);
-            Console.WriteLine(a);
+            News news = new News(1, "News Text Title", "New Text, dehsufhiushfihw,wiewoi",DateTime.Now, false);
+            NewsController newsController = new NewsController();
+            newsController.AddNews(news);
         }
     }
 }

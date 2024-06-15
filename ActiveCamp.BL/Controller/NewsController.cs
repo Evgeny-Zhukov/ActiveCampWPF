@@ -30,6 +30,7 @@ namespace ActiveCamp.BL.Controller
 
                 command.Parameters.AddWithValue("@AuthorID", news.AuthorID);
                 command.Parameters.AddWithValue("@NewsText", news.NewsText);
+                command.Parameters.AddWithValue("@Title", news.NewsTitle);
                 command.Parameters.AddWithValue("@NewsDate", news.NewsDate);
                 command.Parameters.AddWithValue("@IsAdminNews", news.IsAdminNews);
 
@@ -93,6 +94,7 @@ namespace ActiveCamp.BL.Controller
 
                 command.Parameters.AddWithValue("@NewsText", news.NewsText);
                 command.Parameters.AddWithValue("@NewsDate", news.NewsDate);
+                command.Parameters.AddWithValue("@Title", news.NewsTitle);
                 command.Parameters.AddWithValue("@IsAdminNews", news.IsAdminNews);
 
                 _connection.Open();

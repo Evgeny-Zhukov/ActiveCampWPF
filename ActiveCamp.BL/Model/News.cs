@@ -94,9 +94,10 @@ namespace ActiveCamp.BL.Model
         
         public News() { }
         
-        public News(int authorID, string newsText, DateTime newsDate, bool isAdminNews)
+        public News(int authorID, string title, string newsText, DateTime newsDate, bool isAdminNews)
         {
             this._authorID = authorID;
+            this._newsTitle = title;
             this._newsText = newsText;
             this._newsDate = newsDate;
             this._isAdminNews = isAdminNews;
