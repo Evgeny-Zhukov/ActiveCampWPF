@@ -122,7 +122,7 @@ namespace ActiveCampWPF
         {
             _itsFavorMessage = false;
             FavorNewsController controller = new FavorNewsController();
-            controller.DeleteNews(_newsItem.NewsID, ActiveCamp.BL.User.UserID);
+            controller.DeleteFavorNews(_newsItem.NewsID, ActiveCamp.BL.User.UserID);
         }
     }
 }
