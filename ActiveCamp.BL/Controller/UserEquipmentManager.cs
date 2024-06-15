@@ -35,13 +35,13 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public bool AddUserEquipment(List<RecordOfUserEquipment> userEquipment)
+        public bool AddUserEquipment(List<UserEquipment> userEquipment)
         {
             bool allSuccess = true;
             using (_connection)
             {
                 _connection.Open();
-                foreach (RecordOfUserEquipment item in userEquipment)
+                foreach (UserEquipment item in userEquipment)
                 {
                     using (SqlCommand command = new SqlCommand("AddUserEquipment", _connection))
                     {
@@ -51,11 +51,8 @@ namespace ActiveCamp.BL.Controller
                         successParameter.Direction = ParameterDirection.Output;
                         command.Parameters.Add(successParameter);
 
-                        command.Parameters.AddWithValue("@EquipmentName", item.EquipmentName);
-                        command.Parameters.AddWithValue("@CountOfEquipment", item.CountOfEquipment);
-                        command.Parameters.AddWithValue("@WightOfEquipment", item.WightOfEquipment);
-                        command.Parameters.AddWithValue("@OwnerID", item.OwnerID);
-                        command.Parameters.AddWithValue("@EquipmentDescription", item.EquipmentDescription);
+                        command.Parameters.AddWithValue("@EquipmentID", item.EquipmentID);
+                        command.Parameters.AddWithValue("@UserID", item.UserID);
 
                         command.ExecuteNonQuery();
 
@@ -122,44 +119,5 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public int GetUserEquipmentID(RecordOfUserEquipment userEquipment)
-        {
-            int userEquipmentID = -1;
-            using (_connection)
-            {
-                string query = "SELECT * FROM UserEquipment WHERE UserEquipmentID = @UserEquipmentID AND UserID = @UserID";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@UserEquipmentID", userEquipment.UserEquipmentID);
-                command.Parameters.AddWithValue("@UserID", userEquipment.OwnerID); 
-                try
-                {
-                    _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        userEquipmentID = Convert.ToInt32(reader["UserEquipmentID"]);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-
-            }
-            if (userEquipmentID <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(userEquipmentID), "ID снаряжения пользователя должен быть положительным числом.");
-            }
-            return userEquipmentID;
-        }
-        public List<RecordOfUserEquipment> CreateList()
-        {
-            List<RecordOfUserEquipment> list = new List<RecordOfUserEquipment>();
-            return list;
-        }
-        
     }
 }
