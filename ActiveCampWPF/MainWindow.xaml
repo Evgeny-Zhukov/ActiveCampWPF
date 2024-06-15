@@ -331,7 +331,8 @@
                             </Style>
                         </Grid.Resources>
 
-                        <ToggleButton x:Name="SortbyFavorFlag" Style="{StaticResource StyleForSortToggleButtons}" Grid.Row="1">
+                        <ToggleButton x:Name="SortbyFavorFlag" Style="{StaticResource StyleForSortToggleButtons}" Grid.Row="1"
+                                      Checked="SortbyFavorFlag_Checked" Unchecked="SortbyFavorFlag_Unchecked">
                             <ToggleButton.Content>
                                 <Grid Width="55" Height="55">
                                     <Path Stroke="Black" StrokeThickness="2" Fill="Red">
@@ -350,7 +351,8 @@
                             </ToggleButton.Content>
                         </ToggleButton>
 
-                        <ToggleButton x:Name="SortbyFavorAdminMessage" Style="{StaticResource StyleForSortToggleButtons}" Grid.Row="2">
+                        <ToggleButton x:Name="SortbyFavorAdminMessage" Style="{StaticResource StyleForSortToggleButtons}" Grid.Row="2"
+                                      Checked="SortbyFavorAdminMessage_Checked" Unchecked="SortbyFavorAdminMessage_Unchecked">
                             <ToggleButton.Content>
                                 <Grid Width="55" Height="55">
                                     <Path Stroke="Black" StrokeThickness="2" Fill="Yellow">

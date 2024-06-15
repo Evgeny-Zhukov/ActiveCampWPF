@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,9 +99,10 @@ namespace ActiveCamp.BL.Controller
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
-        public bool DeleteNews(int newsId, int authorId)
+            }
         }
-        public bool DeleteNews(int id)
+        
+        public bool DeleteNews(int newsId, int authorId)
         {
             using (_connection)
             {

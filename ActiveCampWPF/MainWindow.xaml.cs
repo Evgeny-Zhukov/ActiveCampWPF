@@ -408,6 +408,7 @@ namespace ActiveCampWPF
             if (Login(user))
             {
                 Background_of_window.IsEnabled = true;
+                UpdateNewsList();
                 Person_Validate.IsEnabled = false;
                 Person_Validate.Visibility = Visibility.Hidden;
             }
@@ -416,6 +417,7 @@ namespace ActiveCampWPF
                 MessageBox.Show($"Неверный логин или пароль, попробуйте снова");
             }
         }
+
         private bool Login(User user)
         {
             UserManager userManager = new UserManager();
@@ -559,9 +561,77 @@ namespace ActiveCampWPF
 
         private void NewsSorting()
         {
+            if (SortbyFavorFlag.IsChecked == true && SortbyFavorAdminMessage.IsChecked == false)
+            {
+                List<NewHikkingListItem> sortedNews = new List<NewHikkingListItem>();
+                
+                foreach(NewHikkingListItem elementOfNews in NewsList.Items)
+                {
+                    if(elementOfNews.ItsFavorMessage == true && elementOfNews.ItsAdminMessage == false)
+                    {
+                        sortedNews.Add(elementOfNews);
+                    }
+                }
+
+                NewsList.ItemsSource = null;
+                NewsList.ItemsSource = sortedNews;
+
+            }
+            else if(SortbyFavorFlag.IsChecked == false && SortbyFavorAdminMessage.IsChecked == true)
+            {
+                List<NewHikkingListItem> sortedNews = new List<NewHikkingListItem>();
+
+                foreach (NewHikkingListItem elementOfNews in NewsList.Items)
+                {
+                    if (elementOfNews.ItsFavorMessage == false && elementOfNews.ItsAdminMessage == true)
+                    {
+                        sortedNews.Add(elementOfNews);
+                    }
+                }
+
+                NewsList.ItemsSource = null;
+                NewsList.ItemsSource = sortedNews;
+            }
+            else if(SortbyFavorFlag.IsChecked == true && SortbyFavorAdminMessage.IsChecked == true)
+            {
+                List<NewHikkingListItem> sortedNews = new List<NewHikkingListItem>();
+
+                foreach (NewHikkingListItem elementOfNews in NewsList.Items)
+                {
+                    if (elementOfNews.ItsFavorMessage == true && elementOfNews.ItsAdminMessage == true)
+                    {
+                        sortedNews.Add(elementOfNews);
+                    }
+                }
+
+                NewsList.ItemsSource = null;
+                NewsList.ItemsSource = sortedNews;
+            }
 
         }
 
+        private void SortbyFavorFlag_Checked(object sender, RoutedEventArgs e)
+        {
+            NewsSorting();
+        }
+
+        private void SortbyFavorFlag_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateNewsList();
+            NewsSorting();
+        }
+
+        private void SortbyFavorAdminMessage_Checked(object sender, RoutedEventArgs e)
+        {
+            NewsSorting();
+        }
+
+        private void SortbyFavorAdminMessage_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateNewsList();
+            NewsSorting();
+        }
+        
         #endregion
 
         #region Hiking
@@ -671,5 +741,6 @@ namespace ActiveCampWPF
 
         }
         #endregion
+
     }
 }

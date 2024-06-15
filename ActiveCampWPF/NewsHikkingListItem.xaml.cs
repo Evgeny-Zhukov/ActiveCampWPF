@@ -63,7 +63,7 @@ namespace ActiveCampWPF
 
             List<FavorNews> favorNews = new List<FavorNews>();
             FavorNewsController controller = new FavorNewsController();
-            favorNews = controller.GetNews(ActiveCamp.BL.User.UserID);
+            favorNews = controller.GetFavorNews(ActiveCamp.BL.User.UserID);
             foreach(FavorNews favor in favorNews) 
             { 
                 if(favor.NewsID == _newsItem.NewsID)
@@ -115,7 +115,7 @@ namespace ActiveCampWPF
             _itsFavorMessage = true;
             FavorNews favornews = new FavorNews(ActiveCamp.BL.User.UserID, _newsItem.NewsID);
             FavorNewsController controller = new FavorNewsController();
-            controller.AddNews(favornews);
+            controller.AddFavorNews(favornews);
         }
 
         private void FavouriteFlag_Unchecked(object sender, RoutedEventArgs e)
