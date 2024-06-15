@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 
 namespace ActiveCamp.BL.Controller
@@ -98,22 +96,21 @@ namespace ActiveCamp.BL.Controller
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
-        public bool DeleteNews(int newsId, int authorId)
+            }
         }
-        public bool DeleteNews(int id)
+        public bool DeleteNews(int newsID, int id)
         {
             using (_connection)
             {
                 SqlCommand command = new SqlCommand("DeleteFavorNewsById", _connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@NewsID", newsId);
-                command.Parameters.AddWithValue("@AuthorID", authorId);
-
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
+                command.Parameters.AddWithValue("@AuthorID", id);
+                command.Parameters.AddWithValue("@NewsID", newsID);
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
