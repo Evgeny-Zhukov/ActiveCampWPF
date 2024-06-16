@@ -48,7 +48,7 @@ namespace ActiveCamp.BL.Controller
             List<GroupMembership> memberships = new List<GroupMembership>();
 
             using (_connection)
-            {
+            { 
                 string query = "SELECT * FROM GroupMemberships WHERE UserId = @UserId";
 
                 SqlCommand command = new SqlCommand(query, _connection);
