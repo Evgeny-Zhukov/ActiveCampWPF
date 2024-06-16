@@ -672,7 +672,7 @@ namespace ActiveCampWPF
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             RouteManager routeManager = new RouteManager();
-            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, 0, false);
+            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, false);
             routeManager.AddRoute(NewRoute);
 
             DoubleAnimation openAnimation = new DoubleAnimation();
