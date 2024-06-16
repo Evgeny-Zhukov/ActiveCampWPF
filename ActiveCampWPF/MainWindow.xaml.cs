@@ -704,6 +704,7 @@ namespace ActiveCampWPF
 
             HikkingList.ItemsSource = source;
         }
+
         private void HikkingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
@@ -711,11 +712,27 @@ namespace ActiveCampWPF
             Paragraph title = new Paragraph();
             title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
 
-            Paragraph mainBodyOfNews = new Paragraph();
-            mainBodyOfNews.Inlines.Add(new Run(routeInfo.Description));
+            Paragraph description = new Paragraph();
+            description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
+
+            Paragraph dates = new Paragraph();
+            dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
+
+            Paragraph tripInfo = new Paragraph();
+            tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
+            
+            Paragraph level = new Paragraph();
+            level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
+
+            Paragraph count = new Paragraph();
+            count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
 
             List newsBodyList = new List();
-            newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
+            newsBodyList.ListItems.Add(new ListItem(level));
+            newsBodyList.ListItems.Add(new ListItem(description));
+            newsBodyList.ListItems.Add(new ListItem(dates));
+            newsBodyList.ListItems.Add(new ListItem(tripInfo));
+            newsBodyList.ListItems.Add(new ListItem(count));
 
             FlowDocument flowDocument = new FlowDocument();
             flowDocument.Blocks.Add(title);
@@ -761,7 +778,7 @@ namespace ActiveCampWPF
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             RouteManager routeManager = new RouteManager();
-            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, NameOfHiking.Text, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, 100, LevelOfHiking.Text, Int32.Parse(CountOfMember.Text), false);
+            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, NameOfHiking.Text, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, Double.Parse(TripLengthInKM.Text), LevelOfHiking.Text, Int32.Parse(CountOfMember.Text), false);
             routeManager.AddRoute(NewRoute);
 
             DoubleAnimation openAnimation = new DoubleAnimation();

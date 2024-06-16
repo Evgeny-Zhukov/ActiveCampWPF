@@ -51,7 +51,7 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-        public Group GetGroups(int RouteID)
+        public Group GetGroup(int RouteID)
         {
             Group group = new Group();
 
@@ -83,17 +83,16 @@ namespace ActiveCamp.BL.Model
             }
             return group;
         }
-        public List<Group> GetGroup(int RouteID)
+        public List<Group> GetGroups()
         {
             List<Group> groups = new List<Group>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM Groups WHERE RouteID = @RouteID";
+                string query = "SELECT * FROM Groups";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-
-                command.Parameters.AddWithValue("@RouteID", RouteID);
+                
                 try
                 {
                     _connection.Open();

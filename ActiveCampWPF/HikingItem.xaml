@@ -22,7 +22,8 @@
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                          FontFamily="Times New Roman" FontSize="14" FontWeight="Bold"/>
 
-                <ToggleButton x:Name="ConsentWithParticipation" Grid.Column="1" Checked="ConsentWithParticipation_Checked">
+                <ToggleButton x:Name="ConsentWithParticipation" Grid.Column="1" 
+                              Checked="ConsentWithParticipation_Checked" Unchecked="ConsentWithParticipation_Unchecked">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
                             <Border x:Name="ConsentWithParticipation_border">

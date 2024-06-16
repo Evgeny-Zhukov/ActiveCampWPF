@@ -47,6 +47,7 @@ namespace ActiveCampWPF
         {
             InitializeComponent();
             _routeitem = routeItem;
+            Title.Text = routeItem.RouteName;
         }
 
         private hikingItem temp_Record = null;
@@ -90,12 +91,28 @@ namespace ActiveCampWPF
         private void ConsentWithParticipation_Checked(object sender, RoutedEventArgs e)
         {
 
-            GroupManager group = new GroupManager();
-            group.GetGroup()
+            GroupManager groupManager = new GroupManager();
+            
+            Group group = groupManager.GetGroup(RouteItem.RouteId);
+            
             GroupMembership membership = new GroupMembership();
-            membership.GroupId = ;
+            membership.GroupId = group.GroupId;
+            membership.UserId = ActiveCamp.BL.User.UserID;
+            membership.JoinedDate = DateTime.Now;
+            membership.IsAproved = false;
+            
             GroupMembershipManager manager = new GroupMembershipManager();
-            manager.AddGroupMembership()
+            manager.AddGroupMembership(membership);
+        }
+
+        private void ConsentWithParticipation_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GroupManager groupManager = new GroupManager();
+
+            Group group = groupManager.GetGroup(RouteItem.RouteId);
+
+            GroupMembershipManager manager = new GroupMembershipManager();
+            manager.DeleteGroupMembership(ActiveCamp.BL.User.UserID, group.GroupId);
         }
     }
 }
