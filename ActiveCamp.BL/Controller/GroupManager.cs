@@ -41,13 +41,16 @@ namespace ActiveCamp.BL.Model
                     Direction = ParameterDirection.Output
                 };
                 command.Parameters.Add(groupIdParam);
-                int id = Convert.ToInt32(groupIdParam.Value);
+
                 _connection.Open();
                 command.ExecuteNonQuery();
+
+                int id = (int)command.Parameters["@GroupID"].Value;
 
                 return id;
             }
         }
+
 
         /// <summary>
         /// Добавляет пользователя в группу.
@@ -56,38 +59,18 @@ namespace ActiveCamp.BL.Model
         /// <param name="userId">Идентификатор пользователя</param>
         public void AddUserToGroup(int groupId, int userId)
         {
-            Group group = groups.FirstOrDefault(g => g.GroupId == groupId);
-            User user = users.FirstOrDefault(u => ActiveCamp.BL.User.UserID == userId); 
-
-            if (group == null)
-            {
-                throw new Exception("Группа не обнаружена");
-            }
-
-            if (user == null)
-            {
-                throw new Exception("Пользователь не обнаружен");
-            }
-
-            group.UserIds.Add(userId);
-            groupMemberships.Add(new GroupMembership
-            {
-                GroupId = groupId,
-                UserId = userId
-            });
-
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("AddUserToGroup", _connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                command.Parameters.AddWithValue("@GroupId", groupId);
-                command.Parameters.AddWithValue("@UserId", userId);
-
                 _connection.Open();
-                command.ExecuteNonQuery();
+                using (SqlCommand command = new SqlCommand("INSERT INTO GroupMemberships (GroupID, UserID, JoinedDate, IsAproved) VALUES (@GroupID, @UserID, @JoinedDate, @IsAproved)", _connection))
+                {
+                    command.Parameters.AddWithValue("@GroupID", groupId);
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    command.Parameters.AddWithValue("@JoinedDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@IsAproved", 0);
+
+                    command.ExecuteNonQuery();
+                }
             }
         }
 

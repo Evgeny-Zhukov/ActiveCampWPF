@@ -12,12 +12,11 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            Route route = new Route("name", 28, DateTime.Now, DateTime.MaxValue, "asg","1", "2",100,"1", 3, false);
-            List<Route> routes = new List<Route>();
-            RouteManager routeManager = new RouteManager();
-            //routeManager.AddRoute(route);
-            routes = routeManager.GetAllRoutes();
-            Console.WriteLine(routes);
+            /*Group group = new Group(17, "Kuk", "Link", 34);
+            
+            group.GroupId = groupM.CreateGroup(group);*/
+            GroupManager groupM = new GroupManager();
+            groupM.AddUserToGroup(7, 34);
             //assert
 
         }

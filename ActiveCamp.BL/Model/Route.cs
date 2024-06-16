@@ -243,7 +243,7 @@ namespace ActiveCamp.BL.Model
         /// <param name="endPoint">Конечная точка</param>
         /// <param name="difficulty">Сложность</param>
         /// <param name="isPrivate">Приватный маршрут</param>
-        public Route(int authorID, string routeName, DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, string difficulty,  int memberCount, bool isPrivate)
+        public Route(int authorID, string routeName, DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, int lenght, string difficulty,  int memberCount, bool isPrivate)
         {
             this._routeName = routeName;
             this._authorID = authorID;
