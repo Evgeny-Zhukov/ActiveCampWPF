@@ -7,8 +7,10 @@ namespace ActiveCamp.BL.Model
     public class GroupMembership : INotifyPropertyChanged, IEditableObject
     {
         #region Свойства
+        private int _groupMembershipID;
         private int _groupID;
         private int _userID;
+        private bool _isAproved;
         private DateTime _joinedDate;
         /// <summary>
         /// ИД группы.
@@ -22,6 +24,18 @@ namespace ActiveCamp.BL.Model
                 {
                     this._groupID = value;
                     NotifyPropertyChanged("GroupId");
+                }
+            }
+        }
+        public int GroupMembershipID
+        {
+            get { return this._groupMembershipID; }
+            set
+            {
+                if (value != this._groupMembershipID)
+                {
+                    this._groupMembershipID = value;
+                    NotifyPropertyChanged("GroupMembershipID");
                 }
             }
         }
@@ -40,7 +54,18 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-
+        public bool IsAproved
+        {
+            get { return this._isAproved; }
+            set
+            {
+                if (value != this._isAproved)
+                {
+                    this._isAproved = value;
+                    NotifyPropertyChanged("IsAproved");
+                }
+            }
+        }
         /// <summary>
         /// Дата присоединения.
         /// </summary>
@@ -94,16 +119,25 @@ namespace ActiveCamp.BL.Model
 
         public void EndEdit()
         {
-            if(m_Editing == true)
+            if (m_Editing == true)
             {
-                temp_Record = null;
+                _groupID = temp_Record._groupID;
+                _userID = temp_Record._userID;
+                _joinedDate = temp_Record._joinedDate;
+                _isAproved = temp_Record._isAproved;
+                _groupMembershipID = temp_Record._groupMembershipID;
+
                 m_Editing = false;
             }
         }
 
         public void CancelEdit()
         {
-            throw new NotImplementedException();
+            if (m_Editing == true)
+            {
+                temp_Record = null;
+                m_Editing = false;
+            }
         }
 
         /// <summary>

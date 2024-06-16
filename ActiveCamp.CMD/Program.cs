@@ -12,7 +12,7 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            //Route route = new Route("name", 27, DateTime.Now, DateTime.MaxValue, "asg","1", "2",100,"1", 3, false);
+            Route route = new Route("name", 28, DateTime.Now, DateTime.MaxValue, "asg","1", "2",100,"1", 3, false);
             List<Route> routes = new List<Route>();
             RouteManager routeManager = new RouteManager();
             //routeManager.AddRoute(route);

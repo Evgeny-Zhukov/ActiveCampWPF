@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controller\ExperienceManager.cs" />
     <Compile Include="Controller\FavorNewsManager.cs" />
+    <Compile Include="Controller\GroupMembershipManager.cs" />
     <Compile Include="Controller\NewsManager.cs" />
     <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
     <Compile Include="Controller\DishManager.cs" />
