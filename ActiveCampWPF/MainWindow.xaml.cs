@@ -139,6 +139,8 @@ namespace ActiveCampWPF
 
         #region  Prepering_for_Hiking
 
+
+
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
         { 
 
@@ -540,21 +542,6 @@ namespace ActiveCampWPF
 
         #endregion
 
-        //++ Хз что это и для чего нужно 
-        public void ShowMainContent(Session session)
-        {
-            Person_Validate.Visibility = Visibility.Collapsed;
-            Main_controls.Visibility = Visibility.Visible;
-        }
-
-        public void ShowLoginContent()
-        {
-            Person_Validate.Visibility = Visibility.Visible;
-
-            Main_controls.Visibility = Visibility.Collapsed;
-        }
-        //--
-
         #region Window Events
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -693,7 +680,7 @@ namespace ActiveCampWPF
             HikkingList.ItemsSource = null;
             List<Route> routes = new List<Route> { };
             RouteManager routeController = new RouteManager();
-            routes = routeController.GetRouteList();
+            routes = routeController.GetAllRoutes();
 
             List<hikingItem> source = new List<hikingItem> { };
 
