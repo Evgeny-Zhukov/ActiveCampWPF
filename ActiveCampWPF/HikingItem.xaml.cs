@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ActiveCamp.BL.Controller;
 using ActiveCamp.BL.Model;
 
 namespace ActiveCampWPF
@@ -88,10 +89,13 @@ namespace ActiveCampWPF
 
         private void ConsentWithParticipation_Checked(object sender, RoutedEventArgs e)
         {
-            //GroupManager group = new GroupManager();
 
-            //group.GetGroup(RouteItem.RouteId;
-            //RouteItem.RouteId
+            GroupManager group = new GroupManager();
+            group.GetGroup()
+            GroupMembership membership = new GroupMembership();
+            membership.GroupId = ;
+            GroupMembershipManager manager = new GroupMembershipManager();
+            manager.AddGroupMembership()
         }
     }
 }
