@@ -87,51 +87,6 @@ namespace ActiveCamp.BL.Controller
             }
             return routes;
         }
-
-        public List<Route> GetRouteList()
-        {
-            List<Route> routes = new List<Route>();
-
-            using (_connection)
-            {
-                string query = "SELECT * FROM HikingRoutes";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-
-                try
-                {
-                    _connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Route route = new Route();
-                            {
-                                route.RouteId = Convert.ToInt32(reader["RouteId"]);
-                                route.AuthorId = Convert.ToInt32(reader["AuthorID"]);
-                                route.Duration = Convert.ToInt32(reader["DurationInDays"]);
-                                route.RouteName = (reader["RouteName"].ToString());
-                                route.Description = (reader["Description"].ToString());
-                                route.Length = Convert.ToInt32(reader["LengthInKm"]);
-                                route.StartDate = (Convert.ToDateTime(reader["StartDate"]));
-                                route.EndDate = (Convert.ToDateTime(reader["EndDate"]));
-                                route.StartPoint = (reader["StartPoint"].ToString());
-                                route.EndPoint = (reader["EndPoint"].ToString());
-                                route.Difficulty = (reader["Difficulty"].ToString());
-                                route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
-                                route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
-                            }
-                            routes.Add(route);
-                        }
-                    }      
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-            }
-            return routes;
-        }
         public List<Route> GetAllRoutes()
         {
             List<Route> routes = new List<Route>();
