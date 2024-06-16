@@ -6,11 +6,11 @@ using System.Data;
 
 namespace ActiveCamp.BL.Controller
 {
-    public class ExperienceController
+    public class ExperienceManager
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
-        public ExperienceController()
+        public ExperienceManager()
         {
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();

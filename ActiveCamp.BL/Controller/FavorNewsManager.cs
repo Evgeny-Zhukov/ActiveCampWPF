@@ -1,27 +1,28 @@
 ﻿using ActiveCamp.BL.Model;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
+
 
 namespace ActiveCamp.BL.Controller
 {
-    public class NewsController
+    public class FavorNewsManager
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
 
-        public NewsController()
+        public FavorNewsManager()
         {
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
 
-        public bool AddNews(News news)
+        public bool AddFavorNews(FavorNews news)
         {
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("AddNews", _connection);
+                SqlCommand command = new SqlCommand("AddFavorNews", _connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
@@ -29,10 +30,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@AuthorID", news.AuthorID);
-                command.Parameters.AddWithValue("@NewsText", news.NewsText);
-                command.Parameters.AddWithValue("@Title", news.NewsTitle);
-                command.Parameters.AddWithValue("@NewsDate", news.NewsDate);
-                command.Parameters.AddWithValue("@IsAdminNews", news.IsAdminNews);
+                command.Parameters.AddWithValue("@NewsID", news.NewsID);
 
                 _connection.Open();
                 command.ExecuteNonQuery();
@@ -41,16 +39,16 @@ namespace ActiveCamp.BL.Controller
             }
         }
 
-        public List<News> GetNews(int AuthorID)
+        public List<FavorNews> GetFavorNews(int AuthorId)
         {
-            List<News> newses = new List<News>();
+            List<FavorNews> newses = new List<FavorNews>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM News";
+                string query = "SELECT * FROM FavorNews WHERE AuthorId = @AuthorId";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                //command.Parameters.AddWithValue("@AuthorId", AuthorId);
+                command.Parameters.AddWithValue("@AuthorId", AuthorId);
 
                 try
                 {
@@ -60,13 +58,11 @@ namespace ActiveCamp.BL.Controller
                     {
                         while (reader.Read())
                         {
-                            News news = new News();
+                            FavorNews news = new FavorNews();
                             {
                                 news.NewsID = Convert.ToInt32(reader["NewsID"]);
                                 news.AuthorID = Convert.ToInt32(reader["AuthorID"]);
-                                news.NewsTitle = reader["Title"].ToString();
-                                news.NewsText = reader["NewsText"].ToString();
-                                news.IsAdminNews = (Convert.ToBoolean(reader["IsAdminNews"]));
+                                news.FavorNewsID = Convert.ToInt32(reader["FavorNewsID"]);
                             }
                             newses.Add(news);
                         }
@@ -81,21 +77,20 @@ namespace ActiveCamp.BL.Controller
             return newses;
         }
 
-        public bool UpdateNews(News news)
+        public bool UpdateFavorNews(FavorNews news)
         {
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("UpdateNews", _connection);
+                SqlCommand command = new SqlCommand("UpdateFavorNews", _connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
-                command.Parameters.AddWithValue("@NewsText", news.NewsText);
-                command.Parameters.AddWithValue("@NewsDate", news.NewsDate);
-                command.Parameters.AddWithValue("@Title", news.NewsTitle);
-                command.Parameters.AddWithValue("@IsAdminNews", news.IsAdminNews);
+                command.Parameters.AddWithValue("@AuthorID", news.AuthorID);
+                command.Parameters.AddWithValue("@NewsID", news.NewsID);
+                command.Parameters.AddWithValue("@FavorNewsID", news.FavorNewsID);
 
                 _connection.Open();
                 command.ExecuteNonQuery();
@@ -103,19 +98,20 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public bool DeleteNews(int id)
+        
+        public bool DeleteFavorNews(int newsId, int authorId)
         {
             using (_connection)
             {
-                SqlCommand command = new SqlCommand("DeleteNewsById", _connection);
+                SqlCommand command = new SqlCommand("DeleteFavorNewsById", _connection);
                 command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.AddWithValue("@NewsID", id);
 
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
+                command.Parameters.AddWithValue("@AuthorID", authorId);
+                command.Parameters.AddWithValue("@NewsID", newsId);
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;

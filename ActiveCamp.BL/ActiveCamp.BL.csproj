@@ -57,9 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ExperienceController.cs" />
-    <Compile Include="Controller\FavorNewsController.cs" />
-    <Compile Include="Controller\NewsController.cs" />
+    <Compile Include="Controller\ExperienceManager.cs" />
+    <Compile Include="Controller\FavorNewsManager.cs" />
+    <Compile Include="Controller\NewsManager.cs" />
     <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
     <Compile Include="Controller\DishManager.cs" />
     <Compile Include="Controller\EquipmentManager.cs" />

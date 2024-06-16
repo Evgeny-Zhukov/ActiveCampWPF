@@ -546,7 +546,7 @@ namespace ActiveCampWPF
         {
             NewsList.ItemsSource = null;
             List<News> newses = new List<News> {};
-            NewsController newsController = new NewsController();
+            NewsManager newsController = new NewsManager();
             newses = newsController.GetNews(ActiveCamp.BL.User.UserID);
             
             List<NewHikkingListItem> source = new List<NewHikkingListItem> { };

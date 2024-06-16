@@ -14,6 +14,7 @@ namespace ActiveCamp.BL.Controller.Tests
         [TestMethod()]
         public void UserControllerTest()
         {
+
             Assert.Fail();
         }
     }

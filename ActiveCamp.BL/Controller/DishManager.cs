@@ -112,7 +112,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@DishID", dish.DishID);
-                command.Parameters.AddWithValue("@Name", dish.Name);
+                command.Parameters.AddWithValue("@DishName", dish.Name);
                 command.Parameters.AddWithValue("@Proteins", dish.Proteins);
                 command.Parameters.AddWithValue("@Fats", dish.Fats);
                 command.Parameters.AddWithValue("@Carbohydrates", dish.Carbohydrates);

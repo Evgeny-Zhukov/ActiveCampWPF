@@ -26,12 +26,15 @@ namespace ActiveCamp.BL.Controller
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
-                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@RouteName", route.RouteName);
                 command.Parameters.AddWithValue("@StartData", route.StartDate);
                 command.Parameters.AddWithValue("@EndData", route.EndDate);
                 command.Parameters.AddWithValue("@Description", route.Description);
                 command.Parameters.AddWithValue("@StartPoint", route.StartPoint);
                 command.Parameters.AddWithValue("@EndPoint", route.EndPoint);
+                command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
+                command.Parameters.AddWithValue("@MemberCount", route.MemberCount);
+                command.Parameters.AddWithValue("@IsPrivate", route.IsPrivate);
                 _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -88,14 +91,14 @@ namespace ActiveCamp.BL.Controller
             using (_connection)
             {
 
-                SqlCommand command = new SqlCommand("UpdateRoute", _connection);
+                SqlCommand command = new SqlCommand("UpdateRoutes", _connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@RouteId", route.RouteId);
-                command.Parameters.AddWithValue("@routeName", route.RouteName);
+                command.Parameters.AddWithValue("@RouteName", route.RouteName);
                 command.Parameters.AddWithValue("@AuthorID", route.AuthorId);
                 command.Parameters.AddWithValue("@StartDate", route.StartDate);
                 command.Parameters.AddWithValue("@EndDate", route.EndDate);
@@ -129,38 +132,6 @@ namespace ActiveCamp.BL.Controller
                 bool success = (bool)successParameter.Value;
                 return success;
             }
-        }
-        public int GetRouteID(Route route)
-        {
-            int routeID = -1;
-            using (_connection)
-            {
-                string query = "SELECT * FROM HikingRoutes WHERE RouteName = @RouteName";
-
-                SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@RouteName", route.RouteName);
-                try
-                {
-                    _connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        routeID = Convert.ToInt32(reader["RouteID"]);
-                    }
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-
-            }
-            if (routeID <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(routeID), "ID маршрута должен быть положительным числом.");
-            }
-            return routeID;
         }
     }
 }

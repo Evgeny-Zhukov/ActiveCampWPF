@@ -12,9 +12,13 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            News news = new News(1, "News Text Title", "New Text, dehsufhiushfihw,wiewoi",DateTime.Now, false);
-            NewsController newsController = new NewsController();
-            newsController.AddNews(news);
+            Route route = new Route();
+            List<Route> routes = new List<Route>();
+            RouteManager routeManager = new RouteManager();
+            routes = routeManager.GetRouteById(25);
+            Console.WriteLine(routes);
+            //assert
+
         }
     }
 }

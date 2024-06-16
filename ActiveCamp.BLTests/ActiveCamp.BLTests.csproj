@@ -55,6 +55,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Controller\DishTests.cs" />
+    <Compile Include="Controller\EquipmentTests.cs" />
+    <Compile Include="Controller\ExperienceTests.cs" />
+    <Compile Include="Controller\FavorNewsTests.cs" />
+    <Compile Include="Controller\IllnessManagerTests.cs" />
+    <Compile Include="Controller\NewsTests.cs" />
+    <Compile Include="Controller\RouteTests.cs" />
+    <Compile Include="Controller\UserEquipmentTests.cs" />
+    <Compile Include="Controller\UserDishTests.cs" />
     <Compile Include="Controller\UserControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
