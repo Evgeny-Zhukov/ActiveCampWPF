@@ -104,7 +104,7 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
-        public bool DeleteGroupMembershipManager(int userID)
+        public bool DeleteGroupMembership(int userID, int groupID)
         {
             using (_connection)
             {
@@ -116,6 +116,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@UserId", userID);
+                command.Parameters.AddWithValue("@GroupId", groupID);
 
                 _connection.Open();
                 command.ExecuteNonQuery();

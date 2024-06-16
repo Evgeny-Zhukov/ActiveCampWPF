@@ -224,5 +224,45 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
+        public List<GroupMembership> GetGroupMembershipsByRoute(int routeID)
+        {
+            List<GroupMembership> gms = new List<GroupMembership>();
+
+            using (_connection)
+            {
+                SqlCommand command = new SqlCommand("GetGroupMembershipsByRoute", _connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@RouteID", routeID);
+
+                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                successParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(successParameter);
+                try
+                {
+                    _connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            GroupMembership gm = new GroupMembership();
+                            {
+                                gm.GroupMembershipID = Convert.ToInt32(reader["GroupMembershipID"]);
+                                gm.GroupId = Convert.ToInt32(reader["GroupId"]);
+                                gm.IsAproved = Convert.ToBoolean(reader["IsAproved"]);
+                                gm.UserId = Convert.ToInt32(reader["UserId"]);
+                                
+                            }
+                            gms.Add(gm);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return gms;
+        }
     }
 }
