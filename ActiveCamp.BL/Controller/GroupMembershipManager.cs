@@ -32,6 +32,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.Add(successParameter);
 
                 command.Parameters.AddWithValue("@UserId", groupMembership.UserId);
+                command.Parameters.AddWithValue("@GroupId", groupMembership.GroupId);
                 command.Parameters.AddWithValue("@JoinedDate", groupMembership.JoinedDate);
                 command.Parameters.AddWithValue("@IsAproved", groupMembership.IsAproved);
 

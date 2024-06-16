@@ -51,39 +51,16 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-
-        /// <summary>
-        /// Добавляет пользователя в группу.
-        /// </summary>
-        /// <param name="groupId">Идентификатор группы</param>
-        /// <param name="userId">Идентификатор пользователя</param>
-        public void AddUserToGroup(int groupId, int userId)
-        {
-            using (_connection)
-            {
-                _connection.Open();
-                using (SqlCommand command = new SqlCommand("INSERT INTO GroupMemberships (GroupID, UserID, JoinedDate, IsAproved) VALUES (@GroupID, @UserID, @JoinedDate, @IsAproved)", _connection))
-                {
-                    command.Parameters.AddWithValue("@GroupID", groupId);
-                    command.Parameters.AddWithValue("@UserID", userId);
-                    command.Parameters.AddWithValue("@JoinedDate", DateTime.Now);
-                    command.Parameters.AddWithValue("@IsAproved", 0);
-
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public Group GetGroups(int UserID)
+        public Group GetGroups(int RouteID)
         {
             Group group = new Group();
 
             using (_connection)
             {
-                string query = "SELECT * FROM Groups WHERE AuthorID = @AuthorID";
+                string query = "SELECT * FROM Groups WHERE RouteID = @RouteID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@AuthorID", UserID);
+                command.Parameters.AddWithValue("@RouteID", RouteID);
                 try
                 {
                     _connection.Open();
@@ -106,17 +83,17 @@ namespace ActiveCamp.BL.Model
             }
             return group;
         }
-        public List<Group> GetGroup(int UserID)
+        public List<Group> GetGroup(int RouteID)
         {
             List<Group> groups = new List<Group>();
 
             using (_connection)
             {
-                string query = "SELECT * FROM Groups WHERE AuthorID = @AuthorID";
+                string query = "SELECT * FROM Groups WHERE RouteID = @RouteID";
 
                 SqlCommand command = new SqlCommand(query, _connection);
 
-                command.Parameters.AddWithValue("@AuthorID", UserID);
+                command.Parameters.AddWithValue("@RouteID", RouteID);
                 try
                 {
                     _connection.Open();

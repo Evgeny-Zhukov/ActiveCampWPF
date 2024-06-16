@@ -16,7 +16,7 @@ namespace ActiveCamp.BL.Model
         private string _startPoint;
         private string _endPoint;
         private int _duration;
-        private double _lenght;
+        private double _length;
         private string _difficulty;
         private int _memberCount;
         private int _authorID;
@@ -155,12 +155,12 @@ namespace ActiveCamp.BL.Model
         /// </summary>
         public double Length
         {
-            get { return this._lenght; }
+            get { return this._length; }
             set
             {
-                if (value != this._lenght)
+                if (value != this._length)
                 {
-                    this._lenght = value;
+                    this._length = value;
                     NotifyPropertyChanged("Length");
                 }
             }
@@ -252,7 +252,7 @@ namespace ActiveCamp.BL.Model
             this._routeDescription = description;
             this._startPoint = startPoint;
             this._endPoint = endPoint;
-            this._lenght = length;
+            this._length = lenght;
             this._difficulty = difficulty;
             this._memberCount = memberCount;
             this._isPrivate = isPrivate;
@@ -289,7 +289,7 @@ namespace ActiveCamp.BL.Model
                 _startPoint = temp_Record.StartPoint;
                 _endPoint = temp_Record.EndPoint;
                 _duration = temp_Record.Duration;
-                _lenght = temp_Record.Length;
+                _length = temp_Record.Length;
                 _difficulty = temp_Record.Difficulty;
                 _memberCount = temp_Record.MemberCount;
                 _authorID = temp_Record.AuthorId;

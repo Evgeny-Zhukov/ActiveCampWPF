@@ -17,8 +17,9 @@ namespace ActiveCamp.CMD
             group.GroupId = groupM.CreateGroup(group);*/
             GroupManager groupM = new GroupManager();
             RouteManager routeManager = new RouteManager();
-            List<GroupMembership> groups = new List<GroupMembership>();
-            groups = routeManager.GetGroupMembershipsByRoute(17);
+            GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
+            groupMembershipManager.DeleteGroupMembership(25, 7);
+            
             Console.WriteLine();
             //assert
 
