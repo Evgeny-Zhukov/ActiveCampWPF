@@ -252,7 +252,7 @@ namespace ActiveCamp.BL.Model
             this._routeDescription = description;
             this._startPoint = startPoint;
             this._endPoint = endPoint;
-            this._lenght = lenght;
+            this._lenght = length;
             this._difficulty = difficulty;
             this._memberCount = memberCount;
             this._isPrivate = isPrivate;

@@ -385,7 +385,7 @@
                 <!-- #region Hikking Section-->
                 
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -858,7 +858,7 @@
 
                 <Grid x:Name="PreperingForHiking" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                      Visibility="Hidden" IsEnabled="False" Margin="0,0,55,0">
+                      Visibility="Visible" IsEnabled="True" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -1005,7 +1005,7 @@
 
                     <!-- #region Main info about hikings -->
                     <Grid x:Name="MainInfoAboutHiking" Grid.Column="1" Grid.RowSpan="2" 
-                          IsEnabled="True" Visibility="Visible">
+                          IsEnabled="False" Visibility="Hidden">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
@@ -1289,12 +1289,37 @@
                     </TabControl>
 
                     <!--#endregion-->
+                    
+                    <!--#region Members of a group-->
+
+                    <Grid x:Name="MembersOfFGroup" Grid.Column="1" Grid.RowSpan="2">
+                        <ListBox x:Name="ListOfMemebers">
+                            <ListBox.Background>
+                                <SolidColorBrush Color="White" Opacity="0.75"/>
+                            </ListBox.Background>
+                            <ListBox.Template>
+                                <ControlTemplate TargetType="ListBox">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" 
+                                            Margin="10,5,0,10" CornerRadius="10,10,10,10">
+                                        <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
+                                            <ItemsControl>
+                                                <StackPanel Margin="5" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"></StackPanel>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                        </ListBox>    
+                    </Grid>
+                    
+                    <!--#endregion-->
 
                     <!-- #region Instrumental grid -->
 
                     <Grid x:Name="Instruments" Grid.Column="0" Grid.Row="0">
 
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
                             <RowDefinition Height="60"></RowDefinition>
@@ -1424,6 +1449,18 @@
                                 </Grid>
 
                             </ToggleButton.Content>
+                        </ToggleButton>
+
+                        <ToggleButton x:Name="GroupMembers" Grid.Row="3" Style="{StaticResource ResourceKey=StyleOfInstrument_ToggleButton}"
+                                      Checked="GroupMembers_Checked" Unchecked="GroupMembers_Unchecked">
+                            <ToggleButton.Content>
+                                <Grid Width="50" Height="50">
+                                    <Ellipse Width="13" Height="16" Fill="Black" Margin="15,10,15,20"/>
+                                    <Border BorderBrush="Black" BorderThickness="1" Background="Black" 
+                                            Width="30" Height="10" Margin="5,17,5,0"
+                                            CornerRadius="25,25,0,0"/>
+                                </Grid>
+                            </ToggleButton.Content>    
                         </ToggleButton>
                     </Grid>
 

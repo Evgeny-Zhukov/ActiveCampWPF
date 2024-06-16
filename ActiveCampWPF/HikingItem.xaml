@@ -11,9 +11,54 @@
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </Border.Background>
-            <TextBox x:Name="Title" Margin="10,5,10,5" Background="Transparent" BorderThickness="0"
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     FontFamily="Times New Roman" FontSize="14" FontWeight="Bold"/>
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBox x:Name="Title" Margin="10,5,10,5" Background="Transparent" BorderThickness="0"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                         FontFamily="Times New Roman" FontSize="14" FontWeight="Bold"/>
+
+                <ToggleButton x:Name="ConsentWithParticipation" Grid.Column="1" Checked="ConsentWithParticipation_Checked">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border x:Name="ConsentWithParticipation_border">
+                                <Ellipse x:Name="ConsentWithParticipation_indicate" Width="10" Height="10" Fill="Black"></Ellipse>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="ConsentWithParticipation_border" Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="Blue" Opacity="0.9"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="ConsentWithParticipation_indicate" Property="Fill">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter TargetName="ConsentWithParticipation_border" Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="Transparent" Opacity="1"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="ConsentWithParticipation_indicate" Property="Fill">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="Black" Opacity="1"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
+                
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

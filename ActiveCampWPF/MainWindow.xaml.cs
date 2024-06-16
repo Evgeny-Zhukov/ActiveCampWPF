@@ -150,6 +150,10 @@ namespace ActiveCampWPF
             MainInfoAboutHiking.Visibility = Visibility.Hidden;
             MainInfoAboutHiking.IsEnabled = false;
 
+            GroupMembers.IsChecked = false;
+            ListOfMemebers.IsEnabled = false;
+            ListOfMemebers.Visibility = Visibility.Hidden;
+
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
@@ -218,6 +222,10 @@ namespace ActiveCampWPF
             MainInfoAboutHiking.IsEnabled = false;
             MainInfoAboutHiking.Visibility = Visibility.Hidden;
 
+            GroupMembers.IsChecked = false;
+            ListOfMemebers.IsEnabled = false;
+            ListOfMemebers.Visibility = Visibility.Hidden;
+
             TabControlOfEquipmentInfo.IsEnabled = true;
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
@@ -261,6 +269,10 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = false;
             TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
 
+            GroupMembers.IsChecked = false;
+            ListOfMemebers.IsEnabled = false;
+            ListOfMemebers.Visibility = Visibility.Hidden;
+
             MainInfoAboutHiking.IsEnabled = true;
             MainInfoAboutHiking.Visibility = Visibility.Visible;
 
@@ -276,6 +288,38 @@ namespace ActiveCampWPF
         {
             MainInfoAboutHiking.Visibility = Visibility.Hidden;
             MainInfoAboutHiking.IsEnabled = false;
+        }
+
+        private void GroupMembers_Checked(object sender, RoutedEventArgs e)
+        {
+
+            Food_ToggleButton.IsChecked = false;
+            TabControlOfFoodInfo.IsEnabled = false;
+            TabControlOfFoodInfo.Visibility = Visibility.Hidden;
+
+            Equipment.IsChecked = false;
+            TabControlOfEquipmentInfo.IsEnabled = false;
+            TabControlOfEquipmentInfo.Visibility = Visibility.Hidden;
+
+            this.HikingInfo.IsChecked = false;
+            MainInfoAboutHiking.IsEnabled = false;
+            MainInfoAboutHiking.Visibility = Visibility.Hidden;
+
+            ListOfMemebers.IsEnabled = true;
+            ListOfMemebers.Visibility = Visibility.Visible;
+
+            AddNewRecordInEquipmentTable.IsEnabled = false;
+            AddNewRecordInEquipmentTable.Visibility = Visibility.Hidden;
+
+            AddNewRecordInFoodTable.IsEnabled = false;
+            AddNewRecordInFoodTable.Visibility = Visibility.Hidden;
+
+        }
+
+        private void GroupMembers_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ListOfMemebers.IsEnabled = false;
+            ListOfMemebers.Visibility = Visibility.Hidden;
         }
 
         private void AddNewRecordInEquipmentTable_Click(object sender, RoutedEventArgs e)
@@ -302,7 +346,7 @@ namespace ActiveCampWPF
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         }
-
+        
         #region Filling_Events
         
         private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)

@@ -85,5 +85,13 @@ namespace ActiveCampWPF
                 m_Editing = false;
             }
         }
+
+        private void ConsentWithParticipation_Checked(object sender, RoutedEventArgs e)
+        {
+            //GroupManager group = new GroupManager();
+
+            //group.GetGroup(RouteItem.RouteId;
+            //RouteItem.RouteId
+        }
     }
 }
