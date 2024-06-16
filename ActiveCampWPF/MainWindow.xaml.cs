@@ -139,7 +139,22 @@ namespace ActiveCampWPF
 
         #region  Prepering_for_Hiking
 
+        private void UpdateActiveHiking()
+        {
+            .ItemsSource = null;
+            List<Route> routes = new List<Route> { };
+            RouteManager routeController = new RouteManager();
+            routes = routeController.GetAllRoutes();
 
+            List<hikingItem> source = new List<hikingItem> { };
+
+            foreach (Route route in routes)
+            {
+                source.Add(new hikingItem(route));
+            }
+
+            HikkingList.ItemsSource = source;
+        }
 
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
         { 

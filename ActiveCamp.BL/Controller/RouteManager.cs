@@ -163,6 +163,7 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
+
         public bool DeleteRoute(int routeId)
         {
             using (_connection)
@@ -179,6 +180,7 @@ namespace ActiveCamp.BL.Controller
                 return success;
             }
         }
+
         public List<GroupMembership> GetGroupMembershipsByRoute(int routeID)
         {
             List<GroupMembership> gms = new List<GroupMembership>();

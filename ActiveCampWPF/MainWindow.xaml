@@ -1005,7 +1005,7 @@
 
                     <!-- #region Main info about hikings -->
                     <Grid x:Name="MainInfoAboutHiking" Grid.Column="1" Grid.RowSpan="2" 
-                          IsEnabled="False" Visibility="Hidden">
+                          IsEnabled="True" Visibility="Visible">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
@@ -1293,7 +1293,7 @@
                     <!--#region Members of a group-->
 
                     <Grid x:Name="MembersOfFGroup" Grid.Column="1" Grid.RowSpan="2">
-                        <ListBox x:Name="ListOfMemebers">
+                        <ListBox x:Name="ListOfMemebers" Visibility="Hidden" IsEnabled="False">
                             <ListBox.Background>
                                 <SolidColorBrush Color="White" Opacity="0.75"/>
                             </ListBox.Background>
