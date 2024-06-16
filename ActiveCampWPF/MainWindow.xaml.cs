@@ -43,6 +43,8 @@ namespace ActiveCampWPF
         {
             DisableAllControlOfsections();
 
+            NewsList.SelectionMode = SelectionMode.Single;
+
             News_Section.Visibility = Visibility.Visible;
             News_Section.IsEnabled = true;
             
@@ -57,10 +59,14 @@ namespace ActiveCampWPF
         {
             DisableAllControlOfsections();
 
+            HikkingList.SelectionMode = SelectionMode.Single;
+
             Hikking_Section.Visibility = Visibility.Visible;
             Hikking_Section.IsEnabled = true;
 
             HeaderOfSection.Text = "Походы";
+
+            UpdateHikingList();
             CloseMenu();
             //Treatment of Hiking button.
         }
@@ -523,19 +529,21 @@ namespace ActiveCampWPF
 
         private void NewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsText;
             string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsTitle;
 
             Paragraph title = new Paragraph();
-            Paragraph mainBodyOfNews = new Paragraph();
             title.Inlines.Add(new Bold(new Run(newsTitle)));            
+
+            Paragraph mainBodyOfNews = new Paragraph();
             mainBodyOfNews.Inlines.Add(new Run(descriptionOfnews));
             
             List newsBodyList = new List();
-            newsBodyList.ListItems.Add(new ListItem(title));
             newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
 
             FlowDocument flowDocument = new FlowDocument();
+            flowDocument.Blocks.Add(title);
             flowDocument.Blocks.Add(newsBodyList);
 
             NewsDescription.Document = flowDocument;
@@ -635,6 +643,43 @@ namespace ActiveCampWPF
         #endregion
 
         #region Hiking
+
+        private void UpdateHikingList()
+        {
+            HikkingList.ItemsSource = null;
+            List<Route> routes = new List<Route> { };
+            RouteManager routeController = new RouteManager();
+            routes = routeController.GetRouteList();
+
+            List<hikingItem> source = new List<hikingItem> { };
+
+            foreach (Route route in routes)
+            {
+                source.Add(new hikingItem(route));
+            }
+
+            HikkingList.ItemsSource = source;
+        }
+        private void HikkingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
+
+            Paragraph title = new Paragraph();
+            title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
+
+            Paragraph mainBodyOfNews = new Paragraph();
+            mainBodyOfNews.Inlines.Add(new Run(routeInfo.Description));
+
+            List newsBodyList = new List();
+            newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
+
+            FlowDocument flowDocument = new FlowDocument();
+            flowDocument.Blocks.Add(title);
+            flowDocument.Blocks.Add(newsBodyList);
+
+            NewsDescription.Document = flowDocument;
+        }
+
         private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
         {
             BorderOfCancelAproovingform.Visibility = Visibility.Visible;
@@ -672,7 +717,7 @@ namespace ActiveCampWPF
         private void SaveAndContinue_Click(object sender, RoutedEventArgs e)
         {
             RouteManager routeManager = new RouteManager();
-            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, false);
+            Route NewRoute = new Route(ActiveCamp.BL.User.UserID, NameOfHiking.Text, DateTime.Parse(DateFrom.SelectedDate.ToString()), DateTime.Parse(DateTo.SelectedDate.ToString()), LittleDiscription.Text, PointFrom.Text, PointTo.Text, LevelOfHiking.Text, Int32.Parse(CountOfMember.Text), false);
             routeManager.AddRoute(NewRoute);
 
             DoubleAnimation openAnimation = new DoubleAnimation();
@@ -685,6 +730,8 @@ namespace ActiveCampWPF
 
             SavingSucssesfulMessage.BeginAnimation(OpacityProperty, openAnimation);
 
+            UpdateHikingList();
+
             NewHikkingFormBorder.Visibility = Visibility.Hidden;
             NewHikkingFormBorder.IsEnabled = false;
 
@@ -695,6 +742,7 @@ namespace ActiveCampWPF
             DateFrom.Text = "Выберете дату";
             LevelOfHiking.Text = "";
         }
+        
         #endregion
 
         #region AI Agent 

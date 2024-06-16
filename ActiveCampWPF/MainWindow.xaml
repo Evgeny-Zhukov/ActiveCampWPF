@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -243,11 +243,6 @@
                                 </Border>
                             </ControlTemplate>
                         </RichTextBox.Template>
-                        <FlowDocument>
-                            <Paragraph>
-                                <Run Text="check the vision"/>
-                            </Paragraph>
-                        </FlowDocument>
                     </RichTextBox>
 
                     <Grid x:Name="SortGridOfNewsSection">
@@ -388,9 +383,9 @@
                 <!--#endregion-->
 
                 <!-- #region Hikking Section-->
-
+                
                 <Grid x:Name="Hikking_Section" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
-                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
+                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
@@ -399,7 +394,7 @@
 
                     <!--#region Main form of hiking list-->
                     <ListBox x:Name="HikkingList" Grid.Column="0" Grid.Row="1" Margin="0,0,0,55"
-                             IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
+                             IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="HikkingList_SelectionChanged">
                         <ListBox.Background>
                             <SolidColorBrush Color="Azure" Opacity="0.25"></SolidColorBrush>
                         </ListBox.Background>
@@ -2259,7 +2254,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible" Focusable="True">
+              IsEnabled="False" Visibility="Hidden" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
