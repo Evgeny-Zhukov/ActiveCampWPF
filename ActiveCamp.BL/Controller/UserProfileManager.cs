@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ActiveCamp.BL.Controller
 {
-    internal class UserProfileManager
+    public class UserProfileManager
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
@@ -20,9 +20,10 @@ namespace ActiveCamp.BL.Controller
             _connection = dbContext.GetSqlConnection();
         }
 
-        public List<UserProfile> GetUserProfile(int UserID)
+        public UserProfile GetUserProfile(int UserID)
         {
-            List<UserProfile> userProfiles = new List<UserProfile>();
+            
+            UserProfile userProfile = new UserProfile();
 
             using (_connection)
             {
@@ -37,22 +38,17 @@ namespace ActiveCamp.BL.Controller
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
-                        {
-                            UserProfile userProfile = new UserProfile();
-                            {
-                                userProfile.UserID = Convert.ToInt32(reader["UserID"]);
-                                userProfile.FirstName = (reader["Name"].ToString());
-                                userProfile.SecondName = (reader["SecondName"].ToString());
-                                userProfile.Height = (Convert.ToInt32(reader["Height"]));
-                                userProfile.Weight = (Convert.ToInt32(reader["Weight"]));
-                                userProfile.ExperienceID = (Convert.ToInt32(reader["ExperienceID"]));
-                                userProfile.IllnessID = (Convert.ToInt32(reader["IllnessID"]));
-                                userProfile.EquipmentID = (Convert.ToInt32(reader["EquipmentID"]));
-                                userProfile.DishID = (Convert.ToInt32(reader["DishID"]));
-                            }
-                            userProfiles.Add(userProfile);
-                        }
+                        
+                        userProfile.UserID = Convert.ToInt32(reader["UserID"]);
+                        userProfile.FirstName = (reader["Name"].ToString());
+                        userProfile.SecondName = (reader["SecondName"].ToString());
+                        userProfile.Height = (Convert.ToInt32(reader["Height"]));
+                        userProfile.Weight = (Convert.ToInt32(reader["Weight"]));
+                        userProfile.ExperienceID = (Convert.ToInt32(reader["ExperienceID"]));
+                        userProfile.IllnessID = (Convert.ToInt32(reader["IllnessID"]));
+                        userProfile.EquipmentID = (Convert.ToInt32(reader["EquipmentID"]));
+                        userProfile.DishID = (Convert.ToInt32(reader["DishID"]));
+
                     }
 
                 }
@@ -61,7 +57,8 @@ namespace ActiveCamp.BL.Controller
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
-            return userProfiles;
+            
+            return userProfile;
         }
 
         public bool UpdateUserProfile(UserProfile userProfile)
