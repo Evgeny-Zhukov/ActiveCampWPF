@@ -15,7 +15,7 @@ namespace ActiveCamp.BL.Controller
             dbContext = new ActiveCampDbContext();
             _connection = dbContext.GetSqlConnection();
         }
-        public bool AddGroupDish(List<GroupEquipment> groupEquipment)
+        public bool AddGroupEquipment(List<GroupEquipment> groupEquipment)
         {
 
             using (_connection)
