@@ -90,6 +90,7 @@ namespace ActiveCampWPF
 
         private void HikkingClosing_Click(object sender, RoutedEventArgs e)
         {
+            this.RouteItem.IsCurrent = false;
             RouteManager manager = new RouteManager();
             manager.UpdateRoute(RouteItem);
         }

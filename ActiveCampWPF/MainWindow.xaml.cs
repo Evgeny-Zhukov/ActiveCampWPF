@@ -80,7 +80,11 @@ namespace ActiveCampWPF
 
             MainInfoAboutHiking.IsEnabled = true;
             MainInfoAboutHiking.Visibility = Visibility.Visible;
+            
             HikingInfo.IsChecked = true;
+
+            ActiveHikingList.SelectedIndex = 0;
+            ActiveHikingList.SelectionChanged += ActiveHikingList_SelectionChanged;
 
             HeaderOfSection.Text = "Подготовка";
 
@@ -160,6 +164,11 @@ namespace ActiveCampWPF
         
         private void ActiveHikingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Основная информация                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
 
             Paragraph title = new Paragraph();
@@ -192,6 +201,65 @@ namespace ActiveCampWPF
             flowDocument.Blocks.Add(newsBodyList);
 
             Discription_of_ActiveHikking.Document = flowDocument;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Заполненние данных по еде                                                                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if(ActiveCamp.BL.User.UserID == routeInfo.AuthorId)
+            {
+
+                AddNewRecordInFoodTable.IsEnabled = true;
+                AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+
+                List<> list = new List<>();
+
+                RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
+
+                _records.Add(new RecordOfFoodTable());
+
+                ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
+                if (cvRecords != null && cvRecords.CanGroup == true)
+                {
+                    cvRecords.GroupDescriptions.Clear();
+                    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
+                    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
+                }
+
+                FoodTable.ItemsSource = cvRecords;
+
+
+                RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
+
+                _recordPerPerson.Add(new RecordOfFoodTablePerPerson(0, "Zurab", "Kasha", 30, ""));
+
+
+                ICollectionView cvRecordOfFoodTablePerPerson = CollectionViewSource.GetDefaultView(FoodTablePerPerson.ItemsSource);
+                if (cvRecords != null && cvRecords.CanGroup == true)
+                {
+                    cvRecordOfFoodTablePerPerson.GroupDescriptions.Clear();
+                    cvRecordOfFoodTablePerPerson.GroupDescriptions.Add(new PropertyGroupDescription("Person"));
+                }
+
+                FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
+            }
+            else
+            {
+
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Заполненние данных по инвентарю                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Заполненние данных по участникам группы                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
         }
 
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -214,47 +282,6 @@ namespace ActiveCampWPF
 
             AddNewRecordInFoodTable.IsEnabled = true;
             AddNewRecordInFoodTable.Visibility = Visibility.Visible;
-
-            ////////////////////////////////////////////////////////////////////////////////////
-
-            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
-
-            _records.Add( new RecordOfFoodTable(0, "Ужин", "День 1", 1, "Сахар", "Пробное описание", 30, 150));
-            _records.Add( new RecordOfFoodTable(0, "Завтрак", "День 1", 2, "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(0, "Обед", "День 1", 1, "Гречка", "Пробное описание", 30, 300));
-            _records.Add( new RecordOfFoodTable(1, "Завтрак", "День 2", 1, "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(1, "Ужин", "День 2", 1, "Перловка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(2, "Завтрак", "День 3", 2, "Гречка", "Пробное описание", 40, 200));
-            _records.Add( new RecordOfFoodTable(2, "Обед", "День 3", 1, "Гречка", "Пробное описание", 40, 200));
-
-            ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
-            if(cvRecords != null && cvRecords.CanGroup == true)
-            {
-                cvRecords.GroupDescriptions.Clear();
-                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
-                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
-            }
-
-            FoodTable.ItemsSource = cvRecords;
-
-
-            RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
-
-            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(0, "Zurab", "Kasha", 30, ""));
-            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(1, "Bulvar", "Kasha", 40, ""));
-            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(2, "Kostya", "Grechka", 30, ""));
-            _recordPerPerson.Add(new RecordOfFoodTablePerPerson(3, "Miver", "Makaronyu", 40, ""));
-
-
-            ICollectionView cvRecordOfFoodTablePerPerson = CollectionViewSource.GetDefaultView(FoodTablePerPerson.ItemsSource);
-            if (cvRecords != null && cvRecords.CanGroup == true)
-            {
-                cvRecordOfFoodTablePerPerson.GroupDescriptions.Clear();
-                cvRecordOfFoodTablePerPerson.GroupDescriptions.Add(new PropertyGroupDescription("Person"));
-            }
-
-            FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
-
 
         }
 

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
 {
+
     public class RecordOfUserEquipment : INotifyPropertyChanged, IEditableObject
     {
         private int _userEquipmentID;
@@ -174,6 +175,7 @@ namespace ActiveCamp.BL.Model
         private string m_foodTime;
         private string m_foodName;
         private int m_ownerID;
+        private string m_ownerName;
         private string m_day;
         private int m_amountPerPerson;
         private int m_amountPerGroup;
@@ -206,6 +208,20 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+
+        public string OwnerName
+        {
+            get { return this.m_ownerName;}
+            set
+            {
+                if(value != this.m_ownerName)
+                {
+                    this.m_ownerName = value;
+                    NotifyPropertyChanged(nameof(OwnerName));
+                }
+            }
+        }
+
         public string FoodTime
         {
             get { return this.m_foodTime;}
@@ -279,10 +295,11 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-        public RecordOfFoodTable(int id, string foodTime, string day = null, int ownerID = 0, string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
+        public RecordOfFoodTable(int id, string foodTime, string day = null, int ownerID = 0, string ownerName = "", string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
         {
             this.m_id = id;
             this.m_ownerID = ownerID;
+            this.m_ownerName = ownerName;
             this.m_foodTime = foodTime;
             this.m_day = day;
             this.m_foodName = foodName;
@@ -478,6 +495,5 @@ namespace ActiveCamp.BL.Model
     {
 
     }
-
 
 }

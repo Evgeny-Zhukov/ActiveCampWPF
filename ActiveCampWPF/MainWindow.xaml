@@ -1059,6 +1059,7 @@
 
                         <TabItem Header="Расчет пищи" Style="{StaticResource ResourceKey=StyleForTabItem}">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                
                                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
 
                                     <Grid.RowDefinitions>
@@ -1132,7 +1133,9 @@
                                         </DataGrid.RowStyle>
 
                                     </DataGrid>
+                                
                                 </Grid>
+                            
                             </ScrollViewer>
                         </TabItem>
 
