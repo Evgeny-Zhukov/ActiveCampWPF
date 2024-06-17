@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="290">
     <Grid>
-        <Border CornerRadius="20">
+        <Border CornerRadius="20" Width="290">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </Border.Background>

@@ -1966,26 +1966,31 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40"></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition ></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label x:Name="SettingSectionHeader" Content="Настройки" Grid.Row="0"
                                    VerticalAlignment="Bottom" HorizontalAlignment="Center"
                                    FontFamily="TimesNewRomans" FontSize="28" FontWeight="Bold"/>
-                            <ScrollViewer Grid.Row="1" Margin="7"
+                            <ScrollViewer Grid.Row="1" Margin="7,7,7,7"
                                           HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="110"></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="150"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
+                                        <RowDefinition Height="60"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     
                                     <!-- Avatar -->
                                     
                                     <Image Grid.Row="0" Grid.Column="0" x:Name="AvavtarImage_Setting"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                           Height="100" Width="100" >
+                                           Height="100" Width="100" Margin="0,0,0,40">
                                         <Image.Source>
                                             <DrawingImage>
                                                 <DrawingImage.Drawing>
@@ -2010,13 +2015,112 @@
                                         </Image.Source>
                                     </Image>
 
+                                    <Label Content="Персональные данные"
+                                           Width="450" Height="40" VerticalAlignment="Bottom"
+                                           FontFamily="Times new roman" FontSize="24" FontWeight="Heavy"
+                                           BorderBrush="Black" BorderThickness="0,0,0,2"></Label>
+                                    
+                                    <!-- First name -->
+
+                                    <Label Grid.Row="1" Width="60" Content="Имя:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <TextBox x:Name="FirstName" Grid.Row="1" 
+                                             Width="360" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="80,0,0,15"
+                                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                                             Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                             FontFamily="Times new roman" FontSize="20" FontWeight="Normal"/>
+                                    
+                                    <!-- Second name -->
+
+                                    <Label Grid.Row="2" Width="100" Content="Фамилия:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <TextBox x:Name="SecondName" Grid.Row="2" 
+                                             Width="320" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="120,0,0,15"
+                                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                                             Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                             FontFamily="Times new roman" FontSize="20" FontWeight="Normal"/>
+
+                                    <!-- Contact info -->
+
+                                    <Label Grid.Row="3" Width="80" Content="E-mail:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <TextBox x:Name="Email" Grid.Row="3" 
+                                             Width="340" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,15"
+                                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                                             Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                             FontFamily="Times new roman" FontSize="20" FontWeight="Normal"/>
+
+                                    <!-- Illness -->
+
+                                    <Label Grid.Row="4" Width="100" Content="Болезни:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <ComboBox Grid.Row="4" Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                              Text="Отметьте болезни" Width="320" Height="50" Margin="0,0,20,0"
+                                              HorizontalAlignment="Right"/>
+                                    
+                                    
+                                    <!-- Weight -->
+
+                                    <Label Grid.Row="5" Width="60" Content="Вес:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <TextBox x:Name="UserWeight" Grid.Row="5" 
+                                             Width="360" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="80,0,0,15"
+                                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                                             Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                             FontFamily="Times new roman" FontSize="20" FontWeight="Normal"/>
+
+                                    
+                                    <!-- Height -->
+
+                                    <Label Grid.Row="6" Width="60" Content="Рост:"
+                                           FontFamily="Times new roman" FontSize="20" FontWeight="Normal"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+
+                                    <TextBox x:Name="UserHeight" Grid.Row="6" 
+                                             Width="360" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="80,0,0,15"
+                                             VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+                                             Background="Transparent" BorderBrush="Black" BorderThickness="0,0,0,2"
+                                             FontFamily="Times new roman" FontSize="20" FontWeight="Normal"/>
+
+
                                 </Grid>
                             </ScrollViewer>
 
+                            <Button x:Name="SaveSetings" Grid.Row="3" Content="Сохранить">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="SaveSetings_border" Width="200" Height="40"
+                                                VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"
+                                                BorderBrush="Black" BorderThickness="2" CornerRadius="10">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="White" Opacity="0.8"/>
+                                            </Border.Background>
+                                            <ContentPresenter Content="{TemplateBinding Content}"
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger>
+                                                
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            
                         </Grid>
                     </Border>
 
-
+                       
                 </Grid>
 
                 <!--#endregion-->
