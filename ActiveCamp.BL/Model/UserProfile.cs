@@ -213,7 +213,7 @@ namespace ActiveCamp.BL.Model
         /// <param name="height">Рост пользователя</param>
         /// <param name="gender">Пол пользователя</param>
         /// <param name="experience">Опыт пользователя</param>
-        public UserProfile(int userId, string firstName, string secondName, float weight, float height)
+        public UserProfile(int userId, string firstName, string secondName, float weight, float height )
         {
             this._userID = userId;
             this._firstName = firstName;

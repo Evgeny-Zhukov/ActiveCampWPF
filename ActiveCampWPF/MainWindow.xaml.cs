@@ -265,16 +265,16 @@ namespace ActiveCampWPF
 
             RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
 
-            UserManager userManager = new UserManager();
+            UserProfileManager userManager = new UserProfileManager();
 
             foreach(GroupMembership membership in groupMemberships)
             {
 
-                User user = userManager.GetUserById(membership.UserId);
+                UserProfile user = userManager.GetUserProfile(membership.UserId);
 
                 foreach (GroupDish dish in dishList)
                 {
-                    _recordPerPerson.Add(new RecordOfFoodTablePerPerson(user.Username, dish.DishName, dish.Weigth1, dish.Comment));
+                    _recordPerPerson.Add(new RecordOfFoodTablePerPerson(user.FirstName + user.SecondName, dish.DishName, dish.Weigth1, dish.Comment));
                 }
             }
 
