@@ -141,10 +141,10 @@ namespace ActiveCampWPF
 
         private void UpdateActiveHiking()
         {
-            .ItemsSource = null;
+            ActiveHikingList.ItemsSource = null;
             List<Route> routes = new List<Route> { };
             RouteManager routeController = new RouteManager();
-            routes = routeController.GetAllRoutes();
+            routes = routeController.;
 
             List<hikingItem> source = new List<hikingItem> { };
 
