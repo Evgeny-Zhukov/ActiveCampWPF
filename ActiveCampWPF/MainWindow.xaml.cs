@@ -224,47 +224,56 @@ namespace ActiveCampWPF
 
         private void UpdateFoodTabControl(Route routeInfo)
         {
-            if (ActiveCamp.BL.User.UserID == routeInfo.AuthorId)
+
+            AddNewRecordInFoodTable.IsEnabled = true;
+            AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+
+            GroupManager manager = new GroupManager();
+            Group group = manager.GetGroup(routeInfo.RouteId);
+
+            GroupDishManager dishManager = new GroupDishManager();
+            List<GroupDish> dishList = new List<GroupDish>();
+            dishList = dishManager.GetGroupDishById(routeInfo.RouteId);
+
+            RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
+            
+            foreach(GroupDish dish in dishList)
             {
-
-                AddNewRecordInFoodTable.IsEnabled = true;
-                AddNewRecordInFoodTable.Visibility = Visibility.Visible;
-
-                //List<> list = new List<>();
-
-                RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
-
-                _records.Add(new RecordOfFoodTable());
-
-                ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
-                if (cvRecords != null && cvRecords.CanGroup == true)
-                {
-                    cvRecords.GroupDescriptions.Clear();
-                    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
-                    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
-                }
-
-                FoodTable.ItemsSource = cvRecords;
-
-
-                RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
-
-                _recordPerPerson.Add(new RecordOfFoodTablePerPerson(0, "Zurab", "Kasha", 30, ""));
-
-
-                ICollectionView cvRecordOfFoodTablePerPerson = CollectionViewSource.GetDefaultView(FoodTablePerPerson.ItemsSource);
-                if (cvRecords != null && cvRecords.CanGroup == true)
-                {
-                    cvRecordOfFoodTablePerPerson.GroupDescriptions.Clear();
-                    cvRecordOfFoodTablePerPerson.GroupDescriptions.Add(new PropertyGroupDescription("Person"));
-                }
-
-                FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
+                _records.Add(new RecordOfFoodTable(dish.DishTime, dish.RouteDay.ToString(), dish.DishName, dish.Comment, dish.WeigthAll, dish.Weigth1));
             }
-            else
+
+            ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
+            if (cvRecords != null && cvRecords.CanGroup == true)
             {
-
+                cvRecords.GroupDescriptions.Clear();
+                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
+                cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
             }
+
+            FoodTable.ItemsSource = cvRecords;
+
+            GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
+            List<GroupMembership> groupMemberships = new List<GroupMembership>();
+            groupMemberships = groupMembershipManager.GetGroupMembership();
+
+            RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
+
+            foreach(GroupMembership membership in groupMemberships)
+            {
+                foreach (GroupDish dish in dishList)
+                {
+                    _recordPerPerson.Add(new RecordOfFoodTablePerPerson("Zurab", "Kasha", 30, ""));
+                }
+            }
+
+            ICollectionView cvRecordOfFoodTablePerPerson = CollectionViewSource.GetDefaultView(FoodTablePerPerson.ItemsSource);
+            if (cvRecords != null && cvRecords.CanGroup == true)
+            {
+                cvRecordOfFoodTablePerPerson.GroupDescriptions.Clear();
+                cvRecordOfFoodTablePerPerson.GroupDescriptions.Add(new PropertyGroupDescription("Person"));
+            }
+
+            FoodTablePerPerson.ItemsSource = cvRecordOfFoodTablePerPerson;
         }
 
         private void UpdateEquipmentTabControl(Route routeInfo)

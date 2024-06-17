@@ -47,7 +47,6 @@ namespace ActiveCamp.BL.Controller
         public List<GroupMembership> GetGroupMembership(int GroupId)
         {
             List<GroupMembership> memberships = new List<GroupMembership>();
-
             using (_connection)
             { 
                 string query = "SELECT * FROM GroupMemberships WHERE GroupId = @GroupId";

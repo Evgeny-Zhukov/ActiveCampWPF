@@ -171,11 +171,8 @@ namespace ActiveCamp.BL.Model
     public class RecordOfFoodTable : INotifyPropertyChanged, IEditableObject
     {
 
-        private int m_id;
         private string m_foodTime;
         private string m_foodName;
-        private int m_ownerID;
-        private string m_ownerName;
         private string m_day;
         private int m_amountPerPerson;
         private int m_amountPerGroup;
@@ -184,43 +181,6 @@ namespace ActiveCamp.BL.Model
         private RecordOfFoodTable temp_Record = null;
         private bool m_Editing = false;
 
-        public int Id 
-        { 
-            get { return this.m_id;} 
-            set 
-            { 
-                if (value != this.m_id)
-                {
-                    this.m_id = value;
-                    NotifyPropertyChanged("id");
-                }
-            } 
-        }
-        public int OwnerID
-        {
-            get { return this.m_ownerID;}
-            set
-            {
-                if(this.m_ownerID != value)
-                {
-                    this.m_ownerID = value;
-                    NotifyPropertyChanged("OwnerID");
-                }
-            }
-        }
-
-        public string OwnerName
-        {
-            get { return this.m_ownerName;}
-            set
-            {
-                if(value != this.m_ownerName)
-                {
-                    this.m_ownerName = value;
-                    NotifyPropertyChanged(nameof(OwnerName));
-                }
-            }
-        }
 
         public string FoodTime
         {
@@ -295,11 +255,8 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-        public RecordOfFoodTable(int id, string foodTime, string day = null, int ownerID = 0, string ownerName = "", string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
+        public RecordOfFoodTable(string foodTime = "", string day = null, string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
         {
-            this.m_id = id;
-            this.m_ownerID = ownerID;
-            this.m_ownerName = ownerName;
             this.m_foodTime = foodTime;
             this.m_day = day;
             this.m_foodName = foodName;
@@ -330,7 +287,6 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
-                this.Id = temp_Record.Id;
                 this.Day = temp_Record.Day;
                 this.FoodTime = temp_Record.FoodTime;
                 this.FoodName = temp_Record.FoodName;
@@ -359,7 +315,6 @@ namespace ActiveCamp.BL.Model
 
     public class RecordOfFoodTablePerPerson : INotifyPropertyChanged, IEditableObject
     {
-        private int _id;
         private string _person;
         private string _FoodName;
         private int m_amountPerPerson;
@@ -369,9 +324,8 @@ namespace ActiveCamp.BL.Model
         private RecordOfFoodTablePerPerson temp_Record = null;
         private bool m_Editing = false;
 
-        public RecordOfFoodTablePerPerson(int id, string Person, string FoodName, int AmaountPerPerson, string Description)
+        public RecordOfFoodTablePerPerson(string Person, string FoodName, int AmaountPerPerson, string Description)
         {
-            this._id = id;
             this._person = Person;
             this._FoodName = FoodName;
             this.m_amountPerPerson = AmaountPerPerson;
@@ -381,19 +335,6 @@ namespace ActiveCamp.BL.Model
         public RecordOfFoodTablePerPerson()
         {
 
-        }
-
-        public int Id
-        {
-            get { return this._id; }
-            set
-            {
-                if (this._id != value)
-                {
-                    this._id = value;
-                    NotifyPropertyChanged("Id");
-                }
-            }
         }
 
         public string Person
@@ -471,7 +412,6 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
-                this._id = temp_Record.Id;
                 this._person = temp_Record.Person;
                 this._FoodName = temp_Record.Foodname;
                 this.m_amountPerPerson = temp_Record.AmountPerPerson;
