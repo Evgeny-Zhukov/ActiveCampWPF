@@ -36,6 +36,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@MemberCount", route.MemberCount);
                 command.Parameters.AddWithValue("@IsPrivate", route.IsPrivate);
+                command.Parameters.AddWithValue("@IsCurrent", route.IsCurrent);
 
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
@@ -75,6 +76,7 @@ namespace ActiveCamp.BL.Controller
                                 route.Difficulty = (reader["Difficulty"].ToString());
                                 route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
+                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
                             }
                             routes.Add(route);
                         }
@@ -119,6 +121,7 @@ namespace ActiveCamp.BL.Controller
                                 route.Difficulty = (reader["Difficulty"].ToString());
                                 route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
+                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
                             }
                             routes.Add(route);
                         }
@@ -131,7 +134,55 @@ namespace ActiveCamp.BL.Controller
             }
             return routes;
         }
+        public List<Route> GetAllUserRoutes(int userID)
+        {
+            List<Route> routes = new List<Route>();
 
+            using (_connection)
+            {
+
+                SqlCommand command = new SqlCommand("GetAllUserRoutes", _connection);
+                command.Parameters.AddWithValue("@UserID", userID);
+                try
+                {
+                    _connection.Open();
+                    
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                    successParameter.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(successParameter);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Route route = new Route();
+                            {
+                                route.RouteId = Convert.ToInt32(reader["RouteId"]);
+                                route.AuthorId = Convert.ToInt32(reader["AuthorID"]);
+                                route.Duration = Convert.ToInt32(reader["DurationInDays"]);
+                                route.RouteName = (reader["RouteName"].ToString());
+                                route.Description = (reader["Description"].ToString());
+                                route.Length = Convert.ToInt32(reader["LengthInKm"]);
+                                route.StartDate = (Convert.ToDateTime(reader["StartDate"]));
+                                route.EndDate = (Convert.ToDateTime(reader["EndDate"]));
+                                route.StartPoint = (reader["StartPoint"].ToString());
+                                route.EndPoint = (reader["EndPoint"].ToString());
+                                route.Difficulty = (reader["Difficulty"].ToString());
+                                route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
+                                route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
+                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
+                            }
+                            routes.Add(route);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return routes;
+        }
         public bool UpdateRoute(Route route)
         {
             using (_connection)
@@ -156,6 +207,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.AddWithValue("@Difficulty", route.Difficulty);
                 command.Parameters.AddWithValue("@MemberCount", route.MemberCount);
                 command.Parameters.AddWithValue("@IsPrivate", route.IsPrivate);
+                command.Parameters.AddWithValue("@IsCurrent", route.IsCurrent);
                 
                 _connection.Open();
                 command.ExecuteNonQuery();

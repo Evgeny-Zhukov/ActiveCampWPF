@@ -21,6 +21,7 @@ namespace ActiveCamp.BL.Model
         private int _memberCount;
         private int _authorID;
         private bool _isPrivate;
+        private bool _isCurrent;
 
         /// <summary>
         /// Получает идентификатор маршрута
@@ -228,6 +229,18 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+        public bool IsCurrent
+        {
+            get { return this._isCurrent; }
+            set
+            {
+                if (value != this._isCurrent)
+                {
+                    this._isCurrent = value;
+                    NotifyPropertyChanged("IsCurrent");
+                }
+            }
+        }
         #endregion
         public Route()
         {
@@ -243,7 +256,7 @@ namespace ActiveCamp.BL.Model
         /// <param name="endPoint">Конечная точка</param>
         /// <param name="difficulty">Сложность</param>
         /// <param name="isPrivate">Приватный маршрут</param>
-        public Route(int authorID, string routeName, DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, double lenght, string difficulty,  int memberCount, bool isPrivate)
+        public Route(int authorID, string routeName, DateTime startDate, DateTime endDate, string description, string startPoint, string endPoint, double lenght, string difficulty,  int memberCount, bool isPrivate, bool isCurrent = true)
         {
             this._routeName = routeName;
             this._authorID = authorID;
@@ -256,6 +269,7 @@ namespace ActiveCamp.BL.Model
             this._difficulty = difficulty;
             this._memberCount = memberCount;
             this._isPrivate = isPrivate;
+            this._isCurrent = isCurrent;
         }
 
         private Route temp_Record = null;
@@ -293,6 +307,7 @@ namespace ActiveCamp.BL.Model
                 _difficulty = temp_Record.Difficulty;
                 _memberCount = temp_Record.MemberCount;
                 _authorID = temp_Record.AuthorId;
+                _isCurrent = temp_Record.IsCurrent;
 
                 m_Editing = false;
             }
