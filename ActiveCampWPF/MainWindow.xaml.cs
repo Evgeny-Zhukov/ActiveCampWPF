@@ -83,6 +83,8 @@ namespace ActiveCampWPF
             HikingInfo.IsChecked = true;
 
             HeaderOfSection.Text = "Подготовка";
+
+            UpdateActiveHiking();
             CloseMenu();
             
             //Treatment of Equipment button.
@@ -144,16 +146,52 @@ namespace ActiveCampWPF
             ActiveHikingList.ItemsSource = null;
             List<Route> routes = new List<Route> { };
             RouteManager routeController = new RouteManager();
-            routes = routeController.;
+            routes = routeController.GetAllUserRoutes(ActiveCamp.BL.User.UserID);
 
-            List<hikingItem> source = new List<hikingItem> { };
+            List<ActiveHikingItem> source = new List<ActiveHikingItem> { };
 
             foreach (Route route in routes)
             {
-                source.Add(new hikingItem(route));
+                source.Add(new ActiveHikingItem(route));
             }
 
-            HikkingList.ItemsSource = source;
+            ActiveHikingList.ItemsSource = source;
+        }
+        
+        private void ActiveHikingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
+
+            Paragraph title = new Paragraph();
+            title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
+
+            Paragraph description = new Paragraph();
+            description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
+
+            Paragraph dates = new Paragraph();
+            dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
+
+            Paragraph tripInfo = new Paragraph();
+            tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
+
+            Paragraph level = new Paragraph();
+            level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
+
+            Paragraph count = new Paragraph();
+            count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
+
+            List newsBodyList = new List();
+            newsBodyList.ListItems.Add(new ListItem(level));
+            newsBodyList.ListItems.Add(new ListItem(description));
+            newsBodyList.ListItems.Add(new ListItem(dates));
+            newsBodyList.ListItems.Add(new ListItem(tripInfo));
+            newsBodyList.ListItems.Add(new ListItem(count));
+
+            FlowDocument flowDocument = new FlowDocument();
+            flowDocument.Blocks.Add(title);
+            flowDocument.Blocks.Add(newsBodyList);
+
+            Discription_of_ActiveHikking.Document = flowDocument;
         }
 
         private void Food_ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -740,8 +778,9 @@ namespace ActiveCampWPF
             flowDocument.Blocks.Add(title);
             flowDocument.Blocks.Add(newsBodyList);
 
-            NewsDescription.Document = flowDocument;
+            Discription_of_Hikking.Document = flowDocument;
         }
+        
 
         private void BackFromCreatingWindow_Click(object sender, RoutedEventArgs e)
         {

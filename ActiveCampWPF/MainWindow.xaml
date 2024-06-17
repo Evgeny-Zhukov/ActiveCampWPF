@@ -1012,7 +1012,7 @@
                         </Grid.ColumnDefinitions>
 
                         <ListBox x:Name="ActiveHikingList" Grid.Column="0" Grid.Row="1" Margin="5,0,0,5"
-                                 IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="NewsList_SelectionChanged">
+                                 IsEnabled="{Binding IsEnabled, ElementName=Background_of_window}" SelectionChanged="ActiveHikingList_SelectionChanged">
                             <ListBox.Background>
                                 <SolidColorBrush Color="White" Opacity="0.25"></SolidColorBrush>
                             </ListBox.Background>

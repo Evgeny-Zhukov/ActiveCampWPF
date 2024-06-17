@@ -76,7 +76,7 @@ namespace ActiveCamp.BL.Controller
                                 route.Difficulty = (reader["Difficulty"].ToString());
                                 route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
-                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
+                                route.IsCurrent = Convert.ToBoolean(reader["IsCurrent"]);
                             }
                             routes.Add(route);
                         }
@@ -121,7 +121,7 @@ namespace ActiveCamp.BL.Controller
                                 route.Difficulty = (reader["Difficulty"].ToString());
                                 route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
-                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
+                                route.IsCurrent = Convert.ToBoolean(reader["IsCurrent"]);
                             }
                             routes.Add(route);
                         }
@@ -170,7 +170,7 @@ namespace ActiveCamp.BL.Controller
                                 route.Difficulty = (reader["Difficulty"].ToString());
                                 route.MemberCount = Convert.ToInt32(reader["MemberCount"]);
                                 route.IsPrivate = Convert.ToBoolean(reader["IsPrivate"]);
-                                route.IsPrivate = Convert.ToBoolean(reader["IsCurrent"]);
+                                route.IsCurrent = Convert.ToBoolean(reader["IsCurrent"]);
                             }
                             routes.Add(route);
                         }
