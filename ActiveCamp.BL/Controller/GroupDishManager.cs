@@ -20,40 +20,46 @@ namespace ActiveCamp.BL.Controller
             using (_connection)
             {
                 _connection.Open();
-                SqlCommand command = new SqlCommand("AddGroupDish", _connection);
-                command.CommandType = CommandType.StoredProcedure;
-                SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
-                successParameter.Direction = ParameterDirection.Output;
-
-                try
+                using (SqlCommand command = new SqlCommand("AddGroupDish", _connection))
                 {
-                    _connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
+                    successParameter.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(successParameter);
+
+                    try
                     {
                         foreach (var item in groupDish)
                         {
-                            command.Parameters.AddWithValue("@GroupID", item.GroupID);
-                            command.Parameters.AddWithValue("@RouteDay", item.RouteDay);
-                            command.Parameters.AddWithValue("@DishName", item.DishName);
-                            command.Parameters.AddWithValue("@Weigth1", item.Weigth1);
-                            command.Parameters.AddWithValue("@WeigthAll", item.WeigthAll);
-                            command.Parameters.AddWithValue("@DishTime", item.DishTime);
-                            command.Parameters.AddWithValue("@Comment", item.Comment);
+                            command.Parameters.Clear();
+
+                            command.Parameters.Add(new SqlParameter("@GroupID", item.GroupID));
+                            command.Parameters.Add(new SqlParameter("@RouteDay", item.RouteDay));
+                            command.Parameters.Add(new SqlParameter("@DishName", item.DishName));
+                            command.Parameters.Add(new SqlParameter("@Weigth1", item.Weigth1));
+                            command.Parameters.Add(new SqlParameter("@WeigthAll", item.WeigthAll));
+                            command.Parameters.Add(new SqlParameter("@DishTime", item.DishTime));
+                            command.Parameters.Add(new SqlParameter("@Comment", item.Comment));
+
+                            command.Parameters.Add(successParameter);
+
                             command.ExecuteNonQuery();
                         }
+
+                        bool success = (bool)successParameter.Value;
+                        return success;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        return false;
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                }
-                
-
-                command.ExecuteNonQuery();
-                bool success = (bool)successParameter.Value;
-                return success;
             }
         }
+
+
         public List<GroupDish> GetGroupDishById(int groupID)
         {
             List<GroupDish> routes = new List<GroupDish>();
@@ -61,7 +67,6 @@ namespace ActiveCamp.BL.Controller
             using (_connection)
             {
                 string query = "SELECT * FROM GroupDish WHERE GroupID = @GroupID";
-
                 SqlCommand command = new SqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@GroupID", groupID);
 
@@ -72,17 +77,17 @@ namespace ActiveCamp.BL.Controller
                     {
                         while (reader.Read())
                         {
-                            GroupDish route = new GroupDish();
+                            GroupDish route = new GroupDish
                             {
-                                route.GroupDishID = Convert.ToInt32(reader["GroupDishID"]);
-                                route.GroupID = Convert.ToInt32(reader["GroupID"]);
-                                route.RouteDay = Convert.ToInt32(reader["RouteDay"]);
-                                route.DishName = reader["DishName"].ToString();
-                                route.Weigth1 = Convert.ToInt32(reader["Weigth1"]);
-                                route.WeigthAll = Convert.ToInt32(reader["WeigthAll"]);
-                                route.DishTime = reader["DishTime"].ToString();
-                                route.Comment = reader["Comment"].ToString();
-                            }
+                                GroupDishID = Convert.ToInt32(reader["GroupDishID"]),
+                                GroupID = Convert.ToInt32(reader["GroupID"]),
+                                RouteDay = Convert.ToInt32(reader["RouteDay"]),
+                                DishName = reader["DishName"].ToString(),
+                                Weigth1 = Convert.ToInt32(reader["Weigth1"]),
+                                WeigthAll = Convert.ToInt32(reader["WeigthAll"]),
+                                DishTime = reader["DishTime"].ToString(),
+                                Comment = reader["Comment"].ToString()
+                            };
                             routes.Add(route);
                         }
                     }
@@ -94,6 +99,7 @@ namespace ActiveCamp.BL.Controller
             }
             return routes;
         }
+
         public bool UpdateGroupDish(GroupDish groupDish)
         {
             using (_connection)
@@ -105,6 +111,7 @@ namespace ActiveCamp.BL.Controller
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
+                command.Parameters.AddWithValue("@GroupDishID", groupDish.GroupDishID);
                 command.Parameters.AddWithValue("@GroupID", groupDish.GroupID);
                 command.Parameters.AddWithValue("@RouteDay", groupDish.RouteDay);
                 command.Parameters.AddWithValue("@DishName", groupDish.DishName);

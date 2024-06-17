@@ -114,7 +114,7 @@ namespace ActiveCamp.BL.Model
             }
         }
         public GroupDish() { }
-        public GroupDish(int groupID, int routeDay,int weigth1, string dishTime, string comment = "", string dishName = "")
+        public GroupDish(int groupID, int routeDay,int weigth1, string dishTime, string comment = " ", string dishName = " ")
         {
             this._groupID = groupID;
             this._routeDay = routeDay;
@@ -122,6 +122,7 @@ namespace ActiveCamp.BL.Model
             this._dishTime = dishTime;
             this._comment = comment;
             this._dishTime = dishTime;
+            this._dishName = dishName;
         }
         private GroupDish temp_Record = null;
         private bool m_Editing = false;
