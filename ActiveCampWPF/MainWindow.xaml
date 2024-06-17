@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
+                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -1930,7 +1930,7 @@
                 <!--#region Settings Section -->
 
                 <Grid x:Name="Settings" Grid.RowSpan="2" Grid.ColumnSpan="3" 
-                      Visibility="Hidden" Focusable="False">
+                      Visibility="Visible" Focusable="True">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -1980,7 +1980,9 @@
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition></RowDefinition>
                                     </Grid.RowDefinitions>
-
+                                    
+                                    <!-- Avatar -->
+                                    
                                     <Image Grid.Row="0" Grid.Column="0" x:Name="AvavtarImage_Setting"
                                            HorizontalAlignment="Center" VerticalAlignment="Center" 
                                            Height="100" Width="100" >
@@ -2296,7 +2298,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="True" Visibility="Visible" Focusable="True">
+              IsEnabled="False" Visibility="Hidden" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>

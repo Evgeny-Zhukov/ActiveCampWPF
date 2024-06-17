@@ -51,6 +51,9 @@ namespace ActiveCampWPF
             
             HeaderOfSection.Text = "Новости";
 
+            NewsList.SelectedIndex = 0;
+            NewsList.SelectionChanged += NewsList_SelectionChanged;
+
             UpdateNewsList();
             CloseMenu();
             //Treatment of News button.
@@ -66,6 +69,9 @@ namespace ActiveCampWPF
             Hikking_Section.IsEnabled = true;
 
             HeaderOfSection.Text = "Походы";
+
+            HikkingList.SelectedIndex = 0;
+            HikkingList.SelectionChanged += HikkingList_SelectionChanged;
 
             UpdateHikingList();
             CloseMenu();
@@ -170,7 +176,7 @@ namespace ActiveCampWPF
             // Основная информация                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
+            Route routeInfo = ((ActiveCampWPF.hikingItem)ActiveHikingList.SelectedValue).RouteItem;
 
             Paragraph title = new Paragraph();
             title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
