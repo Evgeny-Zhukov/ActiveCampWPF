@@ -51,8 +51,8 @@ namespace ActiveCampWPF
             
             HeaderOfSection.Text = "Новости";
 
-            NewsList.SelectedIndex = 0;
-            NewsList.SelectionChanged += NewsList_SelectionChanged;
+            //NewsList.SelectedIndex = 0;
+            //NewsList.SelectionChanged += NewsList_SelectionChanged;
 
             UpdateNewsList();
             CloseMenu();
@@ -70,8 +70,8 @@ namespace ActiveCampWPF
 
             HeaderOfSection.Text = "Походы";
 
-            HikkingList.SelectedIndex = 0;
-            HikkingList.SelectionChanged += HikkingList_SelectionChanged;
+            //HikkingList.SelectedIndex = 0;
+            //HikkingList.SelectionChanged += HikkingList_SelectionChanged;
 
             UpdateHikingList();
             CloseMenu();
@@ -90,8 +90,8 @@ namespace ActiveCampWPF
             
             HikingInfo.IsChecked = true;
 
-            ActiveHikingList.SelectedIndex = 0;
-            ActiveHikingList.SelectionChanged += ActiveHikingList_SelectionChanged;
+            //ActiveHikingList.SelectedIndex = 0;
+            //ActiveHikingList.SelectionChanged += ActiveHikingList_SelectionChanged;
 
             HeaderOfSection.Text = "Подготовка";
 
