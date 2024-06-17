@@ -206,7 +206,25 @@ namespace ActiveCampWPF
             // Заполненние данных по еде                                                                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if(ActiveCamp.BL.User.UserID == routeInfo.AuthorId)
+            UpdateFoodTabControl(routeInfo);
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Заполненние данных по инвентарю                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            UpdateEquipmentTabControl(routeInfo);
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Заполненние данных по участникам группы                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            UpdateGroupMembershipList(routeInfo);
+
+        }
+
+        private void UpdateFoodTabControl(Route routeInfo)
+        {
+            if (ActiveCamp.BL.User.UserID == routeInfo.AuthorId)
             {
 
                 AddNewRecordInFoodTable.IsEnabled = true;
@@ -247,18 +265,27 @@ namespace ActiveCampWPF
             {
 
             }
+        }
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Заполненние данных по инвентарю                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void UpdateEquipmentTabControl(Route routeInfo)
+        {
+            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
 
+            equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, "Zurav", ""));
+            equipments.Add(new RecordOfUserEquipment(2, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
 
+            ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
+            if (cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
+            {
+                cvRecordOfEquipment.GroupDescriptions.Clear();
+                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerID"));
+            }
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Заполненние данных по участникам группы                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            EquipmentTable.ItemsSource = cvRecordOfEquipment;
+        }
 
-
+        private void UpdateGroupMembershipList(Route routeInfo)
+        {
 
         }
 
@@ -280,8 +307,13 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
 
-            AddNewRecordInFoodTable.IsEnabled = true;
-            AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+            UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+
+            if(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+            {
+                AddNewRecordInFoodTable.IsEnabled = true;
+                AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+            }
 
         }
 
@@ -314,21 +346,6 @@ namespace ActiveCampWPF
             AddNewRecordInEquipmentTable.IsEnabled = true;
             AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
 
-            ////////////////////////////////////////////////////////////////////////////////////
-
-            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
-            
-            equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, "Zurav", ""));
-            equipments.Add(new RecordOfUserEquipment(2, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
-
-            ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
-            if(cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
-            {
-                cvRecordOfEquipment.GroupDescriptions.Clear();
-                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerID"));
-            }
-
-            EquipmentTable.ItemsSource = cvRecordOfEquipment;
         }
         
         private void Equipment_Unchecked(object sender, RoutedEventArgs e)
