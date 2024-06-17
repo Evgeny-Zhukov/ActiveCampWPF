@@ -36,18 +36,16 @@ namespace ActiveCamp.BL.Model
                 command.Parameters.AddWithValue("@InvitationLink", group.InvitationLink);
                 command.Parameters.AddWithValue("@AuthorID", group.AuthorID);
 
-                SqlParameter groupIdParam = new SqlParameter("@GroupID", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                command.Parameters.Add(groupIdParam);
+                SqlParameter groupIDParameter = new SqlParameter("@GroupID", SqlDbType.Int);
+                groupIDParameter.Direction = ParameterDirection.Output;
+                command.Parameters.Add(groupIDParameter);
+
 
                 _connection.Open();
                 command.ExecuteNonQuery();
+                group.GroupId = (int)groupIDParameter.Value;
 
-                int id = (int)command.Parameters["@GroupID"].Value;
-
-                return id;
+                return group.GroupId;
             }
         }
 

@@ -124,7 +124,7 @@ namespace ActiveCamp.BL.Model
         /// <param name="groupSupervisor">Руководитель группы</param>
         /// <param name="userIds">Идентификаторы пользователей</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public Group(int routeId, string groupName, string invitationLink, int authorID)
+        public Group(int routeId, int authorID, string groupName = "", string invitationLink = "")
         {
             this._routeID = routeId;
             this._groupName = groupName;

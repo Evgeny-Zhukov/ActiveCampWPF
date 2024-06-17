@@ -12,10 +12,10 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            GroupMembershipManager gm = new GroupMembershipManager();
-            List<GroupMembership> groups = new List<GroupMembership>();
-            groups = gm.GetGroupMembership(7);
-            
+            Group group = new Group(17, 34, "", "");
+            GroupManager manager = new GroupManager();
+            manager.CreateGroup(group);
+
 
         }
     }
