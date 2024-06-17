@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ActiveCamp.BL.Model
@@ -153,5 +154,10 @@ namespace ActiveCamp.BL.Model
                 m_Editing = false;
             }
         }
+    }
+
+    public class GroupEquipments : ObservableCollection<GroupEquipment>
+    {
+
     }
 }

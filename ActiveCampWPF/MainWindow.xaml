@@ -1568,7 +1568,7 @@
                 <!--#region "Add new record" forms -->
 
                 <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" 
-                      IsEnabled="True" Visibility="Hidden">
+                      IsEnabled="True" Visibility="Visible">
 
                     <Grid.Resources>
 
@@ -1750,7 +1750,7 @@
 
                     <!--#region FormForFoodTableFilling-->
 
-                    <Grid x:Name="AddNewRecordForFoodTable" Visibility="Hidden" IsEnabled="False">
+                    <Grid x:Name="AddNewRecordForFoodTable" Visibility="Visible" IsEnabled="True">
 
                         <Grid.ColumnDefinitions>
 
@@ -1849,10 +1849,7 @@
                         </Grid.ColumnDefinitions>
 
                         <ListBox x:Name="EquipmentOwnersList" Grid.RowSpan="2" Margin="15,15,0,15"
-                                 Style="{StaticResource StyleForListInFillingForms}"/>
-
-                        <!--<Button x:Name="AddNewOwner" Grid.Row="1" Content="Добавить информацию по участникам" Margin="15,0,0,15"
-                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>-->
+                                 Style="{StaticResource StyleForListInFillingForms}" SelectionChanged="EquipmentOwnersList_SelectionChanged"/>
 
                         <Border x:Name="EquipmentDataFillingForm" Grid.Column="1" Grid.RowSpan="2" 
                                 CornerRadius="0,10,10,0" BorderThickness="0" Margin="0,15,15,15">
@@ -1886,15 +1883,20 @@
                                         </Grid.RowDefinitions>
 
                                         <DataGrid x:Name="DataGridForFillingEquipmentData" 
-                                                  AutoGenerateColumns="False"
+                                                  AutoGenerateColumns="True"
                                                   Background="White"
                                                   CanUserReorderColumns="False"
-                                                  CanUserAddRows="True" Margin="5">
+                                                  CanUserAddRows="True" 
+                                                  IsManipulationEnabled="True"
+                                                  IsReadOnly="False"
+                                                  Margin="5">
+                                            
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Наименование вещи" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                                <DataGridTextColumn Header="Количество" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                                <DataGridTextColumn Header="Вес/шт." Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Наименование вещи" Width="150" Binding="{Binding Path=EquipmentName}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Количество" Width="150" Binding="{Binding Path=Count}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Вес/шт." Width="150" Binding="{Binding Path=Weigth}"></DataGridTextColumn>
                                             </DataGrid.Columns>
+                                        
                                         </DataGrid>
 
                                         <Button x:Name="AddNewRowForFillingEquipmentData" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"

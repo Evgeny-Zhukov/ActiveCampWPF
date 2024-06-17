@@ -10,6 +10,7 @@ using System.Windows.Data;
 using ActiveCamp.BL.Controller;
 using System.Collections.Generic;
 using System.Windows.Documents;
+using ActiveCamp;
 
 namespace ActiveCampWPF
 {
@@ -360,12 +361,12 @@ namespace ActiveCampWPF
             if(ActiveHikingList.SelectedValue != null)
             {
                 UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
-            }
 
-            if(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
-            {
-                AddNewRecordInFoodTable.IsEnabled = true;
-                AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+                {
+                    AddNewRecordInFoodTable.IsEnabled = true;
+                    AddNewRecordInFoodTable.Visibility = Visibility.Visible;
+                }
             }
 
         }
@@ -399,12 +400,12 @@ namespace ActiveCampWPF
             if(ActiveHikingList.SelectedValue != null)
             {
                 UpdateEquipmentTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
-            }
 
-            if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
-            {
-                AddNewRecordInEquipmentTable.IsEnabled = true;
-                AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
+                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+                {
+                    AddNewRecordInEquipmentTable.IsEnabled = true;
+                    AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
+                }
             }
 
         }
@@ -493,6 +494,21 @@ namespace ActiveCampWPF
             AddNewRecordForEquipmentTable.Visibility= Visibility.Visible;
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+            EquipmentOwnersList.ItemsSource = null;
+
+            List<NewRecordOfEquiment> equipments = new List<NewRecordOfEquiment>();
+
+            GroupManager groupManager = new GroupManager();
+            Group group = groupManager.GetGroup(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.RouteId);
+
+            GroupMembershipManager manager = new GroupMembershipManager();
+            List<GroupMembership> memberships = manager.GetGroupMembership(group.GroupId);
+
+            foreach(GroupMembership membershipItem in memberships)
+            {
+                equipments.Add(new NewRecordOfEquiment(membershipItem));
+            }
+
         }
 
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
@@ -529,15 +545,7 @@ namespace ActiveCampWPF
 
         }
 
-        private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        
-        private void RemoveRowFromEquipmentData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void AddNewRowForFillingFoodData_DataGrid_Click(object sender, RoutedEventArgs e)
         {
@@ -547,17 +555,6 @@ namespace ActiveCampWPF
         private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
-        {
-
-            MenuButton.IsEnabled = true;
-            MenuButton.Visibility = Visibility.Visible;
-
-            HeaderOfSection.IsEnabled = true;
-            HeaderOfSection.Visibility = Visibility.Visible;
-        
         }
 
         private void SaveChangesOfFoodData_Click(object sender, RoutedEventArgs e)
@@ -577,6 +574,75 @@ namespace ActiveCampWPF
             if(SV != null)
             {
                 ((ActiveCampWPF.DayElement)SV).RecordOfFoodTable = new RecordOfFoodTable();
+            }
+        }
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
+        {
+
+            //GroupEquipments equipments = (GroupEquipments)this.Resources["GroupEquipment"];
+
+            //equipments.Add(new GroupEquipment());
+
+            //ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
+            //if (cvRecords != null && cvRecords.CanGroup == true)
+            //{
+            //    cvRecords.GroupDescriptions.Clear();
+            //    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
+            //    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
+            //}
+
+            DataGridForFillingEquipmentData.Items.Add(new GroupEquipment());
+            
+            //DataGridForFillingEquipmentData.ItemsSource = cvRecords;
+
+        }
+
+        private void RemoveRowFromEquipmentData_Click(object sender, RoutedEventArgs e)
+        {
+            DataGridForFillingEquipmentData.Items.RemoveAt(DataGridForFillingEquipmentData.SelectedIndex);
+        }
+        
+        private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
+        {
+
+            MenuButton.IsEnabled = true;
+            MenuButton.Visibility = Visibility.Visible;
+
+            HeaderOfSection.IsEnabled = true;
+            HeaderOfSection.Visibility = Visibility.Visible;
+        
+            GroupEquipmentManager manager = new GroupEquipmentManager();
+
+            List<GroupEquipment> groupEquipment = new List<GroupEquipment> { };
+
+            foreach(NewRecordOfEquiment equiment in EquipmentOwnersList.Items)
+            {
+
+                GroupMembership membership = equiment.Membership;
+
+                foreach (GroupEquipment equipment in equiment.Data.Items)
+                {
+                    equipment.UserID = membership.UserId;
+                    groupEquipment.Add(equipment);
+                }
+            }
+
+            manager.AddGroupEquipment(groupEquipment);
+
+        }
+        
+        private void EquipmentOwnersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.RemovedItems[0] != null)
+            {
+                ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingEquipmentData.ItemsSource;
+            }
+            if(EquipmentOwnersList.SelectedValue != null)
+            {
+                DataGridForFillingEquipmentData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedValue).Data.ItemsSource;
             }
         }
         

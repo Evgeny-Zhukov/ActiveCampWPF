@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="ActiveCampWPF.NewRecordOfEquiment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ActiveCampWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="290">
+    <Grid>
+        <Border CornerRadius="20" BorderThickness="0">
+            <Border.Background>
+                <SolidColorBrush Color="White" Opacity="0.9"/>
+            </Border.Background>
+            <Grid>
+                <!--<Grid.ColumnDefinitions>-->
+                    <!--<ColumnDefinition/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>-->
+                <TextBox x:Name="Title" Background="Transparent"  BorderThickness="0" Margin="8"/>
+            </Grid>
+        </Border>            
+    </Grid>
+</UserControl>
