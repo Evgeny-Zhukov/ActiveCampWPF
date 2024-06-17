@@ -254,15 +254,20 @@ namespace ActiveCampWPF
 
             GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
             List<GroupMembership> groupMemberships = new List<GroupMembership>();
-            groupMemberships = groupMembershipManager.GetGroupMembership();
+            groupMemberships = groupMembershipManager.GetGroupMembership(group.GroupId);
 
             RecordsOfFoodTablePerPerson _recordPerPerson = (RecordsOfFoodTablePerPerson)this.Resources["recordsOfFoodTablePerPerson"];
 
+            UserManager userManager = new UserManager();
+
             foreach(GroupMembership membership in groupMemberships)
             {
+
+                User user = userManager.GetUserById(membership.UserId);
+
                 foreach (GroupDish dish in dishList)
                 {
-                    _recordPerPerson.Add(new RecordOfFoodTablePerPerson("Zurab", "Kasha", 30, ""));
+                    _recordPerPerson.Add(new RecordOfFoodTablePerPerson(user.Username, dish.DishName, dish.Weigth1, dish.Comment));
                 }
             }
 
@@ -280,8 +285,8 @@ namespace ActiveCampWPF
         {
             RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
 
-            equipments.Add(new RecordOfUserEquipment(1, "Отверетка", 1, 1.0, 1, "Zurav", ""));
-            equipments.Add(new RecordOfUserEquipment(2, "Зажигалка", 1, 0.4, 1, "Zurav", ""));
+            equipments.Add(new RecordOfUserEquipment("Отверетка", 1, 1.0, ""));
+            equipments.Add(new RecordOfUserEquipment("Зажигалка", 1, 0.4, ""));
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if (cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
@@ -295,6 +300,24 @@ namespace ActiveCampWPF
 
         private void UpdateGroupMembershipList(Route routeInfo)
         {
+            GroupManager manager = new GroupManager();
+            Group group = manager.GetGroup(routeInfo.RouteId);
+
+            GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
+            List<GroupMembership> groupMemberships = new List<GroupMembership>();
+            groupMemberships = groupMembershipManager.GetGroupMembership(group.GroupId);
+            
+            List<HikingMembersItem> hikingMembersItems = new List<HikingMembersItem>();
+
+            UserProfileManager userProfileManager = new UserProfileManager();
+
+            foreach (GroupMembership membership in groupMemberships)
+            {
+                UserProfile profile = userProfileManager.GetUserProfile(membership.UserId);
+                hikingMembersItems.Add(new HikingMembersItem(membership, profile));
+            }
+
+            ListOfMemebers.ItemsSource = hikingMembersItems;
 
         }
 

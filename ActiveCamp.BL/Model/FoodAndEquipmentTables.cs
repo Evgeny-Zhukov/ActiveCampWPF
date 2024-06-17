@@ -7,27 +7,12 @@ namespace ActiveCamp.BL.Model
 
     public class RecordOfUserEquipment : INotifyPropertyChanged, IEditableObject
     {
-        private int _userEquipmentID;
+
         private string _equipmentName;
         private int _countOfEquipment;
         private double _wightOfEquipment;
         private string _equipmentDescription;
-        private int _ownerID;
-        private string _ownerName;
 
-        public int UserEquipmentID
-        {
-            get { return this._userEquipmentID; }
-            set
-            {
-                if (value != this._userEquipmentID)
-                {
-                    this._userEquipmentID = value;
-                    NotifyPropertyChanged("UserEquipmentID");
-                    
-                }
-            }
-        }
         public string EquipmentName
         {
             get { return this._equipmentName; }
@@ -67,32 +52,6 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-        public int OwnerID
-        {
-            get { return _ownerID; }
-            set
-            {
-                if (value != this._ownerID)
-                {
-                    this._ownerID = value;
-                    NotifyPropertyChanged("OwnerID");
-                }
-            }
-        }
-
-        public string OwnerName
-        {
-            get { return this._ownerName; }
-            set
-            {
-                if(value != this._ownerName)
-                {
-                    this._ownerName = value;
-                    NotifyPropertyChanged("OwnerName");
-                }
-            }
-        }
-
         public string EquipmentDescription
         {
             get { return _equipmentDescription; }
@@ -108,14 +67,11 @@ namespace ActiveCamp.BL.Model
 
         public RecordOfUserEquipment() { }
 
-        public RecordOfUserEquipment(int userEquipmentID, string equipmentName, int countOfEquipment, double wightOfEquipment, int ownerID, string ownerName,string equipmentDescription)
+        public RecordOfUserEquipment(string equipmentName, int countOfEquipment, double wightOfEquipment, string equipmentDescription)
         {
-            this._userEquipmentID = userEquipmentID;
             this._equipmentName = equipmentName;
             this._countOfEquipment = countOfEquipment;
             this._wightOfEquipment = wightOfEquipment;
-            this._ownerID = ownerID;
-            this._ownerName = ownerName;
             this._equipmentDescription = equipmentDescription;
         }
 
@@ -142,11 +98,8 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
-                _ownerID = temp_Record.OwnerID;
-                _ownerName = temp_Record.OwnerName;
                 _equipmentName = temp_Record.EquipmentName;
                 _equipmentDescription = temp_Record.EquipmentDescription;
-                _userEquipmentID = temp_Record.UserEquipmentID;
                 _wightOfEquipment = temp_Record.WightOfEquipment;
                 _countOfEquipment = temp_Record.CountOfEquipment;
 
