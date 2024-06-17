@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
+                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -858,7 +858,7 @@
 
                 <Grid x:Name="PreperingForHiking" 
                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                      Visibility="Visible" IsEnabled="True" Margin="0,0,55,0">
+                      Visibility="Hidden" IsEnabled="False" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -1568,7 +1568,7 @@
                 <!--#region "Add new record" forms -->
 
                 <Grid x:Name="CreateNewRecord_grid" Grid.ColumnSpan="3" Grid.RowSpan="3" 
-                      IsEnabled="True" Visibility="Visible">
+                      IsEnabled="False" Visibility="Hidden">
 
                     <Grid.Resources>
 
@@ -1750,7 +1750,7 @@
 
                     <!--#region FormForFoodTableFilling-->
 
-                    <Grid x:Name="AddNewRecordForFoodTable" Visibility="Visible" IsEnabled="True">
+                    <Grid x:Name="AddNewRecordForFoodTable" Visibility="Hidden" IsEnabled="False">
 
                         <Grid.ColumnDefinitions>
 
@@ -1836,7 +1836,7 @@
 
                     <!--#region FormForEquipmentTableFilling -->
 
-                    <Grid x:Name="AddNewRecordForEquipmentTable" Visibility="Visible" IsEnabled="True">
+                    <Grid x:Name="AddNewRecordForEquipmentTable" Visibility="Hidden" IsEnabled="False">
 
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -2296,7 +2296,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="False" Visibility="Hidden" Focusable="True">
+              IsEnabled="True" Visibility="Visible" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
