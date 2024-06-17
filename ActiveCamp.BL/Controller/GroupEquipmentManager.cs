@@ -140,7 +140,7 @@ namespace ActiveCamp.BL.Controller
         }
 
 
-        public bool DeleteGroupDish(int groupEquipmentID)
+        public bool DeleteGroupEquipment(int groupEquipmentID)
         {
             using (_connection)
             {
