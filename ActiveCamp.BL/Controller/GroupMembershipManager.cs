@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ActiveCamp.BL.Controller
 {
@@ -43,16 +44,16 @@ namespace ActiveCamp.BL.Controller
             }
         }
 
-        public List<GroupMembership> GetGroupMembership(int AuthorId)
+        public List<GroupMembership> GetGroupMembership(int GroupId)
         {
             List<GroupMembership> memberships = new List<GroupMembership>();
 
             using (_connection)
             { 
-                string query = "SELECT * FROM GroupMemberships WHERE UserId = @UserId";
+                string query = "SELECT * FROM GroupMemberships WHERE GroupId = @GroupId";
 
                 SqlCommand command = new SqlCommand(query, _connection);
-                command.Parameters.AddWithValue("@UserId", AuthorId);
+                command.Parameters.AddWithValue("@GroupId", GroupId);
 
                 try
                 {
@@ -64,6 +65,7 @@ namespace ActiveCamp.BL.Controller
                         {
                             GroupMembership membership = new GroupMembership();
                             {
+                                membership.GroupMembershipID = Convert.ToInt32(reader["GroupMembershipID"]);
                                 membership.UserId = Convert.ToInt32(reader["UserId"]);
                                 membership.GroupId = Convert.ToInt32(reader["GroupId"]);
                                 membership.JoinedDate = Convert.ToDateTime(reader["JoinedDate"]);
