@@ -356,8 +356,11 @@ namespace ActiveCampWPF
 
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
-
-            UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+            
+            if(ActiveHikingList.SelectedValue != null)
+            {
+                UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+            }
 
             if(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
             {
@@ -393,8 +396,16 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = true;
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
-            AddNewRecordInEquipmentTable.IsEnabled = true;
-            AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
+            if(ActiveHikingList.SelectedValue != null)
+            {
+                UpdateEquipmentTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+            }
+
+            if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+            {
+                AddNewRecordInEquipmentTable.IsEnabled = true;
+                AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
+            }
 
         }
         
