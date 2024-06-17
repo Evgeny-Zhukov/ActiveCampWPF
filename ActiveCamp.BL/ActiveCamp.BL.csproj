@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controller\ExperienceManager.cs" />
     <Compile Include="Controller\FavorNewsManager.cs" />
+    <Compile Include="Controller\GroupDishManager.cs" />
     <Compile Include="Controller\GroupMembershipManager.cs" />
     <Compile Include="Controller\NewsManager.cs" />
     <Compile Include="Controller\POST_ExchangeWithAIModel.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Model\Equipment.cs" />
     <Compile Include="Model\Experience.cs" />
     <Compile Include="Model\FavorNews.cs" />
+    <Compile Include="Model\GroupDish.cs" />
     <Compile Include="Model\GroupMembership.cs" />
     <Compile Include="Controller\GroupManager.cs" />
     <Compile Include="Model\FoodAndEquipmentTables.cs" />

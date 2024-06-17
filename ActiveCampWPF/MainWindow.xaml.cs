@@ -212,7 +212,7 @@ namespace ActiveCampWPF
                 AddNewRecordInFoodTable.IsEnabled = true;
                 AddNewRecordInFoodTable.Visibility = Visibility.Visible;
 
-                List<> list = new List<>();
+                //List<> list = new List<>();
 
                 RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
 
