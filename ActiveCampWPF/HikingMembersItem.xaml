@@ -56,15 +56,17 @@
                     </Style>
                 </Grid.Resources>
 
+                <TextBox x:Name="Title" BorderThickness="0" Background="Transparent" Margin="6,10,5,10"/>
+
                 <Button x:Name="AgreeButton" Grid.Column="1" Style="{StaticResource StyleForButton}" Click="AgreeButton_Click">
-                    <Path Stroke="Black" StrokeThickness="2" Fill="Black">
+                    <Path Stroke="Black" StrokeThickness="5" Fill="Black">
                         <Path.Data>
                             <PathGeometry>
-                                <PathFigure StartPoint="30,10" >
-                                    <LineSegment Point="30,50"/>
+                                <PathFigure StartPoint="24,7" >
+                                    <LineSegment Point="24,40"/>
                                 </PathFigure>
-                                <PathFigure StartPoint="10,30" >
-                                    <LineSegment Point="50,30"/>
+                                <PathFigure StartPoint="7,24" >
+                                    <LineSegment Point="40,24"/>
                                 </PathFigure>
                             </PathGeometry>
                         </Path.Data>
@@ -72,11 +74,11 @@
                 </Button>
 
                 <Button x:Name="disagreeButton" Grid.Column="2" Style="{StaticResource StyleForButton}" Click="disagreeButton_Click">
-                    <Path Stroke="Black" StrokeThickness="2">
+                    <Path Stroke="Black" StrokeThickness="5">
                         <Path.Data>
                             <PathGeometry>
-                                <PathFigure StartPoint="10,30" >
-                                    <LineSegment Point="50,30"/>
+                                <PathFigure StartPoint="7,24" >
+                                    <LineSegment Point="40,24"/>
                                 </PathFigure>
                             </PathGeometry>
                         </Path.Data>

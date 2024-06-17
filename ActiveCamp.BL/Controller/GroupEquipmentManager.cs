@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace ActiveCamp.BL.Controller
 {
-    internal class GroupEquipmentManager
+    public class GroupEquipmentManager
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,7 @@ namespace ActiveCampWPF
             InitializeComponent();
             _membership = membership;
             _profile = userProfile;
+            Title.Text = userProfile.FirstName + " " + userProfile.SecondName;
         }
 
         private HikingMembersItem temp_Record = null;

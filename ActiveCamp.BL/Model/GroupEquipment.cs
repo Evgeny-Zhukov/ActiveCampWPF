@@ -11,6 +11,7 @@ namespace ActiveCamp.BL.Model
         private string _equipmentName;
         private int _weigth;
         private int _count;
+        private string _description;
 
 
         public int GroupEquipmentID
@@ -86,6 +87,20 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
+
+        public string Description
+        {
+            get => this._description;
+            set
+            {
+                if(value != this._description)
+                {
+                    this._description = value;
+                    NotifyPropertyChanged("Description");
+                }
+            }
+        }
+
         public GroupEquipment() { }
         public GroupEquipment(int groupID, int userID, int weigth, int count = 0, string equipmentName = "")
         {
@@ -123,6 +138,7 @@ namespace ActiveCamp.BL.Model
                 _userID = temp_Record.UserID;
                 _weigth = temp_Record.Weigth;
                 _count = temp_Record.Count;
+                _description = temp_Record.Description;
                 _equipmentName = temp_Record.EquipmentName;
 
 

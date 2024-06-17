@@ -283,16 +283,34 @@ namespace ActiveCampWPF
 
         private void UpdateEquipmentTabControl(Route routeInfo)
         {
-            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
 
-            equipments.Add(new RecordOfUserEquipment("Отверетка", 1, 1.0, ""));
-            equipments.Add(new RecordOfUserEquipment("Зажигалка", 1, 0.4, ""));
+            RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
+            
+            GroupManager manager = new GroupManager();
+            Group group = manager.GetGroup(routeInfo.RouteId);
+
+            GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
+            List<GroupMembership> groupMemberships = new List<GroupMembership>();
+            groupMemberships = groupMembershipManager.GetGroupMembership(group.GroupId);
+
+            GroupEquipmentManager equipmentsManager = new GroupEquipmentManager();
+            List<GroupEquipment> groupEquipments = new List<GroupEquipment>();
+            groupEquipments = equipmentsManager.GetGroupEquipmentById(group.GroupId);
+
+            UserProfileManager userProfileManager = new UserProfileManager();
+
+            foreach (GroupEquipment equipment in groupEquipments)
+            {
+                UserProfile profile = userProfileManager.GetUserProfile(equipment.UserID);
+                equipments.Add(new RecordOfUserEquipment(profile.FirstName, equipment.EquipmentName, equipment.Count, equipment.Weigth, equipment.Description));
+                
+            }
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
             if (cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
             {
                 cvRecordOfEquipment.GroupDescriptions.Clear();
-                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerID"));
+                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerName"));
             }
 
             EquipmentTable.ItemsSource = cvRecordOfEquipment;
