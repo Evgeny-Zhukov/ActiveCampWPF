@@ -1085,6 +1085,7 @@ namespace ActiveCampWPF
             {
                 userProfile.FirstName = FirstName.Text;
                 userProfile.SecondName = SecondName.Text;
+                userProfile.Email = Email.Text;
                 userProfile.Weight = float.Parse(UserWeight.Text);
                 userProfile.Height = float.Parse(UserHeight.Text);
             }

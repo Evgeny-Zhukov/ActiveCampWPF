@@ -14,7 +14,6 @@ namespace ActiveCamp.CMD
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
             UserProfileManager userProfileManager = new UserProfileManager();
             string email = "123@mail.com";
-            userProfileManager.Vali
 
 
         }
