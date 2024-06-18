@@ -8,11 +8,43 @@ namespace ActiveCamp.BL.Model
     public class RecordOfUserEquipment : INotifyPropertyChanged, IEditableObject
     {
 
-        private string _ownerName;
+        private int _userID;
+        private string _userName;
         private string _equipmentName;
-        private int _countOfEquipment;
-        private double _wightOfEquipment;
-        private string _equipmentDescription;
+        private int _weigth;
+        private int _count;
+        private string _description;
+
+
+
+        public int UserID
+        {
+            get { return this._userID; }
+            set
+            {
+                if (value != this._userID)
+                {
+                    this._userID = value;
+                    NotifyPropertyChanged("UserID");
+                }
+            }
+        }
+
+        public string UserName
+        {
+            get
+            {
+                return _userName;
+            }
+            set
+            {
+                if(_userName != value)
+                {
+                    _userName = value;
+                    NotifyPropertyChanged(nameof(UserName));
+                }
+            }
+        }
 
         public string EquipmentName
         {
@@ -26,68 +58,52 @@ namespace ActiveCamp.BL.Model
                 }
             }
         }
-
-        public int CountOfEquipment
+        public int Weigth
         {
-            get
-            {
-                return this._countOfEquipment;
-            }
+            get { return this._weigth; }
             set
             {
-                if (this._countOfEquipment != value)
+                if (value != this._weigth)
                 {
-                    this._countOfEquipment = value;
-                    NotifyPropertyChanged("CountOfEquipment");
+                    this._weigth = value;
+                    NotifyPropertyChanged("Weigth");
+                }
+            }
+        }
+        public int Count
+        {
+            get { return this._count; }
+            set
+            {
+                if (value != this._count)
+                {
+                    this._count = value;
+                    NotifyPropertyChanged("Count");
                 }
             }
         }
 
-        public double WightOfEquipment
+        public string Description
         {
-            get { return this._wightOfEquipment; }
+            get => this._description;
             set
             {
-                this._wightOfEquipment = value;
-                NotifyPropertyChanged("WightOfEquipment");
-            }
-        }
-
-        public string EquipmentDescription
-        {
-            get { return _equipmentDescription; }
-            set
-            {
-                if (value != this._equipmentDescription)
+                if (value != this._description)
                 {
-                    this._equipmentDescription = value;
-                    NotifyPropertyChanged("EquipmentDescription");
-                }
-            }
-        }
-
-        public string OwnerName
-        {
-            get => _ownerName;
-            set
-            {
-                if(value != _ownerName)
-                {
-                    _ownerName = value;
-                    NotifyPropertyChanged(nameof(OwnerName));
+                    this._description = value;
+                    NotifyPropertyChanged("Description");
                 }
             }
         }
 
         public RecordOfUserEquipment() { }
-
-        public RecordOfUserEquipment(string ownerName, string equipmentName, int countOfEquipment, double wightOfEquipment, string equipmentDescription)
+        public RecordOfUserEquipment(string userName, int userID, int weigth, int count = 0, string equipmentName = "")
         {
-            this._ownerName = ownerName;
+            this._userName = userName;
+            this._userID = userID;
+            this._weigth = weigth;
+            this._count = count;
             this._equipmentName = equipmentName;
-            this._countOfEquipment = countOfEquipment;
-            this._wightOfEquipment = wightOfEquipment;
-            this._equipmentDescription = equipmentDescription;
         }
 
         private RecordOfUserEquipment temp_Record = null;
@@ -113,10 +129,11 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
+                _userName = temp_Record.UserName;
                 _equipmentName = temp_Record.EquipmentName;
-                _equipmentDescription = temp_Record.EquipmentDescription;
-                _wightOfEquipment = temp_Record.WightOfEquipment;
-                _countOfEquipment = temp_Record.CountOfEquipment;
+                _description = temp_Record.Description;
+                _weigth = temp_Record.Weigth;
+                _count = temp_Record.Count;
 
                 m_Editing = false;
             }

@@ -52,10 +52,10 @@ namespace ActiveCampWPF
             
             HeaderOfSection.Text = "Новости";
 
-            //NewsList.SelectedIndex = 0;
-            //NewsList.SelectionChanged += NewsList_SelectionChanged;
-
             UpdateNewsList();
+            NewsList.SelectedItem = NewsList.Items[NewsList.Items.Count-1];
+            NewsList.SelectionChanged += NewsList_SelectionChanged;
+
             CloseMenu();
             //Treatment of News button.
         }
@@ -71,10 +71,13 @@ namespace ActiveCampWPF
 
             HeaderOfSection.Text = "Походы";
 
-            //HikkingList.SelectedIndex = 0;
-            //HikkingList.SelectionChanged += HikkingList_SelectionChanged;
-
             UpdateHikingList();
+            if(HikkingList.Items.Count > 0)
+            {
+                HikkingList.SelectedItem = HikkingList.Items[HikkingList.Items.Count - 1];
+                HikkingList.SelectionChanged += HikkingList_SelectionChanged;
+            }
+
             CloseMenu();
             //Treatment of Hiking button.
         }
@@ -91,12 +94,15 @@ namespace ActiveCampWPF
             
             HikingInfo.IsChecked = true;
 
-            //ActiveHikingList.SelectedIndex = 0;
-            //ActiveHikingList.SelectionChanged += ActiveHikingList_SelectionChanged;
+            UpdateActiveHiking();
+            if(ActiveHikingList.Items.Count > 0)
+            {
+                ActiveHikingList.SelectedItem = ActiveHikingList.Items[ActiveHikingList.Items.Count - 1];
+                ActiveHikingList.SelectionChanged += ActiveHikingList_SelectionChanged;
+            }
 
             HeaderOfSection.Text = "Подготовка";
 
-            UpdateActiveHiking();
             CloseMenu();
             
             //Treatment of Equipment button.
@@ -171,70 +177,67 @@ namespace ActiveCampWPF
         
         private void ActiveHikingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(ActiveHikingList.SelectedItem != null)
+            {
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Основная информация                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Основная информация                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                Route routeInfo = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem;
 
-            Route routeInfo = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem;
+                Paragraph title = new Paragraph();
+                title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
 
-            Paragraph title = new Paragraph();
-            title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
+                Paragraph description = new Paragraph();
+                description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
 
-            Paragraph description = new Paragraph();
-            description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
+                Paragraph dates = new Paragraph();
+                dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
 
-            Paragraph dates = new Paragraph();
-            dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
+                Paragraph tripInfo = new Paragraph();
+                tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
 
-            Paragraph tripInfo = new Paragraph();
-            tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
+                Paragraph level = new Paragraph();
+                level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
 
-            Paragraph level = new Paragraph();
-            level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
+                Paragraph count = new Paragraph();
+                count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
 
-            Paragraph count = new Paragraph();
-            count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
+                List newsBodyList = new List();
+                newsBodyList.ListItems.Add(new ListItem(level));
+                newsBodyList.ListItems.Add(new ListItem(description));
+                newsBodyList.ListItems.Add(new ListItem(dates));
+                newsBodyList.ListItems.Add(new ListItem(tripInfo));
+                newsBodyList.ListItems.Add(new ListItem(count));
 
-            List newsBodyList = new List();
-            newsBodyList.ListItems.Add(new ListItem(level));
-            newsBodyList.ListItems.Add(new ListItem(description));
-            newsBodyList.ListItems.Add(new ListItem(dates));
-            newsBodyList.ListItems.Add(new ListItem(tripInfo));
-            newsBodyList.ListItems.Add(new ListItem(count));
+                FlowDocument flowDocument = new FlowDocument();
+                flowDocument.Blocks.Add(title);
+                flowDocument.Blocks.Add(newsBodyList);
 
-            FlowDocument flowDocument = new FlowDocument();
-            flowDocument.Blocks.Add(title);
-            flowDocument.Blocks.Add(newsBodyList);
+                Discription_of_ActiveHikking.Document = flowDocument;
 
-            Discription_of_ActiveHikking.Document = flowDocument;
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Заполненние данных по еде                                                                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Заполненние данных по еде                                                                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                UpdateFoodTabControl(routeInfo);
 
-            UpdateFoodTabControl(routeInfo);
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Заполненние данных по инвентарю                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Заполненние данных по инвентарю                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                UpdateEquipmentTabControl(routeInfo);
 
-            UpdateEquipmentTabControl(routeInfo);
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Заполненние данных по участникам группы                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Заполненние данных по участникам группы                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            UpdateGroupMembershipList(routeInfo);
-
+                UpdateGroupMembershipList(routeInfo);
+            }
         }
 
         private void UpdateFoodTabControl(Route routeInfo)
         {
-
-            AddNewRecordInFoodTable.IsEnabled = true;
-            AddNewRecordInFoodTable.Visibility = Visibility.Visible;
-
             GroupManager manager = new GroupManager();
             Group group = manager.GetGroup(routeInfo.RouteId);
 
@@ -309,7 +312,7 @@ namespace ActiveCampWPF
             foreach (GroupEquipment equipment in groupEquipments)
             {
                 UserProfile profile = userProfileManager.GetUserProfile(equipment.UserID);
-                equipments.Add(new RecordOfUserEquipment(profile.FirstName, equipment.EquipmentName, equipment.Count, equipment.Weigth, equipment.Description));
+                equipments.Add(new RecordOfUserEquipment(profile.FirstName, equipment.UserID, equipment.Weigth, equipment.Count, equipment.EquipmentName));
                 
             }
 
@@ -363,8 +366,11 @@ namespace ActiveCampWPF
 
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
-            
-            if(ActiveHikingList.SelectedItem != null)
+
+            AddNewRecordInEquipmentTable.IsEnabled = false;
+            AddNewRecordInEquipmentTable.Visibility = Visibility.Hidden;
+
+            if (ActiveHikingList.SelectedItem != null)
             {
                 UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem);
 
@@ -403,7 +409,10 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = true;
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
-            if(ActiveHikingList.SelectedItem != null)
+            AddNewRecordInFoodTable.IsEnabled = false;
+            AddNewRecordInFoodTable.Visibility = Visibility.Hidden;
+
+            if (ActiveHikingList.SelectedItem != null)
             {
                 UpdateEquipmentTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem);
 
@@ -588,7 +597,17 @@ namespace ActiveCampWPF
         private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
         {
 
-            DataGridForFillingEquipmentData.Items.Add(new GroupEquipment());
+            if(DataGridForFillingEquipmentData.Items.Count == 0)
+            {
+                //RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
+                DataGridForFillingEquipmentData.Items.Add(new RecordOfUserEquipment());
+                ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(DataGridForFillingEquipmentData.ItemsSource);
+                DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;
+            }
+            else
+            {
+                DataGridForFillingEquipmentData.Items.Add(new GroupEquipment());
+            }
 
         }
 
@@ -779,24 +798,27 @@ namespace ActiveCampWPF
 
         private void NewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsText;
-            string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsTitle;
 
-            Paragraph title = new Paragraph();
-            title.Inlines.Add(new Bold(new Run(newsTitle)));            
+            if(NewsList.SelectedItem != null)
+            {
+                string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsText;
+                string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsTitle;
 
-            Paragraph mainBodyOfNews = new Paragraph();
-            mainBodyOfNews.Inlines.Add(new Run(descriptionOfnews));
-            
-            List newsBodyList = new List();
-            newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
+                Paragraph title = new Paragraph();
+                title.Inlines.Add(new Bold(new Run(newsTitle)));            
 
-            FlowDocument flowDocument = new FlowDocument();
-            flowDocument.Blocks.Add(title);
-            flowDocument.Blocks.Add(newsBodyList);
+                Paragraph mainBodyOfNews = new Paragraph();
+                mainBodyOfNews.Inlines.Add(new Run(descriptionOfnews));
+                
+                List newsBodyList = new List();
+                newsBodyList.ListItems.Add(new ListItem(mainBodyOfNews));
 
-            NewsDescription.Document = flowDocument;
+                FlowDocument flowDocument = new FlowDocument();
+                flowDocument.Blocks.Add(title);
+                flowDocument.Blocks.Add(newsBodyList);
+
+                NewsDescription.Document = flowDocument;
+            }
 
         }
 
@@ -913,38 +935,41 @@ namespace ActiveCampWPF
 
         private void HikkingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedItem).RouteItem;
+            if(HikkingList.SelectedItem != null)
+            {
+                Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedItem).RouteItem;
 
-            Paragraph title = new Paragraph();
-            title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
+                Paragraph title = new Paragraph();
+                title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
 
-            Paragraph description = new Paragraph();
-            description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
+                Paragraph description = new Paragraph();
+                description.Inlines.Add(new Run($"Описание:\n\n{routeInfo.Description}"));
 
-            Paragraph dates = new Paragraph();
-            dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
+                Paragraph dates = new Paragraph();
+                dates.Inlines.Add($"Данный поход будет проходить с {routeInfo.StartDate} по {routeInfo.EndDate}");
 
-            Paragraph tripInfo = new Paragraph();
-            tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
-            
-            Paragraph level = new Paragraph();
-            level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
+                Paragraph tripInfo = new Paragraph();
+                tripInfo.Inlines.Add($"Маршрут начинается с точки {routeInfo.StartPoint} и заканчивается в точке {routeInfo.EndPoint}, протяженность маршрута состовляет {routeInfo.Length} км.");
 
-            Paragraph count = new Paragraph();
-            count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
+                Paragraph level = new Paragraph();
+                level.Inlines.Add($"Уровень сложеность маршрута: {routeInfo.Difficulty}");
 
-            List newsBodyList = new List();
-            newsBodyList.ListItems.Add(new ListItem(level));
-            newsBodyList.ListItems.Add(new ListItem(description));
-            newsBodyList.ListItems.Add(new ListItem(dates));
-            newsBodyList.ListItems.Add(new ListItem(tripInfo));
-            newsBodyList.ListItems.Add(new ListItem(count));
+                Paragraph count = new Paragraph();
+                count.Inlines.Add($"Планируемое чило участников: {routeInfo.MemberCount}");
 
-            FlowDocument flowDocument = new FlowDocument();
-            flowDocument.Blocks.Add(title);
-            flowDocument.Blocks.Add(newsBodyList);
+                List newsBodyList = new List();
+                newsBodyList.ListItems.Add(new ListItem(level));
+                newsBodyList.ListItems.Add(new ListItem(description));
+                newsBodyList.ListItems.Add(new ListItem(dates));
+                newsBodyList.ListItems.Add(new ListItem(tripInfo));
+                newsBodyList.ListItems.Add(new ListItem(count));
 
-            Discription_of_Hikking.Document = flowDocument;
+                FlowDocument flowDocument = new FlowDocument();
+                flowDocument.Blocks.Add(title);
+                flowDocument.Blocks.Add(newsBodyList);
+
+                Discription_of_Hikking.Document = flowDocument;
+            }
         }
         
 
@@ -1038,6 +1063,7 @@ namespace ActiveCampWPF
         #endregion
 
         #region Settings
+
         private void BackFromSettingButton_Click(object sender, RoutedEventArgs e)
         {
             MenuBackground.Visibility = Visibility.Visible;
@@ -1062,17 +1088,13 @@ namespace ActiveCampWPF
             UserProfileManager manager = new UserProfileManager();
             UserProfile userProfile = manager.GetUserProfile(ActiveCamp.BL.User.UserID);
 
-            //IllnessManager illnessManager = new IllnessManager();
-            //Illness illness = illnessManager.GetIllness(;
-
             if (userProfile != null)
             {
                 FirstName.Text = userProfile.FirstName;
                 SecondName.Text = userProfile.SecondName;
+                Email.Text = userProfile.Email;
                 UserWeight.Text = userProfile.Weight.ToString();
                 UserHeight.Text = userProfile.Height.ToString();
-
-
             }
         }
         
@@ -1085,9 +1107,18 @@ namespace ActiveCampWPF
             {
                 userProfile.FirstName = FirstName.Text;
                 userProfile.SecondName = SecondName.Text;
-                userProfile.Email = Email.Text;
-                userProfile.Weight = float.Parse(UserWeight.Text);
-                userProfile.Height = float.Parse(UserHeight.Text);
+                if (manager.ValidateEmail(Email.Text) == true)
+                {
+                    userProfile.Email = Email.Text;
+                }
+                if(UserWeight.Text != "")
+                {
+                    userProfile.Weight = float.Parse(UserWeight.Text);
+                }
+                if(UserHeight.Text != "")
+                {
+                    userProfile.Height = float.Parse(UserHeight.Text);
+                }
             }
 
             manager.UpdateUserProfile(userProfile);
