@@ -11,6 +11,7 @@ using ActiveCamp.BL.Controller;
 using System.Collections.Generic;
 using System.Windows.Documents;
 using ActiveCamp;
+using System.Xml.Schema;
 
 namespace ActiveCampWPF
 {
@@ -110,10 +111,9 @@ namespace ActiveCampWPF
             this.Settings.IsEnabled = true;
 
             HeaderOfSection.Text = "";
-            CloseMenu();
             
-            //Treatment of Setting button.
-
+            UpdateSetting();
+            CloseMenu();
         }
 
         private void CloseMenu()
@@ -588,21 +588,7 @@ namespace ActiveCampWPF
         private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
         {
 
-            //GroupEquipments equipments = (GroupEquipments)this.Resources["GroupEquipment"];
-
-            //equipments.Add(new GroupEquipment());
-
-            //ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
-            //if (cvRecords != null && cvRecords.CanGroup == true)
-            //{
-            //    cvRecords.GroupDescriptions.Clear();
-            //    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("Day"));
-            //    cvRecords.GroupDescriptions.Add(new PropertyGroupDescription("FoodTime"));
-            //}
-
             DataGridForFillingEquipmentData.Items.Add(new GroupEquipment());
-            
-            //DataGridForFillingEquipmentData.ItemsSource = cvRecords;
 
         }
 
@@ -1067,6 +1053,42 @@ namespace ActiveCampWPF
 
 
         }
+
+        private void UpdateSetting()
+        {
+            UserProfileManager manager = new UserProfileManager();
+            UserProfile userProfile = manager.GetUserProfile(ActiveCamp.BL.User.UserID);
+
+            //IllnessManager illnessManager = new IllnessManager();
+            //Illness illness = illnessManager.GetIllness(;
+
+            if (userProfile != null)
+            {
+                FirstName.Text = userProfile.FirstName;
+                SecondName.Text = userProfile.SecondName;
+                UserWeight.Text = userProfile.Weight.ToString();
+                UserHeight.Text = userProfile.Height.ToString();
+
+
+            }
+        }
+        
+        private void SaveSetings_Click(object sender, RoutedEventArgs e)
+        {
+            UserProfileManager manager = new UserProfileManager();
+            UserProfile userProfile = manager.GetUserProfile(ActiveCamp.BL.User.UserID);
+
+            if (userProfile != null)
+            {
+                userProfile.FirstName = FirstName.Text;
+                userProfile.SecondName = SecondName.Text;
+                userProfile.Weight = float.Parse(UserWeight.Text);
+                userProfile.Height = float.Parse(UserHeight.Text);
+            }
+
+            manager.UpdateUserProfile(userProfile);
+        }
+
         #endregion
 
     }

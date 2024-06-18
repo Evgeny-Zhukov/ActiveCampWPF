@@ -77,17 +77,21 @@ namespace ActiveCamp.BL.Model
         {
             this._illnessName = name ?? throw new ArgumentNullException("Название недуга не может быть пустым или NULL", nameof(name));
         }
+        
         public Illness(string name, string description)
         {
             this._illnessName = name ?? throw new ArgumentNullException("Название недуга не может быть пустым или NULL", nameof(name));
             this._illnessDescription = description ?? throw new ArgumentNullException("Описание недуга не может быть пустым или NULL", nameof(description));
         }
+        
         private Illness temp_Record = null;
         private bool m_Editing = false;
+
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public void BeginEdit()
         {
             if (m_Editing == false)

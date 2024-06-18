@@ -24,7 +24,7 @@
             <Border.Background>
                 <SolidColorBrush Color="AliceBlue" Opacity="0.85"></SolidColorBrush>
             </Border.Background>
-            <TextBox x:Name="NewsHeader" Margin="10,5,40,5"
+            <TextBox x:Name="NewsHeader" Margin="10,5,40,5" Focusable="False"
                      FontFamily="TimesNewRomans" FontSize="16" FontStyle="Normal" FontWeight="Bold">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">

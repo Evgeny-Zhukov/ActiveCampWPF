@@ -2096,7 +2096,7 @@
                                 </Grid>
                             </ScrollViewer>
 
-                            <Button x:Name="SaveSetings" Grid.Row="3" Content="Сохранить">
+                            <Button x:Name="SaveSetings" Grid.Row="3" Content="Сохранить" Click="SaveSetings_Click">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="SaveSetings_border" Width="200" Height="30"

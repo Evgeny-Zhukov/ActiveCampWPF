@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBox x:Name="Title" Margin="10,6,5,6" BorderThickness="0" Background="Transparent"/>
+                <TextBox x:Name="Title" Margin="10,6,5,6" BorderThickness="0" Background="Transparent" Focusable="False"/>
 
                 <Button x:Name="HikkingClosing" Grid.Column="1" Click="HikkingClosing_Click">
                     <Button.Template>
