@@ -599,8 +599,8 @@ namespace ActiveCampWPF
 
             if(DataGridForFillingEquipmentData.Items.Count == 0)
             {
-                RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
-                equipments.Add(new RecordOfUserEquipment());
+                //RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
+                DataGridForFillingEquipmentData.Items.Add(new RecordOfUserEquipment());
                 ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(DataGridForFillingEquipmentData.ItemsSource);
                 DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;
             }
