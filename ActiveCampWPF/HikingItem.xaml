@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="290">
     <Grid>
-        <Border x:Name="HikingItem" CornerRadius="20" Width="290">
+        <Border x:Name="HikingItem" CornerRadius="10" Width="280">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </Border.Background>
@@ -26,7 +26,7 @@
                               Checked="ConsentWithParticipation_Checked" Unchecked="ConsentWithParticipation_Unchecked">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Border x:Name="ConsentWithParticipation_border" CornerRadius="0,20,20,0">
+                            <Border x:Name="ConsentWithParticipation_border" CornerRadius="0,10,10,0">
                                 <Ellipse x:Name="ConsentWithParticipation_indicate" Width="10" Height="10" Fill="Black"></Ellipse>
                             </Border>
                             <ControlTemplate.Triggers>
