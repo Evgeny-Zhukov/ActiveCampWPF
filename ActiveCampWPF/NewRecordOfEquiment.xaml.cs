@@ -56,7 +56,7 @@ namespace ActiveCampWPF
         public NewRecordOfEquiment(GroupMembership membership)
         {
             InitializeComponent();
-            Membership = membership;
+            this.membership = membership;
         }
 
         private NewRecordOfEquiment temp_Record = null;

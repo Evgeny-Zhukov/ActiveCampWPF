@@ -609,12 +609,6 @@ namespace ActiveCampWPF
             ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data = DataGridForFillingEquipmentData;
 
             EquipmentOwnersList.SelectionChanged -= EquipmentOwnersList_SelectionChanged;
-
-            MenuButton.IsEnabled = true;
-            MenuButton.Visibility = Visibility.Visible;
-
-            HeaderOfSection.IsEnabled = true;
-            HeaderOfSection.Visibility = Visibility.Visible;
         
             GroupEquipmentManager manager = new GroupEquipmentManager();
 
@@ -625,23 +619,33 @@ namespace ActiveCampWPF
 
                 GroupMembership membership = equiment.Membership;
 
-                foreach (RecordOfUserEquipment equipments in equiment.Data.Items)
+                var items = equiment.Data.Items;
+
+                for(int counter = 0; counter < equiment.Data.Items.Count - 1; counter++)
                 {
                     GroupEquipment newEquipment = new GroupEquipment();
 
 
                     newEquipment.UserID = membership.UserId;
-                    newEquipment.EquipmentName = equipments.EquipmentName;
-                    newEquipment.Count = equipments.Count;
-                    newEquipment.Weigth = equipments.Weigth;
+                    newEquipment.EquipmentName = ((RecordOfUserEquipment)equiment.Data.Items[counter]).EquipmentName;
+                    newEquipment.Count = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Count;
+                    newEquipment.Weigth = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Weigth;
                     groupEquipment.Add(newEquipment);
                 }
             }
 
             manager.AddGroupEquipment(groupEquipment);
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            CreateNewRecord_grid.IsEnabled = false;
+            CreateNewRecord_grid.Visibility = Visibility.Hidden;
+
+            AddNewRecordForEquipmentTable.IsEnabled = false;
+            AddNewRecordForEquipmentTable.Visibility = Visibility.Hidden;
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         }
-        
+
         private void EquipmentOwnersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
