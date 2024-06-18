@@ -176,7 +176,7 @@ namespace ActiveCampWPF
             // Основная информация                                                                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            Route routeInfo = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem;
+            Route routeInfo = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem;
 
             Paragraph title = new Paragraph();
             title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
@@ -364,11 +364,11 @@ namespace ActiveCampWPF
             TabControlOfFoodInfo.IsEnabled = true;
             TabControlOfFoodInfo.Visibility = Visibility.Visible;
             
-            if(ActiveHikingList.SelectedValue != null)
+            if(ActiveHikingList.SelectedItem != null)
             {
-                UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+                UpdateFoodTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem);
 
-                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
                 {
                     AddNewRecordInFoodTable.IsEnabled = true;
                     AddNewRecordInFoodTable.Visibility = Visibility.Visible;
@@ -403,11 +403,11 @@ namespace ActiveCampWPF
             TabControlOfEquipmentInfo.IsEnabled = true;
             TabControlOfEquipmentInfo.Visibility = Visibility.Visible;
 
-            if(ActiveHikingList.SelectedValue != null)
+            if(ActiveHikingList.SelectedItem != null)
             {
-                UpdateEquipmentTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem);
+                UpdateEquipmentTabControl(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem);
 
-                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
+                if (((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.AuthorId == ActiveCamp.BL.User.UserID)
                 {
                     AddNewRecordInEquipmentTable.IsEnabled = true;
                     AddNewRecordInEquipmentTable.Visibility = Visibility.Visible;
@@ -505,7 +505,7 @@ namespace ActiveCampWPF
             List<NewRecordOfEquiment> equipments = new List<NewRecordOfEquiment>();
 
             GroupManager groupManager = new GroupManager();
-            Group group = groupManager.GetGroup(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedValue).RouteItem.RouteId);
+            Group group = groupManager.GetGroup(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.RouteId);
 
             GroupMembershipManager manager = new GroupMembershipManager();
             List<GroupMembership> memberships = manager.GetGroupMembership(group.GroupId);
@@ -576,7 +576,7 @@ namespace ActiveCampWPF
         
         private void DaysList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var SV = DaysList.SelectedValue;
+            var SV = DaysList.SelectedItem;
             if(SV != null)
             {
                 ((ActiveCampWPF.DayElement)SV).RecordOfFoodTable = new RecordOfFoodTable();
@@ -628,14 +628,17 @@ namespace ActiveCampWPF
         
         private void EquipmentOwnersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             if(e.RemovedItems[0] != null)
             {
                 ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingEquipmentData.ItemsSource;
             }
-            if(EquipmentOwnersList.SelectedValue != null)
+
+            if(EquipmentOwnersList.SelectedItem != null)
             {
-                DataGridForFillingEquipmentData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedValue).Data.ItemsSource;
+                DataGridForFillingEquipmentData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data.ItemsSource;
             }
+
         }
         
         #endregion
@@ -777,8 +780,8 @@ namespace ActiveCampWPF
         private void NewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
-            string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsText;
-            string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedValue).NewsItem.NewsTitle;
+            string descriptionOfnews = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsText;
+            string newsTitle = ((ActiveCampWPF.NewHikkingListItem)NewsList.SelectedItem).NewsItem.NewsTitle;
 
             Paragraph title = new Paragraph();
             title.Inlines.Add(new Bold(new Run(newsTitle)));            
@@ -910,7 +913,7 @@ namespace ActiveCampWPF
 
         private void HikkingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedValue).RouteItem;
+            Route routeInfo = ((ActiveCampWPF.hikingItem)HikkingList.SelectedItem).RouteItem;
 
             Paragraph title = new Paragraph();
             title.Inlines.Add(new Bold(new Run(routeInfo.RouteName)));
