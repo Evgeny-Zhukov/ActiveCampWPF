@@ -153,6 +153,38 @@ namespace ActiveCamp.BL.Model
 
     }
     
+    public class VeiwForEqupmentRecord
+    {
+        ObservableCollection<RecordOfUserEquipment> records;
+        public ObservableCollection<RecordOfUserEquipment> Records
+        {
+            get { return records; }
+            set 
+            {
+                if( records != value )
+                {
+                    records = value;
+                }
+            }
+        }
+
+        public VeiwForEqupmentRecord()
+        {
+            Records = new ObservableCollection<RecordOfUserEquipment>();
+        }
+
+        public void AddNewItem(RecordOfUserEquipment item)
+        {
+            Records.Add(item);
+        }
+
+        public void RemoveItem(RecordOfUserEquipment item)
+        {
+            Records.Remove(item);
+        }
+
+    }
+
     public class RecordOfFoodTable : INotifyPropertyChanged, IEditableObject
     {
 

@@ -1883,7 +1883,7 @@
                                         </Grid.RowDefinitions>
 
                                         <DataGrid x:Name="DataGridForFillingEquipmentData" 
-                                                  AutoGenerateColumns="True"
+                                                  AutoGenerateColumns="False"
                                                   Background="White"
                                                   CanUserReorderColumns="False"
                                                   CanUserAddRows="True" 
@@ -1899,11 +1899,11 @@
                                         
                                         </DataGrid>
 
-                                        <Button x:Name="AddNewRowForFillingEquipmentData" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                        <!--<Button x:Name="AddNewRowForFillingEquipmentData" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
                                                 Content="Добавить запись" Click="AddNewRowForFillingEquipmentData_DataGrid_Click"/>
 
                                         <Button x:Name="RemoveRowFromEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
-                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromEquipmentData_Click"/>
+                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromEquipmentData_Click"/>-->
 
                                         <Button x:Name="SaveChangesOfEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
                                                 HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfEquipmentData_Click"/>

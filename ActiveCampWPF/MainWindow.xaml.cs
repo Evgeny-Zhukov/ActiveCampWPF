@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Windows.Documents;
 using ActiveCamp;
 using System.Xml.Schema;
+//using System.Windows.Forms;
 
 namespace ActiveCampWPF
 {
@@ -524,6 +525,14 @@ namespace ActiveCampWPF
                 equipments.Add(new NewRecordOfEquiment(membershipItem));
             }
 
+            EquipmentOwnersList.ItemsSource = equipments;
+            
+            if(EquipmentOwnersList.Items.Count > 0)
+            {
+                EquipmentOwnersList.SelectedItem = EquipmentOwnersList.Items[EquipmentOwnersList.Items.Count - 1];
+                EquipmentOwnersList.SelectionChanged += EquipmentOwnersList_SelectionChanged;
+            }
+
         }
 
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
@@ -594,30 +603,12 @@ namespace ActiveCampWPF
         
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        private void AddNewRowForFillingEquipmentData_DataGrid_Click(object sender, RoutedEventArgs e)
-        {
-
-            if(DataGridForFillingEquipmentData.Items.Count == 0)
-            {
-                //RecordsOfEqipmentsTable equipments = (RecordsOfEqipmentsTable)this.Resources["recordsOfEqipmentsTable"];
-                DataGridForFillingEquipmentData.Items.Add(new RecordOfUserEquipment());
-                ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(DataGridForFillingEquipmentData.ItemsSource);
-                DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;
-            }
-            else
-            {
-                DataGridForFillingEquipmentData.Items.Add(new GroupEquipment());
-            }
-
-        }
-
-        private void RemoveRowFromEquipmentData_Click(object sender, RoutedEventArgs e)
-        {
-            DataGridForFillingEquipmentData.Items.RemoveAt(DataGridForFillingEquipmentData.SelectedIndex);
-        }
-        
         private void SaveChangesOfEquipmentData_Click(object sender, RoutedEventArgs e)
         {
+
+            ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data = DataGridForFillingEquipmentData;
+
+            EquipmentOwnersList.SelectionChanged -= EquipmentOwnersList_SelectionChanged;
 
             MenuButton.IsEnabled = true;
             MenuButton.Visibility = Visibility.Visible;
@@ -634,10 +625,16 @@ namespace ActiveCampWPF
 
                 GroupMembership membership = equiment.Membership;
 
-                foreach (GroupEquipment equipment in equiment.Data.Items)
+                foreach (RecordOfUserEquipment equipments in equiment.Data.Items)
                 {
-                    equipment.UserID = membership.UserId;
-                    groupEquipment.Add(equipment);
+                    GroupEquipment newEquipment = new GroupEquipment();
+
+
+                    newEquipment.UserID = membership.UserId;
+                    newEquipment.EquipmentName = equipments.EquipmentName;
+                    newEquipment.Count = equipments.Count;
+                    newEquipment.Weigth = equipments.Weigth;
+                    groupEquipment.Add(newEquipment);
                 }
             }
 
@@ -648,14 +645,30 @@ namespace ActiveCampWPF
         private void EquipmentOwnersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             
-            if(e.RemovedItems[0] != null)
+            if(e.RemovedItems.Count > 0)
             {
                 ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingEquipmentData.ItemsSource;
             }
 
-            if(EquipmentOwnersList.SelectedItem != null)
+            if (EquipmentOwnersList.SelectedItem != null && EquipmentOwnersList.SelectedItem != null && ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data != null)
             {
                 DataGridForFillingEquipmentData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data.ItemsSource;
+            }
+            else
+            {
+                List<RecordOfUserEquipment> records = new List<RecordOfUserEquipment>();
+
+                if (DataGridForFillingEquipmentData.Items.Count > 0)
+                {
+                    foreach (RecordOfUserEquipment item in DataGridForFillingEquipmentData.Items)
+                    {
+                        records.Add(item);
+                    }
+                }
+                records.Add(new RecordOfUserEquipment());
+                ListCollectionView cvRecordOfEquipment = new ListCollectionView(records);
+                DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;
+
             }
 
         }
