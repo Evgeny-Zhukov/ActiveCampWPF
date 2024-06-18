@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ActiveCamp.BL.Controller
 {
@@ -13,7 +14,7 @@ namespace ActiveCamp.BL.Controller
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
-
+        
         public UserProfileManager()
         {
             dbContext = new ActiveCampDbContext();
@@ -42,6 +43,7 @@ namespace ActiveCamp.BL.Controller
                         userProfile.UserID = Convert.ToInt32(reader["UserID"]);
                         userProfile.FirstName = (reader["Name"].ToString());
                         userProfile.SecondName = (reader["SecondName"].ToString());
+                        userProfile.Email = (reader["Email"].ToString());
                         userProfile.Height = (Convert.ToInt32(reader["Height"]));
                         userProfile.Weight = (Convert.ToInt32(reader["Weight"]));
                         userProfile.ExperienceID = (Convert.ToInt32(reader["ExperienceID"]));
@@ -61,6 +63,12 @@ namespace ActiveCamp.BL.Controller
             return userProfile;
         }
 
+        public static bool ValidateEmail(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            return Regex.IsMatch(email, pattern);
+        }
+
         public bool UpdateUserProfile(UserProfile userProfile)
         {
             using (_connection)
@@ -72,10 +80,12 @@ namespace ActiveCamp.BL.Controller
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
+                command.Parameters.AddWithValue("@UserID", User.UserID);
                 command.Parameters.AddWithValue("@FirstName", userProfile.FirstName);
                 command.Parameters.AddWithValue("@SecondName", userProfile.SecondName);
                 command.Parameters.AddWithValue("@Height", userProfile.Height);
-                command.Parameters.AddWithValue("@Weight", userProfile.Weight);
+                command.Parameters.AddWithValue("@Height", userProfile.Height);
+                command.Parameters.AddWithValue("@Email", userProfile.Email);
 
                 _connection.Open();
                 command.ExecuteNonQuery();

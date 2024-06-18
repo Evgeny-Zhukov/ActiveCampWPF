@@ -12,9 +12,9 @@ namespace ActiveCamp.CMD
         static void Main(string[] args)
         {
             ActiveCampDbContext activeCampDbContext = new ActiveCampDbContext();
-            Group group = new Group(17, 34, "", "");
-            GroupManager manager = new GroupManager();
-            manager.CreateGroup(group);
+            UserProfileManager userProfileManager = new UserProfileManager();
+            string email = "123@mail.com";
+            userProfileManager.ValidateEmail(email);
 
 
         }

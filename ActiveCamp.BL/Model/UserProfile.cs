@@ -13,6 +13,7 @@ namespace ActiveCamp.BL.Model
         private string _secondName;
         private float _weight;
         private float _height;
+        private string _email;
         private List<UserIllness> _userIllness;
         private List<UserEquipment> _userEquipment;
         private List<UserDish> _userDish;
@@ -47,6 +48,18 @@ namespace ActiveCamp.BL.Model
                 {
                     this._firstName = value;
                     NotifyPropertyChanged("FirstName");
+                }
+            }
+        }
+        public string Email
+        {
+            get { return this._email; }
+            set
+            {
+                if (value != this._email)
+                {
+                    this._email = value;
+                    NotifyPropertyChanged("Email");
                 }
             }
         }
@@ -213,13 +226,14 @@ namespace ActiveCamp.BL.Model
         /// <param name="height">Рост пользователя</param>
         /// <param name="gender">Пол пользователя</param>
         /// <param name="experience">Опыт пользователя</param>
-        public UserProfile(int userId, string firstName, string secondName, float weight, float height )
+        public UserProfile(int userId, string firstName, string secondName, float weight, float height, string email)
         {
             this._userID = userId;
             this._firstName = firstName;
             this._secondName = secondName;
             this._weight = weight;
             this._height = height;
+            this._email = email;
         }
 
         private UserProfile temp_Record = null;
@@ -257,6 +271,7 @@ namespace ActiveCamp.BL.Model
                 _illnessID = temp_Record._illnessID;
                 _dishID = temp_Record._dishID;
                 _equipmentID = temp_Record._equipmentID;
+                _email = temp_Record._email;
 
                 m_Editing = false;
             }

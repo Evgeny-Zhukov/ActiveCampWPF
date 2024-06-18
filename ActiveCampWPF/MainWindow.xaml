@@ -2413,7 +2413,7 @@
         <!--#region Registration plane--> 
 
         <Grid x:Name="Person_Validate" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-              IsEnabled="False" Visibility="Hidden" Focusable="True">
+              IsEnabled="True" Visibility="Visible" Focusable="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
