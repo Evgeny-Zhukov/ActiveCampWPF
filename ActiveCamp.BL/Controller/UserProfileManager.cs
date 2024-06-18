@@ -84,7 +84,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.AddWithValue("@FirstName", userProfile.FirstName);
                 command.Parameters.AddWithValue("@SecondName", userProfile.SecondName);
                 command.Parameters.AddWithValue("@Height", userProfile.Height);
-                command.Parameters.AddWithValue("@Height", userProfile.Height);
+                command.Parameters.AddWithValue("@Weight", userProfile.Weight);
                 command.Parameters.AddWithValue("@Email", userProfile.Email);
 
                 connection.Open();
