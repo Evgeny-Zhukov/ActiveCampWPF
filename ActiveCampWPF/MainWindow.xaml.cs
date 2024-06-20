@@ -532,7 +532,7 @@ namespace ActiveCampWPF
             
             if(EquipmentOwnersList.Items.Count > 0)
             {
-                EquipmentOwnersList.SelectedItem = EquipmentOwnersList.Items[EquipmentOwnersList.Items.Count - 1];
+                EquipmentOwnersList.SelectedItem = EquipmentOwnersList.Items[0];
                 EquipmentOwnersList.SelectionChanged += EquipmentOwnersList_SelectionChanged;
             }
 
@@ -572,7 +572,7 @@ namespace ActiveCampWPF
 
             if (DaysList.Items.Count > 0)
             {
-                this.DaysList.SelectedItem = DaysList.SelectedItems[DaysList.SelectedItems.Count - 1];
+                this.DaysList.SelectedItem = DaysList.Items[0];
                 DaysList.SelectionChanged += DaysList_SelectionChanged;
             }
 
@@ -649,14 +649,13 @@ namespace ActiveCampWPF
 
             if (e.RemovedItems.Count > 0)
             {
-                ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingFoodData.ItemsSource;
+                ((ActiveCampWPF.DayElement)e.RemovedItems[0]).Grid = DataGridForFillingFoodData;
             }
 
-            if (DaysList.SelectedItem != null & ((ActiveCampWPF.NewRecordOfEquiment)DaysList.SelectedItem).Data != null)
+            if (DaysList.SelectedItem != null & ((ActiveCampWPF.DayElement)DaysList.SelectedItem).Grid != null)
             {
-                DataGridForFillingFoodData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)DaysList.SelectedItem).Data.ItemsSource;
+                DataGridForFillingFoodData.ItemsSource = ((ActiveCampWPF.DayElement)DaysList.SelectedItem).Grid.ItemsSource;
             }
-
             else if (DaysList.SelectedItem != null)
             {
                 List<RecordOfFoodTable> records = new List<RecordOfFoodTable>();
