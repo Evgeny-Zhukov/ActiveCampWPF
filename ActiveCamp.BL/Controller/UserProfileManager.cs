@@ -39,13 +39,16 @@ namespace ActiveCamp.BL.Controller
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-
-                        userProfile.UserID = User.UserID;
-                        userProfile.FirstName = (reader["Name"].ToString());
-                        userProfile.SecondName = (reader["SecondName"].ToString());
-                        userProfile.Email = (reader["Email"].ToString());
-                        userProfile.Height = (Convert.ToInt32(reader["Height"]));
-                        userProfile.Weight = (Convert.ToInt32(reader["Weight"]));
+                        if (reader.Read())
+                        {
+                            userProfile.UserID = User.UserID;
+                            userProfile.FirstName = (reader["Name"].ToString());
+                            userProfile.SecondName = (reader["SecondName"].ToString());
+                            userProfile.Email = (reader["Email"].ToString());
+                            userProfile.Height = (Convert.ToInt32(reader["Height"]));
+                            userProfile.Weight = (Convert.ToInt32(reader["Weight"]));
+                        }
+                        
                     }
 
                 }
