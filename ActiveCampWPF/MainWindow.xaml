@@ -1767,9 +1767,6 @@
                         <ListBox x:Name="DaysList" Grid.RowSpan="2" Margin="15,15,0,15"
                                  Style="{StaticResource StyleForListInFillingForms}" SelectionMode="Single" SelectionChanged="DaysList_SelectionChanged"/>
 
-                        <!--<Button x:Name="AddNewDay" Grid.Row="1" Content="Добавить информацию по дням" Margin="15,0,0,15"
-                                FontSize="16" FontWeight="Bold" FontFamily="TimesNewRomans" Style="{StaticResource StyleForAddNewRecordInListButton}"/>-->
-
                         <Border x:Name="FoodDataFillingForm" Grid.Column="1" Grid.RowSpan="2" CornerRadius="0,10,10,0" 
                                 BorderThickness="0" Margin="0,15,15,15">
 
@@ -1795,6 +1792,7 @@
                                 <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1"
                                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                     <Grid x:Name="FillingPlace_Food">
+                                        
                                         <Grid.RowDefinitions>
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition Height="40"></RowDefinition>
@@ -1814,12 +1812,6 @@
                                             </DataGrid.Columns>
 
                                         </DataGrid>
-
-                                        <!--<Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
-                                                Content="Добавить запись" Click="AddNewRowForFillingFoodData_DataGrid_Click"/>
-
-                                        <Button x:Name="RemoveRowFromFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
-                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromFoodData_Click"/>-->
 
                                         <Button x:Name="SaveChangesOfFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
                                                 HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfFoodData_Click"/>

@@ -38,7 +38,10 @@ namespace ActiveCampWPF
 
         public string Display
         {
-            get { return _display; }
+            get 
+            { 
+                return _display; 
+            }
             set
             {
                 if (_display != value)

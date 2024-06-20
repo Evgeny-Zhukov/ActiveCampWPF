@@ -54,8 +54,11 @@ namespace ActiveCampWPF
             HeaderOfSection.Text = "Новости";
 
             UpdateNewsList();
-            NewsList.SelectedItem = NewsList.Items[NewsList.Items.Count-1];
-            NewsList.SelectionChanged += NewsList_SelectionChanged;
+            if(NewsList.Items.Count > 0)
+            {
+                NewsList.SelectedItem = NewsList.Items[NewsList.Items.Count-1];
+                NewsList.SelectionChanged += NewsList_SelectionChanged;
+            }
 
             CloseMenu();
             //Treatment of News button.
@@ -539,11 +542,13 @@ namespace ActiveCampWPF
         {
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
+            
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
             
             AddNewRecordForFoodTable.IsEnabled = true;
             AddNewRecordForFoodTable.Visibility = Visibility.Visible;
+            
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             DaysList.ItemsSource = null;
@@ -556,13 +561,16 @@ namespace ActiveCampWPF
             TimeSpan time = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.EndDate.Subtract(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.StartDate);
             int dayCount = time.Days;
             int count = 0;
+
             while(count <= dayCount)
             {
                 count++;
-
+                dayList.Add(new DayElement(count.ToString()));
             }
 
-            if(DaysList.Items.Count > 0)
+            DaysList.ItemsSource = dayList;
+
+            if (DaysList.Items.Count > 0)
             {
                 this.DaysList.SelectedItem = DaysList.SelectedItems[DaysList.SelectedItems.Count - 1];
                 DaysList.SelectionChanged += DaysList_SelectionChanged;
@@ -594,34 +602,69 @@ namespace ActiveCampWPF
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void AddNewRowForFillingFoodData_DataGrid_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        
-        private void RemoveRowFromFoodData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void SaveChangesOfFoodData_Click(object sender, RoutedEventArgs e)
         {
 
-            MenuButton.IsEnabled = true;
-            MenuButton.Visibility = Visibility.Visible;
+            ((ActiveCampWPF.NewRecordOfEquiment)DaysList.SelectedItem).Data = DataGridForFillingFoodData;
+            DaysList.SelectionChanged += DaysList_SelectionChanged;
 
-            HeaderOfSection.IsEnabled = true;
-            HeaderOfSection.Visibility = Visibility.Visible;
-        
+            GroupDishManager manager = new GroupDishManager();
+
+            List<GroupDish> groupDish = new List<GroupDish> { };
+
+            GroupManager groupManager = new GroupManager();
+
+            Group group = groupManager.GetGroup(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.RouteId);
+
+            foreach(DayElement element in DaysList.Items)
+            {
+
+                for (int counter = 0; counter < element.Grid.Items.Count - 1; counter++)
+                {
+
+                    GroupDish newDish = new GroupDish();
+
+                    newDish.RouteDay  = Int32.Parse(((RecordOfFoodTable)element.Grid.Items[counter]).Day);
+                    newDish.DishTime  = ((RecordOfFoodTable)element.Grid.Items[counter]).FoodTime;
+                    newDish.DishName  = ((RecordOfFoodTable)element.Grid.Items[counter]).FoodName;
+                    newDish.Weigth1   = ((RecordOfFoodTable)element.Grid.Items[counter]).AmountPerPerson;
+                    newDish.WeigthAll = ((RecordOfFoodTable)element.Grid.Items[counter]).AmountPerGroup;
+                    newDish.GroupID = group.GroupId;
+
+                }
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            CreateNewRecord_grid.IsEnabled = false;
+            CreateNewRecord_grid.Visibility = Visibility.Hidden;
+
+            AddNewRecordForFoodTable.IsEnabled = false;
+            AddNewRecordForFoodTable.Visibility = Visibility.Hidden;
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         }
-        
+
         private void DaysList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var SV = DaysList.SelectedItem;
-            if(SV != null)
+
+            if (e.RemovedItems.Count > 0)
             {
-                ((ActiveCampWPF.DayElement)SV).RecordOfFoodTable = new RecordOfFoodTable();
+                ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingFoodData.ItemsSource;
             }
+
+            if (DaysList.SelectedItem != null & ((ActiveCampWPF.NewRecordOfEquiment)DaysList.SelectedItem).Data != null)
+            {
+                DataGridForFillingFoodData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)DaysList.SelectedItem).Data.ItemsSource;
+            }
+
+            else if (DaysList.SelectedItem != null)
+            {
+                List<RecordOfFoodTable> records = new List<RecordOfFoodTable>();
+                records.Add(new RecordOfFoodTable());
+                ListCollectionView cvRecordOfEquipment = new ListCollectionView(records);
+                DataGridForFillingFoodData.ItemsSource = cvRecordOfEquipment;
+            }
+
         }
         
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -644,10 +687,10 @@ namespace ActiveCampWPF
 
                 var items = equiment.Data.Items;
 
-                for(int counter = 0; counter < equiment.Data.Items.Count - 1; counter++)
+                for (int counter = 0; counter < equiment.Data.Items.Count - 1; counter++)
                 {
-                    GroupEquipment newEquipment = new GroupEquipment();
 
+                    GroupEquipment newEquipment = new GroupEquipment();
 
                     newEquipment.UserID = membership.UserId;
                     newEquipment.GroupID = membership.GroupId;
@@ -655,7 +698,9 @@ namespace ActiveCampWPF
                     newEquipment.Count = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Count;
                     newEquipment.Weigth = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Weigth;
                     groupEquipment.Add(newEquipment);
+                
                 }
+
             }
 
             manager.AddGroupEquipment(groupEquipment);
@@ -688,7 +733,6 @@ namespace ActiveCampWPF
                 records.Add(new RecordOfUserEquipment());
                 ListCollectionView cvRecordOfEquipment = new ListCollectionView(records);
                 DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;
-
             }
 
         }
