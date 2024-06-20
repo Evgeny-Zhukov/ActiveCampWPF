@@ -14,7 +14,6 @@ namespace ActiveCamp.BL.Model
         private string _dishTime;
         private string _comment;
 
-
         public int GroupDishID
         {
             get { return this._groupDishID; }

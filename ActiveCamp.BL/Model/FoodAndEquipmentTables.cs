@@ -188,6 +188,8 @@ namespace ActiveCamp.BL.Model
     public class RecordOfFoodTable : INotifyPropertyChanged, IEditableObject
     {
 
+        private string m_owner;
+        private int m_ownerId;
         private string m_foodTime;
         private string m_foodName;
         private string m_day;
@@ -199,6 +201,36 @@ namespace ActiveCamp.BL.Model
         private bool m_Editing = false;
 
 
+        public string Owner
+        {
+            get
+            {
+                return m_owner;
+            }
+            set
+            {
+                if ( m_owner != value )
+                {
+                    m_owner = value;
+                    NotifyPropertyChanged(nameof(Owner));
+                }
+            }
+        }
+        public int OwnerId
+        {
+            get
+            {
+                return m_ownerId;
+            }
+            set 
+            {
+                if ( m_ownerId != value )
+                {
+                    m_ownerId = value; 
+                    NotifyPropertyChanged(nameof(OwnerId));
+                }
+            }
+        }
         public string FoodTime
         {
             get { return this.m_foodTime;}
@@ -272,7 +304,7 @@ namespace ActiveCamp.BL.Model
             }
         }
 
-        public RecordOfFoodTable(string foodTime = "", string day = null, string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
+        public RecordOfFoodTable(string owner = "", string foodTime = "", string day = null, string foodName = null, string description = null, int amountPerGroup = 0, int amountPerPerson = 0)
         {
             this.m_foodTime = foodTime;
             this.m_day = day;
@@ -304,6 +336,7 @@ namespace ActiveCamp.BL.Model
         {
             if (m_Editing == true)
             {
+                this.Owner = temp_Record.Owner;
                 this.Day = temp_Record.Day;
                 this.FoodTime = temp_Record.FoodTime;
                 this.FoodName = temp_Record.FoodName;
@@ -314,6 +347,7 @@ namespace ActiveCamp.BL.Model
                 m_Editing = false;
             }
         }
+        
         public void EndEdit()
         {
             if (m_Editing == true)

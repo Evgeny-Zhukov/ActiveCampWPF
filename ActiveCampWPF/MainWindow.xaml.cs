@@ -250,7 +250,7 @@ namespace ActiveCampWPF
             
             foreach(GroupDish dish in dishList)
             {
-                _records.Add(new RecordOfFoodTable(dish.DishTime, dish.RouteDay.ToString(), dish.DishName, dish.Comment, dish.WeigthAll, dish.Weigth1));
+                _records.Add(new RecordOfFoodTable("", dish.DishTime, dish.RouteDay.ToString(), dish.DishName, dish.Comment, dish.WeigthAll, dish.Weigth1));
             }
 
             ICollectionView cvRecords = CollectionViewSource.GetDefaultView(FoodTable.ItemsSource);
@@ -321,7 +321,7 @@ namespace ActiveCampWPF
             if (cvRecordOfEquipment != null && cvRecordOfEquipment.CanGroup == true)
             {
                 cvRecordOfEquipment.GroupDescriptions.Clear();
-                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("OwnerName"));
+                cvRecordOfEquipment.GroupDescriptions.Add(new PropertyGroupDescription("UserName"));
             }
 
             EquipmentTable.ItemsSource = cvRecordOfEquipment;
@@ -537,6 +537,7 @@ namespace ActiveCampWPF
 
         private void AddNewRecordInFoodTable_Click(object sender, RoutedEventArgs e)
         {
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             CreateNewRecord_grid.IsEnabled = true;
             CreateNewRecord_grid.Visibility = Visibility.Visible;
@@ -545,10 +546,32 @@ namespace ActiveCampWPF
             AddNewRecordForFoodTable.Visibility = Visibility.Visible;
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+            DaysList.ItemsSource = null;
+
+            List<DayElement> dayList = new List<DayElement>();
+
+            GroupManager groupManager = new GroupManager();
+            Group group = groupManager.GetGroup(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.RouteId);
+
+            TimeSpan time = ((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.EndDate.Subtract(((ActiveCampWPF.ActiveHikingItem)ActiveHikingList.SelectedItem).RouteItem.StartDate);
+            int dayCount = time.Days;
+            int count = 0;
+            while(count <= dayCount)
+            {
+                count++;
+
+            }
+
+            if(DaysList.Items.Count > 0)
+            {
+                this.DaysList.SelectedItem = DaysList.SelectedItems[DaysList.SelectedItems.Count - 1];
+                DaysList.SelectionChanged += DaysList_SelectionChanged;
+            }
+
         }
-        
+
         #region Filling_Events
-        
+
         private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
         {
             
@@ -627,6 +650,7 @@ namespace ActiveCampWPF
 
 
                     newEquipment.UserID = membership.UserId;
+                    newEquipment.GroupID = membership.GroupId;
                     newEquipment.EquipmentName = ((RecordOfUserEquipment)equiment.Data.Items[counter]).EquipmentName;
                     newEquipment.Count = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Count;
                     newEquipment.Weigth = ((RecordOfUserEquipment)equiment.Data.Items[counter]).Weigth;
@@ -654,21 +678,13 @@ namespace ActiveCampWPF
                 ((ActiveCampWPF.NewRecordOfEquiment)e.RemovedItems[0]).Data.ItemsSource = DataGridForFillingEquipmentData.ItemsSource;
             }
 
-            if (EquipmentOwnersList.SelectedItem != null && EquipmentOwnersList.SelectedItem != null && ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data != null)
+            if (EquipmentOwnersList.SelectedItem != null & ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data != null)
             {
                 DataGridForFillingEquipmentData.ItemsSource = ((ActiveCampWPF.NewRecordOfEquiment)EquipmentOwnersList.SelectedItem).Data.ItemsSource;
             }
-            else
+            else if(EquipmentOwnersList.SelectedItem != null)
             {
                 List<RecordOfUserEquipment> records = new List<RecordOfUserEquipment>();
-
-                if (DataGridForFillingEquipmentData.Items.Count > 0)
-                {
-                    foreach (RecordOfUserEquipment item in DataGridForFillingEquipmentData.Items)
-                    {
-                        records.Add(item);
-                    }
-                }
                 records.Add(new RecordOfUserEquipment());
                 ListCollectionView cvRecordOfEquipment = new ListCollectionView(records);
                 DataGridForFillingEquipmentData.ItemsSource = cvRecordOfEquipment;

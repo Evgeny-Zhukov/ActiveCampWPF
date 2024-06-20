@@ -1231,11 +1231,11 @@
                                               CanUserAddRows="False">
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Владелец" Binding="{Binding Path=OwnerID}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Владелец" Binding="{Binding Path=UserName}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Наименование вещи" Binding="{Binding Path=EquipmentName}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Количество" Binding="{Binding Path=CountOfEquipment}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Вес" Binding="{Binding Path=WightOfEquipment}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Описание" Binding="{Binding Path=EquipmentDescription}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Количество" Binding="{Binding Path=Count}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Вес" Binding="{Binding Path=Weight}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description}"></DataGridTextColumn>
                                         </DataGrid.Columns>
 
                                         <DataGrid.GroupStyle>
@@ -1807,19 +1807,19 @@
                                                   CanUserAddRows="True" Margin="5">
 
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Время периема пищи" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Время периема пищи" Width="150" Binding="{Binding Path=DishName}"></DataGridTextColumn>
                                                 <DataGridTextColumn Header="Участник" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
-                                                <DataGridTextColumn Header="Наименование еды" Width="150" Binding="{Binding Path=Col1}"></DataGridTextColumn>
+                                                <DataGridTextColumn Header="Наименование еды" Width="150" Binding="{Binding Path=DishName}"></DataGridTextColumn>
                                                 <DataGridTextColumn Header="Грамм" Width="100" Binding="{Binding Path=Col1}"></DataGridTextColumn>
                                             </DataGrid.Columns>
 
                                         </DataGrid>
 
-                                        <Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
+                                        <!--<Button x:Name="AddNewRowForFillingFoodData_DataGrid" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
                                                 Content="Добавить запись" Click="AddNewRowForFillingFoodData_DataGrid_Click"/>
 
                                         <Button x:Name="RemoveRowFromFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
-                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromFoodData_Click"/>
+                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromFoodData_Click"/>-->
 
                                         <Button x:Name="SaveChangesOfFoodData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
                                                 HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfFoodData_Click"/>
