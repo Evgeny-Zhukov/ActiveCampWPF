@@ -244,7 +244,7 @@ namespace ActiveCampWPF
 
             GroupDishManager dishManager = new GroupDishManager();
             List<GroupDish> dishList = new List<GroupDish>();
-            dishList = dishManager.GetGroupDishById(routeInfo.RouteId);
+            dishList = dishManager.GetGroupDishById(group.GroupId);
 
             RecordsOfFoodTable _records = (RecordsOfFoodTable)this.Resources["foodRecords"];
             
