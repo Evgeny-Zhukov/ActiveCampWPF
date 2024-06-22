@@ -14,7 +14,7 @@ namespace ActiveCamp.BL.Controller
     {
         private ActiveCampDbContext dbContext;
         private SqlConnection _connection;
-        private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
+        //private readonly string _connectionString = "Server=DESKTOP-VJNL8L9;Database = HikingAppDB;Trusted_Connection=True;MultipleActiveResultSets=True";
         public UserProfileManager()
         {
             dbContext = new ActiveCampDbContext();
@@ -26,16 +26,16 @@ namespace ActiveCamp.BL.Controller
             
             UserProfile userProfile = new UserProfile();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
                 string query = "SELECT * FROM UserProfile WHERE UserID = @UserID";
 
-                SqlCommand command = new SqlCommand(query, connection);
+                SqlCommand command = new SqlCommand(query, _connection);
                 command.Parameters.AddWithValue("@UserID", UserID);
 
                 try
                 {
-                    connection.Open();
+                    _connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -69,9 +69,9 @@ namespace ActiveCamp.BL.Controller
 
         public bool UpdateUserProfile(UserProfile userProfile)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
-                SqlCommand command = new SqlCommand("UpdateUserProfile", connection);
+                SqlCommand command = new SqlCommand("UpdateUserProfile", _connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter successParameter = new SqlParameter("@success", SqlDbType.Bit);
@@ -85,7 +85,7 @@ namespace ActiveCamp.BL.Controller
                 command.Parameters.AddWithValue("@Weight", userProfile.Weight);
                 command.Parameters.AddWithValue("@Email", userProfile.Email);
 
-                connection.Open();
+                _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;
@@ -93,9 +93,9 @@ namespace ActiveCamp.BL.Controller
         }
         public bool DeleteUserProfile(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (_connection)
             {
-                SqlCommand command = new SqlCommand("DeleteUserProfileById", connection);
+                SqlCommand command = new SqlCommand("DeleteUserProfileById", _connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@UserID", userId);
@@ -104,7 +104,7 @@ namespace ActiveCamp.BL.Controller
                 successParameter.Direction = ParameterDirection.Output;
                 command.Parameters.Add(successParameter);
 
-                connection.Open();
+                _connection.Open();
                 command.ExecuteNonQuery();
                 bool success = (bool)successParameter.Value;
                 return success;

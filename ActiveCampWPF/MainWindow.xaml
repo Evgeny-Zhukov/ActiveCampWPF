@@ -201,7 +201,7 @@
                 <!--#region News Section -->
 
                 <Grid x:Name="News_Section" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                      IsEnabled="False" Visibility="Hidden" Margin="0,0,55,0">
+                      IsEnabled="True" Visibility="Visible" Margin="0,0,55,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60"></ColumnDefinition>
@@ -1158,7 +1158,7 @@
                                               CanUserAddRows="False">
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Участник" Binding="{Binding Path=Person}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Участник" Binding="{Binding Path=Owner}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Пища" Binding="{Binding Path=Foodname}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="грамм" Binding="{Binding Path=AmountPerPerson}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path=Description}"></DataGridTextColumn>
@@ -1234,7 +1234,7 @@
                                             <DataGridTextColumn Header="Владелец" Binding="{Binding Path=UserName}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Наименование вещи" Binding="{Binding Path=EquipmentName}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Количество" Binding="{Binding Path=Count}"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="Вес" Binding="{Binding Path=Weight}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="Вес" Binding="{Binding Path=Weigth}"></DataGridTextColumn>
                                             <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description}"></DataGridTextColumn>
                                         </DataGrid.Columns>
 
@@ -1882,21 +1882,15 @@
                                                   IsManipulationEnabled="True"
                                                   IsReadOnly="False"
                                                   Margin="5">
-                                            
+
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Наименование вещи" Width="150" Binding="{Binding Path=EquipmentName}"></DataGridTextColumn>
                                                 <DataGridTextColumn Header="Количество" Width="150" Binding="{Binding Path=Count}"></DataGridTextColumn>
                                                 <DataGridTextColumn Header="Вес/шт." Width="150" Binding="{Binding Path=Weigth}"></DataGridTextColumn>
                                             </DataGrid.Columns>
-                                        
+
                                         </DataGrid>
-
-                                        <!--<Button x:Name="AddNewRowForFillingEquipmentData" Grid.Row="1" Style="{StaticResource ResourceKey=ButtonOnFillingFormStyle}"
-                                                Content="Добавить запись" Click="AddNewRowForFillingEquipmentData_DataGrid_Click"/>
-
-                                        <Button x:Name="RemoveRowFromEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}" 
-                                                Margin="165,0,0,0" Content="Удалить запись" Click="RemoveRowFromEquipmentData_Click"/>-->
-
+                                        
                                         <Button x:Name="SaveChangesOfEquipmentData" Grid.Row="1" Style="{StaticResource ButtonOnFillingFormStyle}"
                                                 HorizontalAlignment="Right" Content="Сохранить" Click="SaveChangesOfEquipmentData_Click"/>
 
@@ -1922,7 +1916,7 @@
                 <!--#region Settings Section -->
 
                 <Grid x:Name="Settings" Grid.RowSpan="2" Grid.ColumnSpan="3" 
-                      Visibility="Visible" Focusable="True">
+                      IsEnabled="False" Visibility="Hidden" Focusable="True">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -2395,6 +2389,87 @@
                     </Button.Template>
 
                 </Button>
+
+                <Grid Grid.Column="1" Grid.Row="1">
+
+                    <Grid.Resources>
+                        <Style TargetType="Button" x:Key="StyleForButton_OnAgentMenu">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="style_button_border" BorderThickness="0" CornerRadius="10">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="White" Opacity="0.85"/>
+                                            </Border.Background>
+                                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="style_button_border" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="White" Opacity="0.65"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="style_button_border" Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="White" Opacity="0.55"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontFamily" Value="Times new Roman"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <ListBox x:Name="ListOfAgentFunction">
+
+                        <ListBox.Background>
+                            <SolidColorBrush Color="White" Opacity="0.75"/>
+                        </ListBox.Background>
+
+                        <ListBox.Template>
+                            <ControlTemplate TargetType="ListBox">
+                                
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" 
+                                        Margin="10,5,0,10" CornerRadius="10,10,10,10">
+
+                                    <ScrollViewer Margin="0" Focusable="{Binding Focusable, ElementName=Main_controls}">
+                                        <ItemsControl>
+                                            <StackPanel Margin="5" IsItemsHost="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+
+                                </Border>
+                            
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        
+                        <ListBoxItem>
+                            <Button x:Name="FAQ_HowUsedPrepering" Width="500" Height="40" Content="Помощь с разделом Подготовки к походу" 
+                                    Style="{StaticResource StyleForButton_OnAgentMenu}"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Button x:Name="FAQ_HowUsedNews" Width="500" Height="40" Content="Помощь с разделом Новостей"
+                                    Style="{StaticResource StyleForButton_OnAgentMenu}"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Button x:Name="FAQ_HowUsedActiveHiking" Width="500" Height="40" Content="Помощь с разделом Активных походов"
+                                    Style="{StaticResource StyleForButton_OnAgentMenu}"/>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Button x:Name="SelectYourHiking" Width="500" Height="40" Content="Подобрать поход"
+                                    Style="{StaticResource StyleForButton_OnAgentMenu}"/>
+                        </ListBoxItem>
+                    </ListBox>
+                    
+                </Grid>
 
             </Grid>
 

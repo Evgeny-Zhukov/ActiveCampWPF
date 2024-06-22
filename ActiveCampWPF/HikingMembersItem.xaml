@@ -56,7 +56,8 @@
                     </Style>
                 </Grid.Resources>
 
-                <TextBox x:Name="Title" BorderThickness="0" Background="Transparent" Margin="6,10,5,10" Focusable="False"/>
+                <TextBox x:Name="Title" BorderThickness="0" Background="Transparent" Margin="6,10,5,10" Focusable="False"
+                         FontFamily="Times New Roman" FontSize="20" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Width="420" Height="30"/>
 
                 <Button x:Name="AgreeButton" Grid.Column="1" Style="{StaticResource StyleForButton}" Click="AgreeButton_Click">
                     <Path Stroke="Black" StrokeThickness="5" Fill="Black">

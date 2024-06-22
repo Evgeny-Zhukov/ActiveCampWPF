@@ -305,21 +305,17 @@ namespace ActiveCampWPF
             GroupManager manager = new GroupManager();
             Group group = manager.GetGroup(routeInfo.RouteId);
 
-            GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
-            List<GroupMembership> groupMemberships = new List<GroupMembership>();
-            groupMemberships = groupMembershipManager.GetGroupMembership(group.GroupId);
-
             GroupEquipmentManager equipmentsManager = new GroupEquipmentManager();
             List<GroupEquipment> groupEquipments = new List<GroupEquipment>();
             groupEquipments = equipmentsManager.GetGroupEquipmentById(group.GroupId);
 
-            UserProfileManager userProfileManager = new UserProfileManager();
 
             foreach (GroupEquipment equipment in groupEquipments)
             {
-                UserProfile profile = userProfileManager.GetUserProfile(equipment.UserID);
+                UserProfileManager userProfileManager = new UserProfileManager();
+                UserProfile profile = new UserProfile();
+                profile = userProfileManager.GetUserProfile(equipment.UserID);
                 equipments.Add(new RecordOfUserEquipment(profile.FirstName, equipment.UserID, equipment.Weigth, equipment.Count, equipment.EquipmentName));
-                
             }
 
             ICollectionView cvRecordOfEquipment = CollectionViewSource.GetDefaultView(EquipmentTable.ItemsSource);
@@ -343,10 +339,10 @@ namespace ActiveCampWPF
             
             List<HikingMembersItem> hikingMembersItems = new List<HikingMembersItem>();
 
-            UserProfileManager userProfileManager = new UserProfileManager();
 
             foreach (GroupMembership membership in groupMemberships)
             {
+                UserProfileManager userProfileManager = new UserProfileManager();
                 UserProfile profile = userProfileManager.GetUserProfile(membership.UserId);
                 hikingMembersItems.Add(new HikingMembersItem(membership, profile));
             }
