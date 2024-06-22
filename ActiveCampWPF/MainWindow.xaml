@@ -2253,7 +2253,7 @@
                                     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="120,15,0,0"
                                     Background="{x:Null}" Foreground="#1b1a1c" 
                                     FontSize="18" FontFamily="TimesNewRoman" FontWeight="Bold"
-                                    Text="Абдуллова Гульназ">
+                                    Text="Абдуллова Гульназ"> <!--Text="{Binding Text, ElementName=FirstName}">-->
                             <TextBox.Template>
                                 <ControlTemplate TargetType="TextBox">
                                     <Border BorderThickness="0">
@@ -2279,7 +2279,7 @@
                             </TextBox.Template>
                         </TextBox>
 
-                        <!-- Status Indicate -->
+                         <!--Status Indicate--> 
                         <Ellipse x:Name="Indicator" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"
                                  Width="10" Height="10" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0"
                                  Fill="Green" Stroke="{x:Null}" StrokeThickness="0"/>

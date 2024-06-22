@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="290">
     <Grid>
-        <Border x:Name="HikingItem" CornerRadius="10" Width="280">
+        <Border x:Name="HikingItem" CornerRadius="10" Width="270">
             <Border.Background>
                 <SolidColorBrush Color="White" Opacity="0.85"/>
             </Border.Background>

@@ -266,6 +266,8 @@ namespace ActiveCampWPF
 
             FoodTable.ItemsSource = cvRecords;
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             GroupMembershipManager groupMembershipManager = new GroupMembershipManager();
             List<GroupMembership> groupMemberships = new List<GroupMembership>();
             groupMemberships = groupMembershipManager.GetGroupMembership(group.GroupId);
@@ -583,8 +585,8 @@ namespace ActiveCampWPF
         private void BackFromFiilingButton_Click(object sender, RoutedEventArgs e)
         {
             
-            DataGridForFillingEquipmentData.Items.Clear();
-            DataGridForFillingFoodData.Items.Clear();
+            DataGridForFillingEquipmentData.ItemsSource = null;
+            DataGridForFillingFoodData.ItemsSource = null;
 
             EquipmentOwnersList.ItemsSource = null;
             DaysList.ItemsSource = null;
